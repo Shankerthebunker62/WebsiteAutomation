@@ -1,7 +1,7 @@
 apply plugin: 'maven'
 apply plugin: "com.moowork.gulp"
 
-description = """Protractor-gradle"""
+description = """Protractor-Gradle"""
 
 buildscript {
   repositories {
