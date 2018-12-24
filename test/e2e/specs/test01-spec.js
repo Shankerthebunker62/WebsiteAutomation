@@ -1,6 +1,7 @@
 const uiDriver = require('/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/utils/webUIActionModule.js');
 
 describe('Protractor Demo App', function() {
+	
 	beforeAll(function() {
 	    browser.get('http://juliemr.github.io/protractor-demo/');
 	});
