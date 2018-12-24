@@ -4,6 +4,7 @@ var HtmlReporter = require('protractor-beautiful-reporter');
 var VideoReporter = require('protractor-video-reporter');
 
 exports.config = {
+		
 		getPageTimeout: 10,
 		
 		allScriptsTimeout: 30000,

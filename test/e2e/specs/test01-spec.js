@@ -9,7 +9,7 @@ describe('Protractor Demo App', function() {
 	it('Module Two Numbers', function() {
 		var pageData = 'Module._DefaultCompRowTwo';
 	
-		WebUIAction.uiAction('Module.operator', 'setValue', pageData, 'Select@Operator');
+		uiDriver.uiKeywordAction('Module.operator', 'setValue', pageData, 'Select@Operator');
 		
 		expect(testDataModule.getExcelTestData(pageData, 'Select@Operator')).toEqual(element(by.model('operator')).$('option:checked').getText());
 	

@@ -11,6 +11,7 @@ exports.uiKeywordAction = function (elementName, elementAction, pageData, dataCo
 	var _result = false;
 	
 	try {
+		
 		switch (_action) {
 			case 'click':
 				_element.click();
