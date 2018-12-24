@@ -1,6 +1,5 @@
 const Path = require('path');
 
-var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 var HtmlReporter = require('protractor-beautiful-reporter');
 var VideoReporter = require('protractor-video-reporter');
 
@@ -63,17 +62,6 @@ exports.config = {
 		         gatherBrowserLogs: true,
 		         preserveDirectory: false
 		    }).getJasmine2Reporter());
-			
-			jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-				savePath : './reports/JasmineReport',
-				screenshotsFolder : 'images',
-				
-				fixedScreenshotName : true,
-				cleanDestination : true,
-				
-				fileNameDateSuffix: true
-				
-			}));
 			
 			browser.driver.manage().window().maximize();
 			

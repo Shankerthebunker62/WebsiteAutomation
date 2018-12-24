@@ -1,96 +1,108 @@
+const uiDriver = require('/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/utils/webUIActionModule.js');
+
 describe('Protractor Demo App', function() {
 	beforeAll(function() {
 	    browser.get('http://juliemr.github.io/protractor-demo/');
 	});
 	
+	it('Module Two Numbers', function() {
+		var pageData = 'Module._DefaultCompRowTwo';
+	
+		WebUIAction.uiAction('Module.operator', 'setValue', pageData, 'Select@Operator');
+		
+		expect(testDataModule.getExcelTestData(pageData, 'Select@Operator')).toEqual(element(by.model('operator')).$('option:checked').getText());
+	
+		element(by.model('first')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueOne'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueOne')).toEqual(element(by.model('first')).getAttribute('value'));
+	
+		element(by.model('second')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueTwo'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueTwo')).toEqual(element(by.model('second')).getAttribute('value'));
+	
+		element(by.id('gobutton')).click();
+	
+		expect(testDataModule.getExcelTestData(pageData, 'verify@Output')).toEqual(element(by.binding('latest')).getText());
+	});
+	
 	it('Add Two Numbers', function() {
-		element(by.model('operator')).sendKeys('+');
+		var pageData = 'Add._DefaultCompRowTwo';
 		
-		expect('+').toEqual(element(by.model('operator')).$('option:checked').getText());
+		element(by.model('operator')).sendKeys(testDataModule.getExcelTestData(pageData, 'Select@Operator'));
 		
-		element(by.model('first')).sendKeys('4');
+		expect(testDataModule.getExcelTestData(pageData, 'Select@Operator')).toEqual(element(by.model('operator')).$('option:checked').getText());
 		
-		expect('4').toEqual(element(by.model('first')).getAttribute('value'));
+		element(by.model('first')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueOne'));
 		
-		element(by.model('second')).sendKeys('6');
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueOne')).toEqual(element(by.model('first')).getAttribute('value'));
 		
-		expect('6').toEqual(element(by.model('second')).getAttribute('value'));
+		element(by.model('second')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueTwo'));
+		
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueTwo')).toEqual(element(by.model('second')).getAttribute('value'));
 		
 		element(by.id('gobutton')).click();
 		
-		expect('10').toEqual(element(by.binding('latest')).getText());
+		expect(testDataModule.getExcelTestData(pageData, 'verify@Output')).toEqual(element(by.binding('latest')).getText());
 	});
 	
 	it('Substract Two Numbers', function() {
-		element(by.model('operator')).sendKeys('-');
-		
-		expect('-').toEqual(element(by.model('operator')).$('option:checked').getText());
-		
-		element(by.model('first')).sendKeys('8');
-		
-		expect('8').toEqual(element(by.model('first')).getAttribute('value'));
-		
-		element(by.model('second')).sendKeys('3');
-		
-		expect('3').toEqual(element(by.model('second')).getAttribute('value'));
-		
+		var pageData = 'Substract._DefaultCompRowTwo';
+	
+		element(by.model('operator')).sendKeys(testDataModule.getExcelTestData(pageData, 'Select@Operator'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'Select@Operator')).toEqual(element(by.model('operator')).$('option:checked').getText());
+	
+		element(by.model('first')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueOne'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueOne')).toEqual(element(by.model('first')).getAttribute('value'));
+	
+		element(by.model('second')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueTwo'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueTwo')).toEqual(element(by.model('second')).getAttribute('value'));
+	
 		element(by.id('gobutton')).click();
-		
-		expect('5').toEqual(element(by.binding('latest')).getText());
+	
+		expect(testDataModule.getExcelTestData(pageData, 'verify@Output')).toEqual(element(by.binding('latest')).getText());
 	});
 	
 	it('Multiply Two Numbers', function() {
-		element(by.model('operator')).sendKeys('*');
-		
-		expect('*').toEqual(element(by.model('operator')).$('option:checked').getText());
-		
-		element(by.model('first')).sendKeys('7');
-		
-		expect('7').toEqual(element(by.model('first')).getAttribute('value'));
-		
-		element(by.model('second')).sendKeys('5');
-		
-		expect('5').toEqual(element(by.model('second')).getAttribute('value'));
-		
+		var pageData = 'Multiply._DefaultCompRowTwo';
+	
+		element(by.model('operator')).sendKeys(testDataModule.getExcelTestData(pageData, 'Select@Operator'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'Select@Operator')).toEqual(element(by.model('operator')).$('option:checked').getText());
+	
+		element(by.model('first')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueOne'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueOne')).toEqual(element(by.model('first')).getAttribute('value'));
+	
+		element(by.model('second')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueTwo'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueTwo')).toEqual(element(by.model('second')).getAttribute('value'));
+	
 		element(by.id('gobutton')).click();
-		
-		expect('35').toEqual(element(by.binding('latest')).getText());
+	
+		expect(testDataModule.getExcelTestData(pageData, 'verify@Output')).toEqual(element(by.binding('latest')).getText());
 	});
 	
 	it('Divide Two Numbers', function() {
-		element(by.model('operator')).sendKeys('/');
-		
-		expect('/').toEqual(element(by.model('operator')).$('option:checked').getText());
-		
-		element(by.model('first')).sendKeys('12');
-		
-		expect('12').toEqual(element(by.model('first')).getAttribute('value'));
-		
-		element(by.model('second')).sendKeys('2');
-		
-		expect('2').toEqual(element(by.model('second')).getAttribute('value'));
-		
-		element(by.id('gobutton')).click();
-		
-		expect('6').toEqual(element(by.binding('latest')).getText());
-	});
+		var pageData = 'Divide._DefaultCompRowTwo';
 	
-	it('Module Two Numbers', function() {
-		element(by.model('operator')).sendKeys('%');
-		
-		expect('%').toEqual(element(by.model('operator')).$('option:checked').getText());
-		
-		element(by.model('first')).sendKeys('7');
-		
-		expect('7').toEqual(element(by.model('first')).getAttribute('value'));
-		
-		element(by.model('second')).sendKeys('3');
-		
-		expect('3').toEqual(element(by.model('second')).getAttribute('value'));
-		
+		element(by.model('operator')).sendKeys(testDataModule.getExcelTestData(pageData, 'Select@Operator'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'Select@Operator')).toEqual(element(by.model('operator')).$('option:checked').getText());
+	
+		element(by.model('first')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueOne'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueOne')).toEqual(element(by.model('first')).getAttribute('value'));
+	
+		element(by.model('second')).sendKeys(testDataModule.getExcelTestData(pageData, 'type@ValueTwo'));
+	
+		expect(testDataModule.getExcelTestData(pageData, 'type@ValueTwo')).toEqual(element(by.model('second')).getAttribute('value'));
+	
 		element(by.id('gobutton')).click();
-		
-		expect('1').toEqual(element(by.binding('latest')).getText());
+	
+		expect(testDataModule.getExcelTestData(pageData, 'verify@Output')).toEqual(element(by.binding('latest')).getText());
 	});
 	
 	afterAll(function() {
