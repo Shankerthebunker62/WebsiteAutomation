@@ -1,3 +1,11 @@
+/*******************************************************************
+ *                                        						   *
+ * Author: Siddharth Shanker               						   *
+ * Date: December, 2018.                            			   *
+ * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
+ *                                        						   *
+ *******************************************************************/
+
 const Path = require('path');
 
 var HtmlReporter = require('protractor-beautiful-reporter');
@@ -9,9 +17,13 @@ exports.config = {
 		
 		allScriptsTimeout: 30000,
 		
+		// Only for Google-Chrome &, Morzilla-FireFox
 		directConnect: true,
 		
 		capabilities: {
+			'shardTestFiles': true,
+			'maxInstances': 1,
+			    
 			'browserName': 'chrome',
 			'logName': 'Chrome - English',
 			
@@ -24,7 +36,7 @@ exports.config = {
 			VideoReporter.prototype.jasmineStarted = function() {
 				var self = this;
 				if (self.options.singleVideo) {
-					var videoPath = Path.join(Path.normalize('./videos/'), 'protractor-specs.mov');
+					var videoPath = Path.join(Path.normalize('./videos/'), 'protractor-specs-' + (new Date()) +'.mov');
 
 					self._startScreencast(videoPath);
 
@@ -42,7 +54,7 @@ exports.config = {
 			    createSubtitles: true,
 			    saveSuccessVideos: true,
 			    
-			    //ffmpegCmd: path.normalize('./node_modules/ffmpeg-binaries/bin/ffmpeg.exe'),   --> Windows OS
+			    //ffmpegCmd: Path.normalize('./node_modules/ffmpeg-binaries/bin/ffmpeg.exe'),   --> Windows OS
 	            //ffmpegCmd: Path.normalize('/usr/local/bin/ffmpeg'), --> Unix/Linux OS
 	            ffmpegArgs: [
 	            	  '-y',
@@ -55,7 +67,7 @@ exports.config = {
 	          }));
 			
 			jasmine.getEnv().addReporter(new HtmlReporter({
-		         baseDirectory: './reports/HtmlReport',
+		         baseDirectory: './reports/HtmlReport_' + Date(),
 		         
 		         docTitle: 'Protractor Automation Report',
 		         docName: 'Automation_Report.html',
@@ -69,17 +81,23 @@ exports.config = {
 			browser.waitForAngularEnabled(true); //true for angular, false otherwise.
 		},
 		
-		specs: ['test\e2e\specs\calculator-spec.js'],
+		specs: ['test\e2e\specs\*.js'],
 		
 		resultJsonOutputFile: 'console.json',
 		
-		framework: 'jasmine',
+		restartBrowserBetweenTests: false,
+		
+		framework: 'jasmine2',
 		
 		jasmineNodeOpts: {
 			showColors: true,
+			
 			isVerbose: true,
+			
 			includeStackTrace: true,
+			
 			defaultTimeoutInterval: 30000,
+			
 			print: function () {
 				console.log();
 			}

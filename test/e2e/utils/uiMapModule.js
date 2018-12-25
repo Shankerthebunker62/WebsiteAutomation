@@ -1,66 +1,90 @@
+/*******************************************************************
+ *                                        						   *
+ * Author: Siddharth Shanker               						   *
+ * Date: December, 2018.                            			   *
+ * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
+ *                                        						   *
+ *******************************************************************/
+
 let filePath = '/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/resources/';
 
 var XLSX = require('xlsx');
 
+/**
+ * read uiMap.xlsx using 'npm xlsx'
+ */
 readUIMap = function() {
 	var workbook = XLSX.readFile(filePath + 'uiMap.xlsx');
 	return workbook;
 }
 
+/**
+ * Find json format for uiMap.xlsx
+ * 
+ * @return json string  value
+ */
 toUIMapJson = function() {
 	try {
 		var workbook = readUIMap();
 		var jsonResult = {};
 		workbook.SheetNames.forEach(function(sheetName) {
-			var roa = XLSX.utils
-					.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			if (roa.length > 0) {
 				jsonResult[sheetName] = roa;
 			}
 		});
 		return jsonResult;
 	} catch (error) {
-		console.log(err.message);
+		console.log(error.message);
 		return null;
 	}
 }
 
+/**
+ * fetchElementBy: creates ElementFinder.locator and, webElement for 
+ * protractor automation from uiMap.xlsx
+ * 
+ * @param locatorType: type of locators to choose from  Object Repo.
+ * @param locator: locator string 
+ * 
+ * @return protractor web element
+ */
 fetchElementBy = function(locatorType, locator) {
 	locatorType = locatorType.replace(/(^\s+|\s+$)/g, '');
-	var _element = '';
+	var _element = undefined;
 	
 	try {
 		switch (locatorType) {
 		case 'id':
-			_element = element.all(by.id(locator));
+			_element = element(by.id(locator));
 			break;
 			
 		case 'name':
-			_element = element.all(by.name(locator));
+			_element = element(by.name(locator));
 			break;
 
 		case 'css':
-			_element = element.all(by.css(locator));
+			_element = element(by.css(locator));
 			break;
 
 		case 'className':
-			_element = element.all(by.className(locator));
+			_element = element(by.className(locator));
 			break;
 
 		case 'xpath':
-			_element = element.all(by.xpath(locator));
+			_element = element(by.xpath(locator));
 			break;
 
 		case 'linkText':
-			_element = element.all(by.linkText(locator));
+			_element = element(by.linkText(locator));
 			break;
 
 		case 'partialLinkText':
-			_element = element.all(by.partialLinkText(locator));
+			_element = element(by.partialLinkText(locator));
 			break;
 
 		case 'buttonText':
-			_element = element.all(by.buttonText(locator));
+			_element = element(by.buttonText(locator));
 			break;
 
 		case 'partialButtonText':
@@ -68,48 +92,51 @@ fetchElementBy = function(locatorType, locator) {
 			break;
 
 		case 'deepCss':
-			_element = element.all(by.deepCss(locator));
+			_element = element(by.deepCss(locator));
 			break;
 
 		case 'binding':
-			_element = element.all(by.binding(locator));
+			_element = element(by.binding(locator));
 			break;
 
 		case 'exactBinding':
-			_element = element.all(by.exactBinding(locator));
+			_element = element(by.exactBinding(locator));
 			break;
 
 		case 'model':
-			_element = element.all(by.model(locator));
+			_element = element(by.model(locator));
 			break;
 
 		case 'repeater':
-			_element = element.all(by.repeater(locator));
+			_element = element(by.repeater(locator));
 			break;
 
 		case 'exactRepeater':
-			_element = element.all(by.exactRepeater(locator));
+			_element = element(by.exactRepeater(locator));
 			break;
 
 		case 'options':
-			_element = element.all(by.options(locator));
+			_element = element(by.options(locator));
 			break;
 
 		default:
 			throw 'No Such Element Locator Type Found';
 		}
 	} catch (error) {
-		console.log(err.message);
+		console.log(error.message);
 	}
-	
-	console.log('Element locator type: ' + locatorType);
-	console.log('Element locator: ' + locator);
 	
 	return _element;
 }
 
+/**
+ * getExcelUIMap: create and, return webElement
+ * 
+ * @param: elementName: element string from xlsx map
+ * @return: protractor element 
+ */
 exports.getExcelUIMap = function(elementName) {
-	let __element = '';
+	var __element = '';
 
 	try {
 		var pageName = elementName.split('.')[0];

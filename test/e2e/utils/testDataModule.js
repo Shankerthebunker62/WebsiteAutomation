@@ -1,12 +1,28 @@
+/*******************************************************************
+ *                                        						   *
+ * Author: Siddharth Shanker               						   *
+ * Date: December, 2018.                            			   *
+ * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
+ *                                        						   *
+ *******************************************************************/
+
 let filePath = '/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/resources/';
 
 var XLSX = require('xlsx');
 
+/**
+ * read testData.xlsx using 'npm xlsx'
+ */
 readTestData = function () {
 	var workbook = XLSX.readFile(filePath + 'testData.xlsx');
 	return workbook;
 }
 
+/**
+ * Find json format for testData.xlsx
+ * 
+ * @return json string  value
+ */
 toTestDataJson = function () {
 	try {
 		var workbook = readTestData();
@@ -24,6 +40,14 @@ toTestDataJson = function () {
 	}
 }
 
+/**
+ * getExcelTestData: fetches test data string from data sheet
+ * 
+ * @param pageData: contains page name and, rowId of of data on page to be used
+ * @param dataColumn: test data column under which test data is available
+ * 
+ * @result test data string for automation
+ */
 exports.getExcelTestData = function (pageData, dataColumn) {
 	var testData = '';
 
@@ -73,7 +97,6 @@ exports.getExcelTestData = function (pageData, dataColumn) {
 		
 		if (typeof nextCell !== undefined || typeof nextCell !== null) {
 			testData = nextCell.w;
-			console.log('Test Data found as : ' + testData + ' at (' + row + ',' + col + ')');
 		}
 
 	} catch (error) {
