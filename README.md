@@ -43,7 +43,7 @@ Protractor Data-Driven Automation Framework using Excel data sheet for UI Object
 * sudo npm i collections --global --save
 </br></br>
 * sudo npm install xlsx-style --global --save
-* npm i xlsx --global --save
+* sudo npm i xlsx --global --save
 </br></br>
 * sudo npm install xml-js --global --save
 * sudo npm install jsonfile --global --save
