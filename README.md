@@ -1,6 +1,9 @@
 "# Protractor-Gradle" 
 </br></br>
 
+Protractor Data-Driven Automation Framework using Excel data sheet for UI Object Repository as well as Test Data. This is a Action-Component based BDD model as Jasmine. Separate test case html reporting in progress. 
+</br></br>
+
 Execution:
 
 * gradle wrapper
