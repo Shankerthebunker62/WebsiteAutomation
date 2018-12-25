@@ -1,10 +1,9 @@
-"# Protractor-Gradle" 
-</br></br>
+# "# Protractor-Gradle" 
 
 Protractor Data-Driven Automation Framework using Excel data sheet for UI Object Repository as well as Test Data. This is a Action-Component based BDD model as Jasmine. Separate test case html reporting in progress. 
 </br></br>
 
-Execution:
+# Execution:
 
 * gradle wrapper
 * gradle installGulp
@@ -12,7 +11,7 @@ Execution:
 * gradle task e2e
 </br></br>
 
-NPM Protractor:
+# NPM Protractor Dependencies:
 
 * sudo npm install gulp --global --save
 * sudo npm install gulp-protractor --global --save
@@ -28,12 +27,18 @@ NPM Protractor:
 * sudo npm install wd wd-bridge --global --save-dev
 * sudo npm install appium-version-manager --global --save
 </br></br>
+
+# NPM Reporting Dependencies:
+
 * sudo npm install protractor-jasmine2-html-reporter --global --save
 * sudo npm install protractor-beautiful-reporter --global --save
 * sudo npm install protractor-video-reporter --global --save
 * sudo npm install jasmine-data-provider --global --save
 * sudo npm install ffmpeg --global --save
 </br></br>
+
+# NPM Data-Driven Dependencies:
+
 * sudo npm install collections --save --global
 * sudo npm i collections --global --save
 </br></br>
@@ -60,7 +65,7 @@ NPM Protractor:
 * sudo npm install --save-dev gulp@3.9.1 --global
 </br></br>
 
-NPM Other Dependencies:
+# NPM Other Dependencies:
 
 * sudo npm install grunt --global --save
 * sudo npm install grunt-cli --global --save
@@ -95,7 +100,7 @@ NPM Other Dependencies:
 * sudo npm install angular-cli mocha --global --save
 </br></br>
 
-NPM Updates:
+# NPM Updates:
 
 * sudo npm install npm-check --global --save
 </br></br>
