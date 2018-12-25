@@ -34,10 +34,12 @@ NPM Protractor:
 * sudo npm install collections --save --global
 * sudo npm i collections --global --save
 </br></br>
+* sudo npm install xlsx-style --global --save
+* npm i xlsx --global --save
+</br></br>
 * sudo npm install xml-js --global --save
 * sudo npm install jsonfile --global --save
 * sudo npm install papaparse --global --save
-* sudo npm install xlsx-style --global --save
 * sudo npm install load-json-file --global --save
 * sudo npm install properties-reader --global --save
 </br></br>
