@@ -20,7 +20,6 @@ const uiMapModule = require('/Users/shankerthebunker/git/Protractor-Gradle/test/
 let EC = protractor.ExpectedConditions;
 let action = browser.actions();
 
-let _result = false;
 let _element = null;
 let _testData = null;
 
@@ -34,14 +33,15 @@ let _testData = null;
  * @result: return type of element action boolean (true/false)
  */
 exports.select = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
 	_element = uiMapModule.getExcelUIMap(elementName);
 	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
-	console.log('Element found: ' + _element.locator());
-	console.log('Test Data found: ' + _testData);
-	
 	try {
 		_element.sendKeys(_testData);
+		
+		_result = true;
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -59,15 +59,16 @@ exports.select = function (elementName, pageData, dataColumn) {
  * @result: return type of element action boolean (true/false)
  */
 exports.setValue = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
 	_element = uiMapModule.getExcelUIMap(elementName);
 	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	console.log('Element found: ' + _element.locator());
-	console.log('Test Data found: ' + _testData);
 	
 	try {
 		_element.clear();
 		_element.sendKeys(_testData);
+		
+		_result = true;
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -85,14 +86,17 @@ exports.setValue = function (elementName, pageData, dataColumn) {
  * @result: return type of element action boolean (true/false)
  */
 exports.verifySelectOption = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
 	_element = uiMapModule.getExcelUIMap(elementName);
 	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
-	console.log('Element found: ' + _element.locator());
-	console.log('Test Data found: ' + _testData);
-	
 	try {
+		let _data = element(_element.locator()).$('option:checked').getText();
 		expect(element(_element.locator()).$('option:checked').getText()).toEqual(_testData);
+		
+		if (_data === _testData)
+			_result = true;
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -108,12 +112,14 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
  * @result: return type of element action boolean (true/false)
  */
 exports.click = function (elementName) {
-	_element = uiMapModule.getExcelUIMap(elementName);
+	let _result = false;
 	
-	console.log('Element found: ' + _element.locator());
+	_element = uiMapModule.getExcelUIMap(elementName);
 	
 	try {
 		_element.click();
+		
+		_result = true;
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -129,12 +135,14 @@ exports.click = function (elementName) {
  * @result: return type of element action boolean (true/false)
  */
 exports.sendKeysEnter = function (elementName) {
-	_element = uiMapModule.getExcelUIMap(elementName);
+	let _result = false;
 	
-	console.log('Element found: ' + _element.locator());
+	_element = uiMapModule.getExcelUIMap(elementName);
 	
 	try {
 		_element.sendKeys(protractor.Key.ENTER);
+		
+		_result = true;
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -150,12 +158,14 @@ exports.sendKeysEnter = function (elementName) {
  * @result: return type of element action boolean (true/false)
  */
 exports.clear = function (elementName) {
-	_element = uiMapModule.getExcelUIMap(elementName);
+	let _result = false;
 	
-	console.log('Element found: ' + _element.locator());
+	_element = uiMapModule.getExcelUIMap(elementName);
 	
 	try {
 		_element.clear();
+		
+		_result = true;
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -173,14 +183,17 @@ exports.clear = function (elementName) {
  * @result: return type of element action boolean (true/false)
  */
 exports.verifyValue = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
 	_element = uiMapModule.getExcelUIMap(elementName);
 	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
-	console.log('Element found: ' + _element.locator());
-	console.log('Test Data found: ' + _testData);
-	
 	try {
+		let _data = _element.getAttribute('value');
 		expect(_element.getAttribute('value')).toEqual(_testData);
+		
+		if (_data === _testData)
+			_result = true;
 	} catch (error) {
 		console.log(error.message);
 	}
@@ -198,15 +211,170 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
  * @result: return type of element action boolean (true/false)
  */
 exports.verifyText = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
 	_element = uiMapModule.getExcelUIMap(elementName);
 	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
-	console.log('Element found: ' + _element.locator());
-	console.log('Test Data found: ' + _testData);
+	try {
+		let _data = _element.getText();
+		expect(_element.getText()).toEqual(_testData);
+		
+		if (_data === _testData)
+			_result = true;
+	} catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+close = function () {
+	let _result = false;
 	
 	try {
-		expect(_element.getText()).toEqual(_testData);
+		browser.close();
+		
+		_result = true;
 	} catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+clearCokkies = function () {
+	let _result = false;
+	
+	try {
+		browser.manage().deleteAllCookies();
+		
+		_result = true;
+	} catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+clearSession = function () {
+	let _result = false;
+	
+	try {
+		browser.executeScript('window.sessionStorage.clear();');
+		browser.executeScript('window.localStorage.clear();');
+		
+		_result = true;
+	} catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+restart = function () {
+	let _result = false;
+	
+	try {
+		browser.restart();
+		
+		_result = true;
+	} catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+back = function () {
+	let _result = false;
+	
+	try {
+		browser.navigate().back();
+		
+		_result = true;
+	} catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+refresh = function () {
+	let _result = false;
+	
+	try {
+		browser.navigate().refresh();
+		
+		_result = true;
+	}  catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+doubleClick = function(elementName) {
+	let _result = false;
+	
+	_element = uiMapModule.getExcelUIMap(elementName);
+	
+	try {
+		action.doubleClick(_element).perform();
+		
+		_result = true;
+	}  catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+rightClick = function(elementName) {
+	let _result = false;
+	
+	_element = uiMapModule.getExcelUIMap(elementName);
+	
+	try {
+		browser.actions().mouseMove(_element.getLocation()).perform();
+		browser.actions().click(protractor.Button.RIGHT).perform();
+		
+		_result = true;
+	}  catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+mouseHoverAction = function(elementName) {
+	let _result = false;
+	
+	_element = uiMapModule.getExcelUIMap(elementName);
+	
+	try {
+		browser.actions().mouseMove(_element).perform();
+		
+		_result = true;
+	}  catch (error) {
+		console.log(error.message);
+	}
+	
+	return _result;
+}
+
+verifyPageTitle = function(pageData, dataColumn) {
+	let _result = false;
+	
+	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	try {
+		let _data = browser.getTitle();
+		expect(browser.getTitle()).toEqual(_testData);
+		
+		if (_data === _testData)
+			_result = true;
+	}  catch (error) {
 		console.log(error.message);
 	}
 	
