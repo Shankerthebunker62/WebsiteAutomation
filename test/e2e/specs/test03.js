@@ -6,9 +6,11 @@
  *                                        						   *
  *******************************************************************/
 
-const SuperCalculator = require('/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/scripts/Super-Calculator-Module.js');
+const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
-var _SuperCalculator = new SuperCalculator();
+const SuperCalculator = require(dirPath + '/test/e2e/scripts/Super-Calculator-Module.js');
+
+let _SuperCalculator = new SuperCalculator();
 
 describe('Protractor Demo App 03', function() {
 	

@@ -6,10 +6,12 @@
  *                                        						   *
  *******************************************************************/
 
+const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
+
 /**
  * Web page UI action method to be used
  */
-const uiDriver = require('/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/utils/webUIActionModule.js');
+const uiDriver = require(dirPath + '/test/e2e/utils/webUIActionModule.js');
 
 /**
  * Super Calculator Class to script/add components for

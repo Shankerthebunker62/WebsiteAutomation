@@ -6,7 +6,7 @@
  *                                        						   *
  *******************************************************************/
 
-let filePath = '/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/resources/';
+const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
 var XLSX = require('xlsx');
 
@@ -14,7 +14,7 @@ var XLSX = require('xlsx');
  * read testData.xlsx using 'npm xlsx'
  */
 readTestData = function () {
-	var workbook = XLSX.readFile(filePath + 'testData.xlsx');
+	var workbook = XLSX.readFile(dirPath + '/test/e2e/resources/testData.xlsx');
 	return workbook;
 }
 

@@ -6,14 +6,16 @@
  *                                        						   *
  *******************************************************************/
 
+const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
+
 /**
  * Web page test data fetch method to be used
  */
-const testDataModule = require('/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/utils/testDataModule.js');
+const testDataModule = require(dirPath + '/test/e2e/utils/testDataModule.js');
 /**
  * Web page UI webElement creator method to be used
  */
-const uiMapModule = require('/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/utils/uiMapModule.js');
+const uiMapModule = require(dirPath + '/test/e2e/utils/uiMapModule.js');
 
 // http://www.collectionsjs.com/ --> for collections alternative in .js
 

@@ -6,7 +6,7 @@
  *                                        						   *
  *******************************************************************/
 
-let filePath = '/Users/shankerthebunker/git/Protractor-Gradle/test/e2e/resources/';
+const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
 var XLSX = require('xlsx');
 
@@ -14,7 +14,7 @@ var XLSX = require('xlsx');
  * read uiMap.xlsx using 'npm xlsx'
  */
 readUIMap = function() {
-	var workbook = XLSX.readFile(filePath + 'uiMap.xlsx');
+	var workbook = XLSX.readFile(dirPath + '/test/e2e/resources/uiMap.xlsx');
 	return workbook;
 }
 
