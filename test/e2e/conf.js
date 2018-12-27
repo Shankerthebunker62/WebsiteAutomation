@@ -8,8 +8,9 @@
 
 const Path = require('path');
 
-var HtmlReporter = require('protractor-beautiful-reporter');
-var VideoReporter = require('protractor-video-reporter');
+let HtmlReporter = require('protractor-beautiful-reporter');
+let VideoReporter = require('protractor-video-reporter');
+let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
 exports.config = {
 		
@@ -75,6 +76,32 @@ exports.config = {
 		         gatherBrowserLogs: true,
 		         preserveDirectory: false
 		    }).getJasmine2Reporter());
+			
+			jasmine.getEnv().addReporter(new SpecReporter({
+			      displayStacktrace: 'all', // display stack-trace for each failed assertion, values: (all|specs|summary|none)
+			      displaySuccessesSummary: true,
+			      displayFailuresSummary: true,
+			      displayPendingSummary: true,
+			      displaySuccessfulSpec: true,
+			      displayFailedSpec: true,
+			      displayPendingSpec: true,
+			      displaySpecDuration: true, 
+			      displaySuiteNumber: true, 
+			      
+			      colors: {
+			        success: 'green',
+			        failure: 'red',
+			        pending: 'yellow'
+			      },
+			      
+			      prefixes: {
+			        success: '✓ ',
+			        failure: '✗ ',
+			        pending: '* '
+			      },
+			      
+			      customProcessors: []
+			    }));
 			
 			browser.driver.manage().window().maximize();
 			
