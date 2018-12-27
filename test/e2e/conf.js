@@ -29,7 +29,7 @@ exports.config = {
 			'logName': 'Chrome - English',
 			
 			chromeOptions: {
-				args: ["--disable-gpu", "test-type", "disable-popup-blocking", "start-maximized", "disable-infobars"]
+				args: ["--disable-gpu", "test-type", "disable-popup-blocking", "start-maximized", "disable-infobars", "--headless"] // "--headless"
 			}
 		},
 		
