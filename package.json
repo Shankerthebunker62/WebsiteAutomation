@@ -8,8 +8,8 @@
 		"gulp": "^3.9.1",
 		"gulp-protractor": "4.1.0",
 		"gulp-task-listing": "1.0.1",
-		"run-sequence": "2.1.0",
-		"jasmine-spec-reporter": "4.2.1"
+		"jasmine-spec-reporter": "4.2.1",
+		"run-sequence": "2.1.0"
 	},
 	"dependencies": {
 		"adler-32": {
