@@ -23,6 +23,10 @@ var SuperCalculator = function () {
 	 * launchUrl method to launch application url which is under test
 	 */
 	this.launchUrl = function () {
+		browser.driver.getSession().then((session) => {
+		      console.debug(session);
+		});
+		
 		browser.get('http://juliemr.github.io/protractor-demo/');
 	}
 	
