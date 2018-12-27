@@ -6,6 +6,7 @@
  *                                        						   *
  *******************************************************************/
 
+//Project location path
 const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
 var XLSX = require('xlsx');
@@ -35,7 +36,7 @@ toUIMapJson = function() {
 		});
 		return jsonResult;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 		return null;
 	}
 }
@@ -123,7 +124,7 @@ fetchElementBy = function(locatorType, locator) {
 			throw 'No Such Element Locator Type Found';
 		}
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _element;
@@ -153,7 +154,7 @@ exports.getExcelUIMap = function(elementName) {
 			}
 		}
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	return __element;
 }

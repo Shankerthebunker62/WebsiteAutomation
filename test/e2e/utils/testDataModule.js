@@ -6,6 +6,7 @@
  *                                        						   *
  *******************************************************************/
 
+//Project location path
 const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
 var XLSX = require('xlsx');
@@ -35,7 +36,7 @@ toTestDataJson = function () {
 		});
 		return jsonResult;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 		return null;
 	}
 }
@@ -100,7 +101,7 @@ exports.getExcelTestData = function (pageData, dataColumn) {
 		}
 
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	return testData;
 }

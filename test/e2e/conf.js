@@ -98,6 +98,8 @@ exports.config = {
 			
 			defaultTimeoutInterval: 30000,
 			
+			realtimeFailure: true,
+			
 			print: function () {
 				console.log();
 			}

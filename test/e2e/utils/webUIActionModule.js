@@ -6,6 +6,7 @@
  *                                        						   *
  *******************************************************************/
 
+//Project location path
 const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
 /**
@@ -45,7 +46,7 @@ exports.select = function (elementName, pageData, dataColumn) {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -72,7 +73,7 @@ exports.setValue = function (elementName, pageData, dataColumn) {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -100,7 +101,7 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 		if (_data === _testData)
 			_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -123,7 +124,7 @@ exports.click = function (elementName) {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -146,7 +147,7 @@ exports.sendKeysEnter = function (elementName) {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -169,7 +170,7 @@ exports.clear = function (elementName) {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -197,7 +198,7 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
 		if (_data === _testData)
 			_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;	
@@ -225,7 +226,7 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
 		if (_data === _testData)
 			_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -239,7 +240,7 @@ close = function () {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -253,7 +254,7 @@ clearCokkies = function () {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -268,7 +269,7 @@ clearSession = function () {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -282,7 +283,7 @@ restart = function () {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -296,7 +297,7 @@ back = function () {
 		
 		_result = true;
 	} catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -310,7 +311,7 @@ refresh = function () {
 		
 		_result = true;
 	}  catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -326,7 +327,7 @@ doubleClick = function(elementName) {
 		
 		_result = true;
 	}  catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -343,7 +344,7 @@ rightClick = function(elementName) {
 		
 		_result = true;
 	}  catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -359,7 +360,7 @@ mouseHoverAction = function(elementName) {
 		
 		_result = true;
 	}  catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
@@ -377,7 +378,7 @@ verifyPageTitle = function(pageData, dataColumn) {
 		if (_data === _testData)
 			_result = true;
 	}  catch (error) {
-		console.log(error.message);
+		console.error(error.message);
 	}
 	
 	return _result;
