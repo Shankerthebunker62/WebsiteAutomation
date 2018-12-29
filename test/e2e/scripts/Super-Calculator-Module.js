@@ -39,10 +39,6 @@ var SuperCalculator = function () {
 		else 
 			pageData = 'Module.' + _rowId;
 		
-		uiDriver.select ('Module.operator', pageData, 'Select@Operator');
-		
-		uiDriver.verifySelectOption ('Module.operator', pageData, 'Select@Operator');
-		
 		uiDriver.setValue ('Module.first', pageData, 'type@ValueOne');
 		
 		uiDriver.verifyValue ('Module.first', pageData, 'type@ValueOne');
@@ -50,6 +46,10 @@ var SuperCalculator = function () {
 		uiDriver.setValue ('Module.second', pageData, 'type@ValueTwo');
 		
 		uiDriver.verifyValue ('Module.second', pageData, 'type@ValueTwo');
+		
+		uiDriver.select ('Module.operator', pageData, 'Select@Operator');
+		
+		uiDriver.verifySelectOption ('Module.operator', pageData, 'Select@Operator');
 		
 		uiDriver.click ('Module.submit');
 		
@@ -65,10 +65,6 @@ var SuperCalculator = function () {
 		else 
 			pageData = 'Add.' + _rowId;
 		
-		uiDriver.select ('Add.operator', pageData, 'Select@Operator');
-		
-		uiDriver.verifySelectOption ('Add.operator', pageData, 'Select@Operator');
-		
 		uiDriver.setValue ('Add.first', pageData, 'type@ValueOne');
 		
 		uiDriver.verifyValue ('Add.first', pageData, 'type@ValueOne');
@@ -76,6 +72,10 @@ var SuperCalculator = function () {
 		uiDriver.setValue ('Add.second', pageData, 'type@ValueTwo');
 		
 		uiDriver.verifyValue ('Add.second', pageData, 'type@ValueTwo');
+
+		uiDriver.select ('Add.operator', pageData, 'Select@Operator');
+		
+		uiDriver.verifySelectOption ('Add.operator', pageData, 'Select@Operator');
 		
 		uiDriver.click ('Add.submit');
 		
@@ -91,10 +91,6 @@ var SuperCalculator = function () {
 		else 
 			pageData = 'Substract.' + _rowId;
 		
-		uiDriver.select ('Substract.operator', pageData, 'Select@Operator');
-		
-		uiDriver.verifySelectOption ('Substract.operator', pageData, 'Select@Operator');
-		
 		uiDriver.setValue ('Substract.first', pageData, 'type@ValueOne');
 		
 		uiDriver.verifyValue ('Substract.first', pageData, 'type@ValueOne');
@@ -102,6 +98,10 @@ var SuperCalculator = function () {
 		uiDriver.setValue ('Substract.second', pageData, 'type@ValueTwo');
 		
 		uiDriver.verifyValue ('Substract.second', pageData, 'type@ValueTwo');
+		
+		uiDriver.select ('Substract.operator', pageData, 'Select@Operator');
+		
+		uiDriver.verifySelectOption ('Substract.operator', pageData, 'Select@Operator');
 		
 		uiDriver.click ('Substract.submit');
 		
@@ -117,10 +117,6 @@ var SuperCalculator = function () {
 		else 
 			pageData = 'Multiply.' + _rowId;
 		
-		uiDriver.select ('Multiply.operator', pageData, 'Select@Operator');
-		
-		uiDriver.verifySelectOption ('Multiply.operator', pageData, 'Select@Operator');
-		
 		uiDriver.setValue ('Multiply.first', pageData, 'type@ValueOne');
 		
 		uiDriver.verifyValue ('Multiply.first', pageData, 'type@ValueOne');
@@ -128,6 +124,10 @@ var SuperCalculator = function () {
 		uiDriver.setValue ('Multiply.second', pageData, 'type@ValueTwo');
 		
 		uiDriver.verifyValue ('Multiply.second', pageData, 'type@ValueTwo');
+
+		uiDriver.select ('Multiply.operator', pageData, 'Select@Operator');
+		
+		uiDriver.verifySelectOption ('Multiply.operator', pageData, 'Select@Operator');
 		
 		uiDriver.click ('Multiply.submit');
 		
@@ -143,10 +143,6 @@ var SuperCalculator = function () {
 		else 
 			pageData = 'Divide.' + _rowId;
 		
-		uiDriver.select ('Divide.operator', pageData, 'Select@Operator');
-		
-		uiDriver.verifySelectOption ('Divide.operator', pageData, 'Select@Operator');
-		
 		uiDriver.setValue ('Divide.first', pageData, 'type@ValueOne');
 		
 		uiDriver.verifyValue ('Divide.first', pageData, 'type@ValueOne');
@@ -154,6 +150,10 @@ var SuperCalculator = function () {
 		uiDriver.setValue ('Divide.second', pageData, 'type@ValueTwo');
 		
 		uiDriver.verifyValue ('Divide.second', pageData, 'type@ValueTwo');
+
+		uiDriver.select ('Divide.operator', pageData, 'Select@Operator');
+		
+		uiDriver.verifySelectOption ('Divide.operator', pageData, 'Select@Operator');
 		
 		uiDriver.click ('Divide.submit');
 		
