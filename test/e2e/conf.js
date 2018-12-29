@@ -55,8 +55,8 @@ exports.config = {
 			    createSubtitles: true,
 			    saveSuccessVideos: true,
 			    
-			    //ffmpegCmd: Path.normalize('./node_modules/ffmpeg-binaries/bin/ffmpeg.exe'),   --> Windows OS
-	            //ffmpegCmd: Path.normalize('/usr/local/bin/ffmpeg'), --> Unix/Linux OS
+			    //ffmpegCmd: Path.normalize('./node_modules/ffmpeg-binaries/bin/ffmpeg.exe'),  // --> Windows OS
+	            //ffmpegCmd: Path.normalize('/usr/local/bin/ffmpeg'), // --> Unix/Linux OS
 	            ffmpegArgs: [
 	            	  '-y',
 	            	  '-r', '30',
