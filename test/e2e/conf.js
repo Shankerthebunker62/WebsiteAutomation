@@ -110,9 +110,17 @@ exports.config = {
 		
 		specs: ['test\e2e\specs\*.js'],
 		
+		restartBrowserBetweenTests: false,
+		
+		SELENIUM_PROMISE_MANAGER: false,
+		
+		ignoreUncaughtExceptions: true,
+		
+		logLevel: 'ERROR'|'WARN'|'INFO'|'DEBUG',
+		
 		resultJsonOutputFile: 'console.json',
 		
-		restartBrowserBetweenTests: false,
+		//highlightDelay: 1000,
 		
 		framework: 'jasmine2',
 		
