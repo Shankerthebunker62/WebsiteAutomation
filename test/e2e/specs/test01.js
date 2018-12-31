@@ -13,29 +13,60 @@ const SuperCalculator = require(dirPath + '/test/e2e/scripts/Super-Calculator-Mo
 let _SuperCalculator = new SuperCalculator();
 
 describe('Protractor Demo App 01', function() {
+	let value;
+	let originalTimeout;
 	
 	beforeAll(function() {
 		_SuperCalculator.launchUrl();
 	});
 	
-	it('Multiply Two Numbers', function() {
+	beforeEach(function(done) {
+		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+        
+		setTimeout(function() {
+		      value = 0;
+		      done();
+		 }, 1);
+	})
+	
+	it('Multiply Two Numbers', function(done) {
+		value++;
 		_SuperCalculator.Multiply('_DefaultCompRowTwo');
+		
+		done();
 	});
 	
-	it('Add Two Numbers', function() {
+	it('Add Two Numbers', function(done) {
+		value++;
 		_SuperCalculator.Add('_DefaultCompRowTwo');
+		
+		done();
 	});
 	
-	it('Module Two Numbers', function() {
+	it('Module Two Numbers', function(done) {
+		value++;
 		_SuperCalculator.Module('_DefaultCompRowTwo');
+		
+		done();
 	});
 	
-	it('Divide Two Numbers', function() {
+	it('Divide Two Numbers', function(done) {
+		value++;
 		_SuperCalculator.Divide('_DefaultCompRowTwo');
+		
+		done();
 	});
 	
-	it('Substract Two Numbers', function() {
+	it('Substract Two Numbers', function(done) {
+		value++;
 		_SuperCalculator.Substract('_DefaultCompRowTwo');
+		
+		done();
+	});
+	
+	afterEach(function() {
+	      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
 	});
 	
 	afterAll(function() {
