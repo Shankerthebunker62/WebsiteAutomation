@@ -112,7 +112,7 @@ exports.config = {
 		
 		restartBrowserBetweenTests: false,
 		
-		SELENIUM_PROMISE_MANAGER: false,
+		SELENIUM_PROMISE_MANAGER: true,
 		
 		ignoreUncaughtExceptions: true,
 		
