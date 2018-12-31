@@ -45,6 +45,7 @@
 		"load-json-file": "5.1.0",
 		"msr": "^1.3.4",
 		"npm-install-peers": "1.2.1",
+		"opencv4nodejs": "^4.13.0",
 		"ideviceinstaller-js": "1.0.2",
 		"papaparse": "4.6.2",
 		"promise": "8.0.2",
