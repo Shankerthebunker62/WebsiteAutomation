@@ -153,6 +153,8 @@ exports.getExcelUIMap = function(elementName) {
 				break;		
 			}
 		}
+		
+		console.debug('Element Found as: ' + __element.locator());
 	} catch (error) {
 		console.error(error.message);
 	}

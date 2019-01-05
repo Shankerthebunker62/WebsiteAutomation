@@ -10,12 +10,18 @@ const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
 const SuperCalculator = require(dirPath + '/test/e2e/scripts/Super-Calculator-Module.js');
 
+const testCasePurpose = 'Protractor Demo App 02';
+
 let _SuperCalculator = new SuperCalculator();
 
-describe('Protractor Demo App 02', function() {
+describe(testCasePurpose, function() {
 	
 	beforeAll(function() {
-		_SuperCalculator.launchUrl();
+		_SuperCalculator.launchUrl('_DefaultCompRow', testCasePurpose);
+	});
+	
+	beforeEach(function() {
+		
 	});
 	
 	it('Multiply Two Numbers', function() {
@@ -36,6 +42,10 @@ describe('Protractor Demo App 02', function() {
 	
 	it('Substract Two Numbers', function() {
 		_SuperCalculator.Substract('_DefaultCompRowTwo');
+	});
+	
+	afterEach(function() {
+	    
 	});
 	
 	afterAll(function() {

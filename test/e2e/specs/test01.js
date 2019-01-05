@@ -10,63 +10,42 @@ const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
 const SuperCalculator = require(dirPath + '/test/e2e/scripts/Super-Calculator-Module.js');
 
+const testCasePurpose = 'Protractor Demo App 01';
+
 let _SuperCalculator = new SuperCalculator();
 
-describe('Protractor Demo App 01', function() {
-	let value;
-	let originalTimeout;
+describe(testCasePurpose, function() {
 	
 	beforeAll(function() {
-		_SuperCalculator.launchUrl();
+		_SuperCalculator.launchUrl('_DefaultCompRow', testCasePurpose);
 	});
 	
-	beforeEach(function(done) {
-		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-        
-		setTimeout(function() {
-		      value = 0;
-		      done();
-		 }, 1);
-	})
+	beforeEach(function() {
+		
+	});
 	
-	it('Multiply Two Numbers', function(done) {
-		value++;
+	it('Multiply Two Numbers', function() {
 		_SuperCalculator.Multiply('_DefaultCompRowTwo');
-		
-		done();
 	});
 	
-	it('Add Two Numbers', function(done) {
-		value++;
+	it('Add Two Numbers', function() {
 		_SuperCalculator.Add('_DefaultCompRowTwo');
-		
-		done();
 	});
 	
-	it('Module Two Numbers', function(done) {
-		value++;
+	it('Module Two Numbers', function() {
 		_SuperCalculator.Module('_DefaultCompRowTwo');
-		
-		done();
 	});
 	
-	it('Divide Two Numbers', function(done) {
-		value++;
+	it('Divide Two Numbers', function() {
 		_SuperCalculator.Divide('_DefaultCompRowTwo');
-		
-		done();
 	});
 	
-	it('Substract Two Numbers', function(done) {
-		value++;
+	it('Substract Two Numbers', function() {
 		_SuperCalculator.Substract('_DefaultCompRowTwo');
-		
-		done();
 	});
 	
 	afterEach(function() {
-	      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+	    
 	});
 	
 	afterAll(function() {

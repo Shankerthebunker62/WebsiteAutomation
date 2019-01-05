@@ -14,9 +14,9 @@ let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
 exports.config = {
 		
-		getPageTimeout: 10,
+		getPageTimeout: 30,
 		
-		allScriptsTimeout: 30000,
+		allScriptsTimeout: 60000,
 		
 		// Only for Google-Chrome &, Morzilla-FireFox
 		directConnect: true,
@@ -29,8 +29,13 @@ exports.config = {
 			'logName': 'Chrome - English',
 			
 			chromeOptions: {
-				args: ["--disable-gpu", "test-type", "disable-popup-blocking", "start-maximized", "disable-infobars"] // "--headless"
+				args: ["--disable-gpu", "test-type", "disable-popup-blocking", "start-maximized", "disable-infobars", "--headless"] // "--headless"
 			}
+		},
+		
+		params: {
+			// Applitools Eyes api_key to publish my results to dashboard
+			API_KEY: '4g99KGsTdYyykThqEva6NdXb9nnw9ZTvi99yIyF8IO107FE110'
 		},
 		
 		onPrepare: function () {
@@ -65,7 +70,7 @@ exports.config = {
 	            	  '-g', '300',
 	            	  '-vcodec', 'mpeg4'
 	              ]
-	          }));
+	        }));
 			
 			jasmine.getEnv().addReporter(new HtmlReporter({
 		         baseDirectory: './reports/HtmlReport_' + Date(),
@@ -101,7 +106,7 @@ exports.config = {
 			      },
 			      
 			      customProcessors: []
-			    }));
+			}));
 			
 			browser.driver.manage().window().maximize();
 			
@@ -131,7 +136,7 @@ exports.config = {
 			
 			includeStackTrace: true,
 			
-			defaultTimeoutInterval: 30000,
+			defaultTimeoutInterval: 60000,
 			
 			realtimeFailure: true,
 			

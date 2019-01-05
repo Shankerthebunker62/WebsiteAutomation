@@ -99,7 +99,8 @@ exports.getExcelTestData = function (pageData, dataColumn) {
 		if (typeof nextCell !== undefined || typeof nextCell !== null) {
 			testData = nextCell.w;
 		}
-
+		
+		console.debug('TestData Found as: ' + testData);
 	} catch (error) {
 		console.error(error.message);
 	}

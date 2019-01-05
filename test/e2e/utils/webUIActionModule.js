@@ -6,6 +6,11 @@
  *                                        						   *
  *******************************************************************/
 
+// Initialize the eyes SDK and set your private API key.
+let Eyes = require('eyes.selenium').Eyes;
+let eyes = new Eyes();
+eyes.setApiKey(browser.params.API_KEY);
+
 //Project location path
 const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
 
@@ -27,22 +32,24 @@ let _element = null;
 let _testData = null;
 
 /**
- * select: send keys on the element to select by text
+ * launchApplication: launches to url of application under test
  * 
- * @param elementName: element created to web page interaction
- * @param pageData: sheetName and, _rowId from where to pick data
- * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
+ * @param url: url of the said application
+ * @result return type of action boolean (true/false)
  */
-exports.select = function (elementName, pageData, dataColumn) {
+exports.launchApplication = function(pageData, dataColumn, testCasePurpose) {
 	let _result = false;
 	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
 	try {
-		_element.sendKeys(_testData);
+		let _url = testDataModule.getExcelTestData(pageData, dataColumn);
+		
+		browser.driver.getSession().then((session) => {
+		      console.debug(session);
+		});
+		
+		eyes.open(browser, testCasePurpose, testCasePurpose + '_' + (new Date()).getTime());
+		
+		browser.get(_url);
 		
 		_result = true;
 	} catch (error) {
@@ -50,7 +57,32 @@ exports.select = function (elementName, pageData, dataColumn) {
 	}
 	
 	return _result;
-}
+};
+
+/**
+ * close: closes the current browser/tab open
+ * 
+ * @return return type of action boolean (true/false)
+ */
+exports.close = function () {
+	let _result = false;
+	
+	try {
+		browser.manage().logs().get('browser').then(function(browserLog) {
+		  console.log('log: ' + require('util').inspect(browserLog));
+		});
+		
+		browser.close();
+		
+		eyes.close();
+		
+		_result = true;
+	} catch (error) {
+		console.error(error.message);
+	}
+	
+	return _result;
+};
 
 /**
  * setValue: send keys on the element
@@ -71,13 +103,15 @@ exports.setValue = function (elementName, pageData, dataColumn) {
 		_element.clear();
 		_element.sendKeys(_testData);
 		
+		eyes.checkWindow(_testData);
+		
 		_result = true;
 	} catch (error) {
 		console.error(error.message);
 	}
 	
 	return _result;
-}
+};
 
 /**
  * verifySelectOption: verify selected option on the element
@@ -98,6 +132,8 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 		let _data = element(_element.locator()).$('option:checked').getText();
 		expect(element(_element.locator()).$('option:checked').getText()).toEqual(_testData);
 		
+		eyes.checkWindow(_testData);
+		
 		if (_data === _testData)
 			_result = true;
 	} catch (error) {
@@ -105,7 +141,124 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 	}
 	
 	return _result;
-}
+};
+
+/**
+ * verifyValue: verify value on the element
+ * 
+ * @param elementName: element created to web page interaction
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * 
+ * @result: return type of element action boolean (true/false)
+ */
+exports.verifyValue = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
+	_element = uiMapModule.getExcelUIMap(elementName);
+	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	try {
+		let _data = _element.getAttribute('value');
+		expect(_element.getAttribute('value')).toEqual(_testData);
+		
+		eyes.checkWindow(_testData);
+		
+		if (_data === _testData)
+			_result = true;
+	} catch (error) {
+		console.error(error.message);
+	}
+	
+	return _result;	
+};
+
+/**
+ * verifyText: verify text on the element by getText()
+ * 
+ * @param elementName: element created to web page interaction
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * 
+ * @result: return type of element action boolean (true/false)
+ */
+exports.verifyText = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
+	_element = uiMapModule.getExcelUIMap(elementName);
+	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	try {
+		let _data = _element.getText();
+		expect(_element.getText()).toEqual(_testData);
+		
+		eyes.checkWindow(_testData);
+		
+		if (_data === _testData)
+			_result = true;
+	} catch (error) {
+		console.error(error.message);
+	}
+	
+	return _result;
+};
+
+/**
+ * verifyPageTitle: validates if correct page title is open
+ * 
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * 
+ * @result: return type of action boolean (true/false)
+ */
+exports.verifyPageTitle = function(pageData, dataColumn) {
+	let _result = false;
+	
+	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	try {
+		let _data = browser.getTitle();
+		expect(browser.getTitle()).toEqual(_testData);
+		
+		eyes.checkWindow(_testData);
+		
+		if (_data === _testData)
+			_result = true;
+	}  catch (error) {
+		console.error(error.message);
+	}
+	
+	return _result;
+};
+
+
+/**
+ * select: send keys on the element to select by text
+ * 
+ * @param elementName: element created to web page interaction
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * 
+ * @result: return type of element action boolean (true/false)
+ */
+exports.select = function (elementName, pageData, dataColumn) {
+	let _result = false;
+	
+	_element = uiMapModule.getExcelUIMap(elementName);
+	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	try {
+		_element.sendKeys(_testData);
+		
+		eyes.checkWindow(_testData);
+		
+		_result = true;
+	} catch (error) {
+		console.error(error.message);
+	}
+	
+	return _result;
+};
 
 /**
  * click: perform click on the element
@@ -128,7 +281,7 @@ exports.click = function (elementName) {
 	}
 	
 	return _result;
-}
+};
 
 /**
  * sendKeysEnter: perform click on the element
@@ -151,7 +304,7 @@ exports.sendKeysEnter = function (elementName) {
 	}
 	
 	return _result;
-}
+};
 
 /**
  * clear: perform clear on the element text field
@@ -174,79 +327,9 @@ exports.clear = function (elementName) {
 	}
 	
 	return _result;
-}
+};
 
-/**
- * verifyValue: verify value on the element
- * 
- * @param elementName: element created to web page interaction
- * @param pageData: sheetName and, _rowId from where to pick data
- * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
- */
-exports.verifyValue = function (elementName, pageData, dataColumn) {
-	let _result = false;
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		let _data = _element.getAttribute('value');
-		expect(_element.getAttribute('value')).toEqual(_testData);
-		
-		if (_data === _testData)
-			_result = true;
-	} catch (error) {
-		console.error(error.message);
-	}
-	
-	return _result;	
-}
-
-/**
- * verifyText: verify text on the element by getText()
- * 
- * @param elementName: element created to web page interaction
- * @param pageData: sheetName and, _rowId from where to pick data
- * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
- */
-exports.verifyText = function (elementName, pageData, dataColumn) {
-	let _result = false;
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		let _data = _element.getText();
-		expect(_element.getText()).toEqual(_testData);
-		
-		if (_data === _testData)
-			_result = true;
-	} catch (error) {
-		console.error(error.message);
-	}
-	
-	return _result;
-}
-
-close = function () {
-	let _result = false;
-	
-	try {
-		browser.close();
-		
-		_result = true;
-	} catch (error) {
-		console.error(error.message);
-	}
-	
-	return _result;
-}
-
-clearCokkies = function () {
+exports.clearCokkies = function () {
 	let _result = false;
 	
 	try {
@@ -258,9 +341,9 @@ clearCokkies = function () {
 	}
 	
 	return _result;
-}
+};
 
-clearSession = function () {
+exports.clearSession = function () {
 	let _result = false;
 	
 	try {
@@ -273,9 +356,9 @@ clearSession = function () {
 	}
 	
 	return _result;
-}
+};
 
-restart = function () {
+exports.restart = function () {
 	let _result = false;
 	
 	try {
@@ -287,9 +370,9 @@ restart = function () {
 	}
 	
 	return _result;
-}
+};
 
-back = function () {
+exports.back = function () {
 	let _result = false;
 	
 	try {
@@ -301,9 +384,9 @@ back = function () {
 	}
 	
 	return _result;
-}
+};
 
-refresh = function () {
+exports.refresh = function () {
 	let _result = false;
 	
 	try {
@@ -315,9 +398,9 @@ refresh = function () {
 	}
 	
 	return _result;
-}
+};
 
-doubleClick = function(elementName) {
+exports.doubleClick = function(elementName) {
 	let _result = false;
 	
 	_element = uiMapModule.getExcelUIMap(elementName);
@@ -331,9 +414,9 @@ doubleClick = function(elementName) {
 	}
 	
 	return _result;
-}
+};
 
-rightClick = function(elementName) {
+exports.rightClick = function(elementName) {
 	let _result = false;
 	
 	_element = uiMapModule.getExcelUIMap(elementName);
@@ -348,9 +431,9 @@ rightClick = function(elementName) {
 	}
 	
 	return _result;
-}
+};
 
-mouseHoverAction = function(elementName) {
+exports.mouseHoverAction = function(elementName) {
 	let _result = false;
 	
 	_element = uiMapModule.getExcelUIMap(elementName);
@@ -364,22 +447,4 @@ mouseHoverAction = function(elementName) {
 	}
 	
 	return _result;
-}
-
-verifyPageTitle = function(pageData, dataColumn) {
-	let _result = false;
-	
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		let _data = browser.getTitle();
-		expect(browser.getTitle()).toEqual(_testData);
-		
-		if (_data === _testData)
-			_result = true;
-	}  catch (error) {
-		console.error(error.message);
-	}
-	
-	return _result;
-}
+};

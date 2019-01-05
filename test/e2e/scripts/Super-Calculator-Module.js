@@ -22,13 +22,14 @@ var SuperCalculator = function () {
 	/**
 	 * launchUrl method to launch application url which is under test
 	 */
-	this.launchUrl = function () {
-		browser.driver.getSession().then((session) => {
-		      console.debug(session);
-		});
+	this.launchUrl = function (_rowId, testCasePurpose) {
+		if (_rowId === null || _rowId === undefined)
+			throw '_rowId cannot be null';
+		else 
+			pageData = 'launchUrl.' + _rowId;
 		
-		browser.get('http://juliemr.github.io/protractor-demo/');
-	}
+		uiDriver.launchApplication(pageData, 'Navigate@URL', testCasePurpose);
+	};
 	
 	/**
 	 * Module method to perform module of two number and,  verify the result
@@ -54,7 +55,7 @@ var SuperCalculator = function () {
 		uiDriver.click ('Module.submit');
 		
 		uiDriver.verifyText ('Module.output', pageData, 'verify@Output')
-	}
+	};
 
 	/**
 	 * Add method to perform addition of two number and,  verify the result
@@ -80,7 +81,7 @@ var SuperCalculator = function () {
 		uiDriver.click ('Add.submit');
 		
 		uiDriver.verifyText ('Add.output', pageData, 'verify@Output')
-	}
+	};
 
 	/**
 	 * Substract method to perform substraction of two number and,  verify the result
@@ -106,7 +107,7 @@ var SuperCalculator = function () {
 		uiDriver.click ('Substract.submit');
 		
 		uiDriver.verifyText ('Substract.output', pageData, 'verify@Output')
-	}
+	};
 	
 	/**
 	 * Multiply method to perform multiplication of two number and,  verify the result
@@ -132,7 +133,7 @@ var SuperCalculator = function () {
 		uiDriver.click ('Multiply.submit');
 		
 		uiDriver.verifyText ('Multiply.output', pageData, 'verify@Output')
-	}
+	};
 	
 	/**
 	 * Divide method to perform division of two number and,  verify the result
@@ -158,14 +159,14 @@ var SuperCalculator = function () {
 		uiDriver.click ('Divide.submit');
 		
 		uiDriver.verifyText ('Divide.output', pageData, 'verify@Output')
-	}
+	};
 	
 	/**
 	 * Close  browser after application test has been performed
 	 */
 	this.closeBrowser = function () {
-		browser.close();
-	}
+		uiDriver.close();
+	};
 };
 
 module.exports = SuperCalculator;
