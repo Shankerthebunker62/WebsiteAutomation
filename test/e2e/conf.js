@@ -35,6 +35,7 @@ exports.config = {
 		
 		params: {
 			// Applitools Eyes api_key to publish my results to dashboard
+			// global: variable = value {call it as browser.params.variable}
 			API_KEY: '4g99KGsTdYyykThqEva6NdXb9nnw9ZTvi99yIyF8IO107FE110'
 		},
 		

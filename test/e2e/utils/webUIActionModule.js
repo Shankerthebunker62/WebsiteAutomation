@@ -7,9 +7,10 @@
  *******************************************************************/
 
 // Initialize the eyes SDK and set your private API key.
-let Eyes = require('eyes.selenium').Eyes;
-let eyes = new Eyes();
-eyes.setApiKey(browser.params.API_KEY);
+// devDependencies as : "eyes.selenium": "0.0.83",
+// let Eyes = require('eyes.selenium').Eyes;
+// let eyes = new Eyes();
+// eyes.setApiKey(browser.params.API_KEY);
 
 //Project location path
 const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
@@ -47,7 +48,7 @@ exports.launchApplication = function(pageData, dataColumn, testCasePurpose) {
 		      console.debug(session);
 		});
 		
-		eyes.open(browser, testCasePurpose, testCasePurpose + '_' + (new Date()).getTime());
+		// eyes.open(browser, testCasePurpose, testCasePurpose + '_' + (new Date()).getTime());
 		
 		browser.get(_url);
 		
@@ -74,7 +75,7 @@ exports.close = function () {
 		
 		browser.close();
 		
-		eyes.close();
+		// eyes.close();
 		
 		_result = true;
 	} catch (error) {
@@ -103,7 +104,7 @@ exports.setValue = function (elementName, pageData, dataColumn) {
 		_element.clear();
 		_element.sendKeys(_testData);
 		
-		eyes.checkWindow(_testData);
+		// eyes.checkWindow(_testData);
 		
 		_result = true;
 	} catch (error) {
@@ -132,7 +133,7 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 		let _data = element(_element.locator()).$('option:checked').getText();
 		expect(element(_element.locator()).$('option:checked').getText()).toEqual(_testData);
 		
-		eyes.checkWindow(_testData);
+		// eyes.checkWindow(_testData);
 		
 		if (_data === _testData)
 			_result = true;
@@ -162,7 +163,7 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
 		let _data = _element.getAttribute('value');
 		expect(_element.getAttribute('value')).toEqual(_testData);
 		
-		eyes.checkWindow(_testData);
+		// eyes.checkWindow(_testData);
 		
 		if (_data === _testData)
 			_result = true;
@@ -192,7 +193,7 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
 		let _data = _element.getText();
 		expect(_element.getText()).toEqual(_testData);
 		
-		eyes.checkWindow(_testData);
+		// eyes.checkWindow(_testData);
 		
 		if (_data === _testData)
 			_result = true;
@@ -220,7 +221,7 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
 		let _data = browser.getTitle();
 		expect(browser.getTitle()).toEqual(_testData);
 		
-		eyes.checkWindow(_testData);
+		// eyes.checkWindow(_testData);
 		
 		if (_data === _testData)
 			_result = true;
@@ -250,7 +251,7 @@ exports.select = function (elementName, pageData, dataColumn) {
 	try {
 		_element.sendKeys(_testData);
 		
-		eyes.checkWindow(_testData);
+		// eyes.checkWindow(_testData);
 		
 		_result = true;
 	} catch (error) {
