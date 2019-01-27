@@ -1,21 +1,21 @@
-/*******************************************************************
- *                                        						   *
- * Author: Siddharth Shanker               						   *
- * Date: December, 2018.                            			   *
- * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
- *                                        						   *
- *******************************************************************/
+/***********************************************************************
+ *                                        						       *
+ * Author: Siddharth Shanker               						       *
+ * Date: December, 2018.                            			   	   *
+ * GitHub: https://github.com/Shankerthebunker62/WebsiteAutomation.git *
+ *                                        						       *
+ ***********************************************************************/
 
 //Project location path
-const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
+const dirPath = browser.params.dirPath;
 
-var XLSX = require('xlsx');
+let XLSX = require('xlsx');
 
 /**
  * read testData.xlsx using 'npm xlsx'
  */
 readTestData = function () {
-	var workbook = XLSX.readFile(dirPath + '/test/e2e/resources/testData.xlsx');
+	let workbook = XLSX.readFile(dirPath + '/test/e2e/resources/testData.xlsx');
 	return workbook;
 }
 
@@ -26,10 +26,10 @@ readTestData = function () {
  */
 toTestDataJson = function () {
 	try {
-		var workbook = readTestData();
-		var jsonResult = {};
+		let workbook = readTestData();
+		let jsonResult = {};
 		workbook.SheetNames.forEach(function(sheetName) {
-			var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			let roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			if (roa.length > 0) {
 				jsonResult[sheetName] = roa;
 			}
@@ -50,21 +50,21 @@ toTestDataJson = function () {
  * @result test data string for automation
  */
 exports.getExcelTestData = function (pageData, dataColumn) {
-	var testData = '';
+	let testData = '';
 
-	var row = 0;
-	var col = 0;
+	let row = 0;
+	let col = 0;
 	
-	var sheetName = pageData.split('.')[0];
-	var rowId = pageData.split('.')[1];
+	let sheetName = pageData.split('.')[0];
+	let rowId = pageData.split('.')[1];
 
 	try {
-		var workbook = readTestData();
-		var worksheet = workbook.Sheets[sheetName];
-		var range = XLSX.utils.decode_range(worksheet['!ref']);
+		let workbook = readTestData();
+		let worksheet = workbook.Sheets[sheetName];
+		let range = XLSX.utils.decode_range(worksheet['!ref']);
 
 		for (let rowNum = range.s.r; rowNum <= range.e.r; rowNum++) {
-			var nextCell = worksheet[XLSX.utils.encode_cell({
+			let nextCell = worksheet[XLSX.utils.encode_cell({
 				r : rowNum,
 				c : 0
 			})];
@@ -78,7 +78,7 @@ exports.getExcelTestData = function (pageData, dataColumn) {
 		}
 		
 		for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-			var nextCell = worksheet[XLSX.utils.encode_cell({
+			let nextCell = worksheet[XLSX.utils.encode_cell({
 				r : 0,
 				c : colNum
 			})];
@@ -91,7 +91,7 @@ exports.getExcelTestData = function (pageData, dataColumn) {
 			}
 		}
 		
-		var nextCell = worksheet[XLSX.utils.encode_cell({
+		let nextCell = worksheet[XLSX.utils.encode_cell({
 			r : row,
 			c : col
 		})];
@@ -100,7 +100,7 @@ exports.getExcelTestData = function (pageData, dataColumn) {
 			testData = nextCell.w;
 		}
 		
-		console.debug('TestData Found as: ' + testData);
+		console.debug(`TestData is found as: ${testData}`);
 	} catch (error) {
 		console.error(error.message);
 	}

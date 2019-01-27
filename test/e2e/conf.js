@@ -1,10 +1,10 @@
-/*******************************************************************
- *                                        						   *
- * Author: Siddharth Shanker               						   *
- * Date: December, 2018.                            			   *
- * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
- *                                        						   *
- *******************************************************************/
+/***********************************************************************
+ *                                        						       *
+ * Author: Siddharth Shanker               						       *
+ * Date: December, 2018.                            			   	   *
+ * GitHub: https://github.com/Shankerthebunker62/WebsiteAutomation.git *
+ *                                        						       *
+ ***********************************************************************/
 
 const Path = require('path');
 
@@ -21,22 +21,39 @@ exports.config = {
 		// Only for Google-Chrome &, Morzilla-FireFox
 		directConnect: true,
 		
+		/**
+		 * Firefox Browser Setting
+		 
+	      'browserName': 'firefox',
+	      'logName': 'Firefox - English',
+	      'moz:firefoxOptions': {
+	          'args': ['--verbose', '--safe-mode'] // '--headless'
+	       }
+		*/
+
+		/**
+		 * Chrome Browser Setting
+		
+		  'browserName': 'chrome',
+		  'logName': 'Chrome - English',
+		  'chromeOptions': {
+			'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'] // '--headless'
+		  }
+		*/
+		
 		capabilities: {
 			'shardTestFiles': true,
 			'maxInstances': 1,
 			    
 			'browserName': 'chrome',
 			'logName': 'Chrome - English',
-			
-			chromeOptions: {
-				args: ["--disable-gpu", "test-type", "disable-popup-blocking", "start-maximized", "disable-infobars", "--headless"] // "--headless"
+			'chromeOptions': {
+				'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'] // '--headless'
 			}
 		},
 		
 		params: {
-			// Applitools Eyes api_key to publish my results to dashboard
-			// global: variable = value {call it as browser.params.variable}
-			API_KEY: '4g99KGsTdYyykThqEva6NdXb9nnw9ZTvi99yIyF8IO107FE110'
+			dirPath : '/Users/shankerthebunker/git/WebsiteAutomation'
 		},
 		
 		onPrepare: function () {
@@ -61,8 +78,8 @@ exports.config = {
 			    createSubtitles: true,
 			    saveSuccessVideos: true,
 			    
-			    //ffmpegCmd: Path.normalize('./node_modules/ffmpeg-binaries/bin/ffmpeg.exe'),  // --> Windows OS
-	            //ffmpegCmd: Path.normalize('/usr/local/bin/ffmpeg'), // --> Unix/Linux OS
+			    //ffmpegCmd: Path.normalize('.\\node_modules\\ffmpeg\\bin\\ffmpeg.exe'),    // --> Windows OS
+	            //ffmpegCmd: Path.normalize('/usr/local/bin/ffmpeg'), 						// --> Unix/Linux OS
 	            ffmpegArgs: [
 	            	  '-y',
 	            	  '-r', '30',

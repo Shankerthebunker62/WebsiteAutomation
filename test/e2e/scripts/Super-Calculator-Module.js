@@ -1,12 +1,13 @@
-/*******************************************************************
- *                                        						   *
- * Author: Siddharth Shanker               						   *
- * Date: December, 2018.                            			   *
- * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
- *                                        						   *
- *******************************************************************/
+/***********************************************************************
+ *                                        						       *
+ * Author: Siddharth Shanker               						       *
+ * Date: December, 2018.                            			   	   *
+ * GitHub: https://github.com/Shankerthebunker62/WebsiteAutomation.git *
+ *                                        						       *
+ ***********************************************************************/
 
-const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
+//Project location path
+const dirPath = browser.params.dirPath;
 
 /**
  * Web page UI action method to be used
@@ -54,7 +55,7 @@ var SuperCalculator = function () {
 		
 		uiDriver.click ('Module.submit');
 		
-		uiDriver.verifyText ('Module.output', pageData, 'verify@Output')
+		uiDriver.verifyText ('Module.output', pageData, 'verify@Output');
 	};
 
 	/**
@@ -80,7 +81,7 @@ var SuperCalculator = function () {
 		
 		uiDriver.click ('Add.submit');
 		
-		uiDriver.verifyText ('Add.output', pageData, 'verify@Output')
+		uiDriver.verifyText ('Add.output', pageData, 'verify@Output');
 	};
 
 	/**
@@ -106,7 +107,7 @@ var SuperCalculator = function () {
 		
 		uiDriver.click ('Substract.submit');
 		
-		uiDriver.verifyText ('Substract.output', pageData, 'verify@Output')
+		uiDriver.verifyText ('Substract.output', pageData, 'verify@Output');
 	};
 	
 	/**
@@ -132,7 +133,9 @@ var SuperCalculator = function () {
 		
 		uiDriver.click ('Multiply.submit');
 		
-		uiDriver.verifyText ('Multiply.output', pageData, 'verify@Output')
+		uiDriver.verifyText ('Multiply.output', pageData, 'verify@Output');
+		
+		console.log('Multiply.output is visible ' + uiDriver.checkIfElementIsDisplayed('Multiply.output'));
 	};
 	
 	/**
@@ -158,7 +161,7 @@ var SuperCalculator = function () {
 		
 		uiDriver.click ('Divide.submit');
 		
-		uiDriver.verifyText ('Divide.output', pageData, 'verify@Output')
+		uiDriver.verifyText ('Divide.output', pageData, 'verify@Output');
 	};
 	
 	/**

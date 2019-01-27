@@ -1,4 +1,4 @@
-# "# Protractor-Gradle" 
+# "# WebsiteAutomation" 
 
 <i>Protractor</i> Data-Driven Automation Framework using Excel data sheet for UI Object Repository as well as Test Data. This is a Action-Component based BDD model as Jasmine.
 </br></br>
@@ -21,3 +21,11 @@
 * sudo npm install npm-check-updates --global --update-all --save
 * sudo npm install
 </br></br> 
+
+# To Do:
+
+* locate the element in multiple window
+* locate the element in multiple frames
+* database connection module
+* autoIt/system process module
+* string from promise object

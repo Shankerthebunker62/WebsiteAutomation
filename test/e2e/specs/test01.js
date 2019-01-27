@@ -1,12 +1,13 @@
-/*******************************************************************
- *                                        						   *
- * Author: Siddharth Shanker               						   *
- * Date: December, 2018.                            			   *
- * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
- *                                        						   *
- *******************************************************************/
+/***********************************************************************
+ *                                        						       *
+ * Author: Siddharth Shanker               						       *
+ * Date: December, 2018.                            			   	   *
+ * GitHub: https://github.com/Shankerthebunker62/WebsiteAutomation.git *
+ *                                        						       *
+ ***********************************************************************/
 
-const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
+//Project location path
+const dirPath = browser.params.dirPath;
 
 const SuperCalculator = require(dirPath + '/test/e2e/scripts/Super-Calculator-Module.js');
 

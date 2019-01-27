@@ -1,21 +1,21 @@
-/*******************************************************************
- *                                        						   *
- * Author: Siddharth Shanker               						   *
- * Date: December, 2018.                            			   *
- * GitHub: https://github.com/Shankerthebunker62/Protractor-Gradle *
- *                                        						   *
- *******************************************************************/
+/***********************************************************************
+ *                                        						       *
+ * Author: Siddharth Shanker               						       *
+ * Date: December, 2018.                            			   	   *
+ * GitHub: https://github.com/Shankerthebunker62/WebsiteAutomation.git *
+ *                                        						       *
+ ***********************************************************************/
 
 //Project location path
-const dirPath = '/Users/shankerthebunker/git/Protractor-Gradle';
+const dirPath = browser.params.dirPath;
 
-var XLSX = require('xlsx');
+let XLSX = require('xlsx');
 
 /**
  * read uiMap.xlsx using 'npm xlsx'
  */
 readUIMap = function() {
-	var workbook = XLSX.readFile(dirPath + '/test/e2e/resources/uiMap.xlsx');
+	let workbook = XLSX.readFile(dirPath + '/test/e2e/resources/uiMap.xlsx');
 	return workbook;
 }
 
@@ -26,10 +26,10 @@ readUIMap = function() {
  */
 toUIMapJson = function() {
 	try {
-		var workbook = readUIMap();
-		var jsonResult = {};
+		let workbook = readUIMap();
+		let jsonResult = {};
 		workbook.SheetNames.forEach(function(sheetName) {
-			var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			let roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			if (roa.length > 0) {
 				jsonResult[sheetName] = roa;
 			}
@@ -52,72 +52,72 @@ toUIMapJson = function() {
  */
 fetchElementBy = function(locatorType, locator) {
 	locatorType = locatorType.replace(/(^\s+|\s+$)/g, '');
-	var _element = undefined;
+	let _element = undefined;
 	
 	try {
 		switch (locatorType) {
 		case 'id':
-			_element = element(by.id(locator));
+			_element = element (by.id(locator));
 			break;
 			
 		case 'name':
-			_element = element(by.name(locator));
+			_element = element (by.name(locator));
 			break;
 
 		case 'css':
-			_element = element(by.css(locator));
+			_element = element (by.css(locator));
 			break;
 
 		case 'className':
-			_element = element(by.className(locator));
+			_element = element (by.className(locator));
 			break;
 
 		case 'xpath':
-			_element = element(by.xpath(locator));
+			_element = element (by.xpath(locator));
 			break;
 
 		case 'linkText':
-			_element = element(by.linkText(locator));
+			_element = element (by.linkText(locator));
 			break;
 
 		case 'partialLinkText':
-			_element = element(by.partialLinkText(locator));
+			_element = element (by.partialLinkText(locator));
 			break;
 
 		case 'buttonText':
-			_element = element(by.buttonText(locator));
+			_element = element (by.buttonText(locator));
 			break;
 
 		case 'partialButtonText':
-			_element = element(by.partialButtonText(locator));
+			_element = element (by.partialButtonText(locator));
 			break;
 
 		case 'deepCss':
-			_element = element(by.deepCss(locator));
+			_element = element (by.deepCss(locator));
 			break;
 
 		case 'binding':
-			_element = element(by.binding(locator));
+			_element = element (by.binding(locator));
 			break;
 
 		case 'exactBinding':
-			_element = element(by.exactBinding(locator));
+			_element = element (by.exactBinding(locator));
 			break;
 
 		case 'model':
-			_element = element(by.model(locator));
+			_element = element (by.model(locator));
 			break;
 
 		case 'repeater':
-			_element = element(by.repeater(locator));
+			_element = element (by.repeater(locator));
 			break;
 
 		case 'exactRepeater':
-			_element = element(by.exactRepeater(locator));
+			_element = element (by.exactRepeater(locator));
 			break;
 
 		case 'options':
-			_element = element(by.options(locator));
+			_element = element (by.options(locator));
 			break;
 
 		default:
@@ -137,26 +137,146 @@ fetchElementBy = function(locatorType, locator) {
  * @return: protractor element 
  */
 exports.getExcelUIMap = function(elementName) {
-	var __element = '';
+	let _element = '';
 
 	try {
-		var pageName = elementName.split('.')[0];
-		var locator = elementName.split('.')[1];
+		let pageName = elementName.split('.')[0];
+		let locator = elementName.split('.')[1];
 
-		var workbook = readUIMap();
-		var worksheet = workbook.Sheets['locators'];
-		var excelRows = XLSX.utils.sheet_to_row_object_array(worksheet);
+		let workbook = readUIMap();
+		let worksheet = workbook.Sheets['locators'];
+		let excelRows = XLSX.utils.sheet_to_row_object_array(worksheet);
 
-		for (var i = 0; i < excelRows.length; i++) {
+		for (let i = 0; i < excelRows.length; i++) {
 			if (excelRows[i].pageName === pageName && excelRows[i].elementName === locator) {
-				__element = fetchElementBy(excelRows[i].locatorTypes, excelRows[i].locator);
+				_element = fetchElementBy(excelRows[i].locatorTypes, excelRows[i].locator);
 				break;		
 			}
 		}
 		
-		console.debug('Element Found as: ' + __element.locator());
+		console.debug(`Element is found as: ${_element.locator()}`);
 	} catch (error) {
 		console.error(error.message);
 	}
-	return __element;
+	return _element;
+}
+
+/**
+ * fetchElementsBy: creates ElementFinder.locator and, webElement for 
+ * protractor automation from uiMap.xlsx
+ * 
+ * @param locatorType: type of locators to choose from  Object Repo.
+ * @param locator: locator string 
+ * 
+ * @return protractor web element list
+ */
+fetchElementsBy = function(locatorType, locator) {
+	locatorType = locatorType.replace(/(^\s+|\s+$)/g, '');
+	let _element = undefined;
+	
+	try {
+		switch (locatorType) {
+		case 'id':
+			_element = element.all (by.id(locator));
+			break;
+			
+		case 'name':
+			_element = element.all (by.name(locator));
+			break;
+
+		case 'css':
+			_element = element.all (by.css(locator));
+			break;
+
+		case 'className':
+			_element = element.all (by.className(locator));
+			break;
+
+		case 'xpath':
+			_element = element.all (by.xpath(locator));
+			break;
+
+		case 'linkText':
+			_element = element.all (by.linkText(locator));
+			break;
+
+		case 'partialLinkText':
+			_element = element.all (by.partialLinkText(locator));
+			break;
+
+		case 'buttonText':
+			_element = element.all (by.buttonText(locator));
+			break;
+
+		case 'partialButtonText':
+			_element = element.all (by.partialButtonText(locator));
+			break;
+
+		case 'deepCss':
+			_element = element.all (by.deepCss(locator));
+			break;
+
+		case 'binding':
+			_element = element.all (by.binding(locator));
+			break;
+
+		case 'exactBinding':
+			_element = element.all (by.exactBinding(locator));
+			break;
+
+		case 'model':
+			_element = element.all (by.model(locator));
+			break;
+
+		case 'repeater':
+			_element = element.all (by.repeater(locator));
+			break;
+
+		case 'exactRepeater':
+			_element = element.all (by.exactRepeater(locator));
+			break;
+
+		case 'options':
+			_element = element.all (by.options(locator));
+			break;
+
+		default:
+			throw 'No Such Element Locator Type Found';
+		}
+	} catch (error) {
+		console.error(error.message);
+	}
+	
+	return _element;
+}
+
+/**
+ * getExcelUIMapList: create and, return List<WebElement>
+ * 
+ * @param: elementName: element string from xlsx map
+ * @return: protractor element list 
+ */
+exports.getExcelUIMapList = function(elementName) {
+	let _element = '';
+
+	try {
+		let pageName = elementName.split('.')[0];
+		let locator = elementName.split('.')[1];
+
+		let workbook = readUIMap();
+		let worksheet = workbook.Sheets['locators'];
+		let excelRows = XLSX.utils.sheet_to_row_object_array(worksheet);
+
+		for (let i = 0; i < excelRows.length; i++) {
+			if (excelRows[i].pageName === pageName && excelRows[i].elementName === locator) {
+				_element = fetchElementBy(excelRows[i].locatorTypes, excelRows[i].locator);
+				break;		
+			}
+		}
+		
+		console.debug(`Element is found as: ${_element.locator()}`);
+	} catch (error) {
+		console.error(error.message);
+	}
+	return _element;
 }

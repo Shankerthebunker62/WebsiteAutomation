@@ -1,7 +1,7 @@
 apply plugin: 'maven'
 apply plugin: "com.moowork.gulp"
 
-description = """Protractor-Gradle"""
+description = """WebsiteAutomation"""
 
 buildscript {
 

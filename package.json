@@ -8,6 +8,7 @@
 		"gulp": "^3.9.1",
 		"gulp-protractor": "4.1.0",
 		"gulp-task-listing": "1.0.1",
+		"html-dnd": "1.2.0",
 		"jasmine-spec-reporter": "^4.2.1",
 		"karma-sauce-launcher": "2.0.2",
 		"run-sequence": "2.1.0",
