@@ -134,8 +134,6 @@ var SuperCalculator = function () {
 		uiDriver.click ('Multiply.submit');
 		
 		uiDriver.verifyText ('Multiply.output', pageData, 'verify@Output');
-		
-		console.log('Multiply.output is visible ' + uiDriver.checkIfElementIsDisplayed('Multiply.output'));
 	};
 	
 	/**

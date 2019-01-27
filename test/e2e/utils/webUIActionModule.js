@@ -423,6 +423,8 @@ exports.clear = function (elementName) {
  *********************** Verify Action **********************
  ***********************************************************/
 
+// data returned promise should be string/boolean
+
 /**
  * verifySelectOption: verify selected option on the element
  * 
@@ -680,6 +682,8 @@ dragAndDrop = function (elementFrom, elementTo) {
 /************************************************************
  ****************** Expected/Check Conditions ***************
  ***********************************************************/
+
+// returned promise should be string/boolean
 
 /**
  * Checks if alert is present on page or, not
