@@ -6,8 +6,6 @@
  *                                        						       *
  ***********************************************************************/
 
-let dragAndDrop = require('html-dnd').code;
-
 //Project location path
 const dirPath = browser.params.dirPath;
 
@@ -26,10 +24,9 @@ const conditionsModule = require(dirPath + '/test/e2e/utils/conditionsModule.js'
 
 // http://www.collectionsjs.com/ --> for collections alternative in .js
 
-let _action = browser.actions();
-let _element = null;
-let _elements = null;
-let _testData = null;
+let dragAndDrop = require('html-dnd').code;
+let crypto = require("crypto");
+let uuid = require("uuid");
 
 /************************************************************
  **************** Browser/Window/Alert Action ***************
@@ -41,7 +38,7 @@ let _testData = null;
  * @param url: url of the said application
  * @result return type of action boolean (true/false)
  */
-exports.launchApplication = function(pageData, dataColumn, testCasePurpose) {
+exports.launchApplication = function(pageData, dataColumn) {
 	let _url = testDataModule.getExcelTestData(pageData, dataColumn);
 		
 	browser.driver.getSession().then((session) => {
@@ -194,7 +191,8 @@ exports.acceptAlert  = function () {
 };
 
 exports.switchToWindowHandle = function (pageData, dataColumn) {
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	let _result = false;
 	
 	try {
 		browser.getAllWindowHandles().then(function(handles){
@@ -202,11 +200,14 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
 				 browser.switchTo().window(windowHandle);
 				 
 				 browser.getTitle().then(function(title){
-					if(title == '_testData'){
+					if(title == '_testData' && _result === false){
 						console.log(`Successfully switched to window handle with title ${_testData}`);
-						break;
+						_result = true;
 					}
 				});
+				 
+				if (_result)
+					break;
 			 };
 		});
 	} catch (error) {
@@ -217,7 +218,7 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
 
 exports.switchToFrame = function(elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.switchTo().frame(_element).then(() => {
 			console.log(`Switched to frame ${elementName}`);
@@ -249,7 +250,7 @@ exports.switchToDefaultContent = function() {
 
 exports.getWebElement = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		return _element;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -259,7 +260,7 @@ exports.getWebElement = function (elementName) {
 
 exports.getWebElements = function (elementName) {
 	try {
-		_elements = uiMapModule.getExcelUIMapList(elementName);
+		let _elements = uiMapModule.getExcelUIMapList(elementName);
 		return _elements;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -280,10 +281,9 @@ exports.getWebElements = function (elementName) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.setValue = function (elementName, pageData, dataColumn) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.setValue = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
@@ -299,7 +299,7 @@ exports.setValue = function (elementName, pageData, dataColumn) {
 };
 
 /**
- * setValue: send keys on the element and, press enter
+ * setValueRandomString: send keys on the element
  * 
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
@@ -307,10 +307,71 @@ exports.setValue = function (elementName, pageData, dataColumn) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.setValueEnter = function (elementName, pageData, dataColumn) {
+exports.setValueRandom = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	if (_testData !== null || _testData !== '')
+		_testData += generateString();
+	else
+		_testData = generateString();
+		
+	_element.clear().then(() => {
+		console.log(`Element ${elementName} clear is passed`);
+	}).catch((error) => {
+	    console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+	});
+		
+	_element.sendKeys(_testData).then(() => {
+		console.log(`Element ${elementName} setValue ${_testData} is passed`);
+	}).catch((error) => {
+	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}`);
+	});
+};
+
+/**
+ * setValueTimeStamp: send keys on the element
+ * 
+ * @param elementName: element created to web page interaction
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * 
+ * @result: return type of element action boolean (true/false)
+ */
+exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	if (_testData !== null || _testData !== '')
+		_testData += getTimeStamp();
+	else
+		_testData = getTimeStamp();
+		
+	_element.clear().then(() => {
+		console.log(`Element ${elementName} clear is passed`);
+	}).catch((error) => {
+	    console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+	});
+		
+	_element.sendKeys(_testData).then(() => {
+		console.log(`Element ${elementName} setValue ${_testData} is passed`);
+	}).catch((error) => {
+	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}`);
+	});
+};
+
+/**
+ * setValueEnter: send keys on the element and, press enter
+ * 
+ * @param elementName: element created to web page interaction
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * 
+ * @result: return type of element action boolean (true/false)
+ */
+exports.setValueEnter = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
@@ -326,7 +387,7 @@ exports.setValueEnter = function (elementName, pageData, dataColumn) {
 };
 
 /**
- * setValue: send keys on the element character by character
+ * setValueCharByChar: send keys on the element character by character
  * 
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
@@ -334,10 +395,9 @@ exports.setValueEnter = function (elementName, pageData, dataColumn) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.setValueCharByChar = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
@@ -353,13 +413,13 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
 	      }).catch((error) => {
 	        console.error(`Element ${elementName} setValue ${chars[i]} is failed, error: ${error.message}`);
 	      });
+		
+		browser.sleep(500).then(() => {
+			console.log(`Waiting ...`);
+		}).catch((error) => {
+			 console.error(`Couldn't wait !!, error: ${error.message}`);
+		});
 	}
-	
-	_element.sendKeys(protractor.Key.ENTER).then(() => {
-		console.log(`Element ${elementName} send keys enter is passed`);
-      }).catch((error) => {
-        console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}`);
-      });
 };
 
 /**
@@ -371,10 +431,9 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.select = function (elementName, pageData, dataColumn) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.select = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.sendKeys(_testData).then(() => {
 		console.log(`Element ${elementName} select data ${_testData} is passed`);
@@ -390,9 +449,8 @@ exports.select = function (elementName, pageData, dataColumn) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.sendKeysEnter = function (elementName) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
+exports.sendKeysEnter = function (elementName) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_element.sendKeys(protractor.Key.ENTER).then(() => {
 		console.log(`Element ${elementName} send keys enter is passed`);
@@ -408,9 +466,8 @@ exports.sendKeysEnter = function (elementName) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.clear = function (elementName) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
+exports.clear = function (elementName) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_element.clear().then((isTrue) => {
 		console.log(`Element ${elementName} clear is passed`);
@@ -423,8 +480,6 @@ exports.clear = function (elementName) {
  *********************** Verify Action **********************
  ***********************************************************/
 
-// data returned promise should be string/boolean
-
 /**
  * verifySelectOption: verify selected option on the element
  * 
@@ -434,21 +489,21 @@ exports.clear = function (elementName) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.verifySelectOption = function (elementName, pageData, dataColumn) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.verifySelectOption = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	try {
+		element(_element.locator()).$('option:checked').getText().then(function (text) {
+	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+	        	console.log(`Element ${elementName} selected option ${_testData} to ${text} is passed`);
+	        } else {
+	        	console.log(`Element ${elementName} selected option ${_testData} to ${text} is failed`);
+	        }
+		});
+		
 		let _data = element(_element.locator()).$('option:checked').getText();
-		
 		expect(_data).toEqual(_testData);
-		
-		if (_data === _testData) {
-		    console.log(`Element ${elementName} selected option ${_testData} to ${JSON.stringify(JSON.decycle(_data))} is passed`);
-		} else {
-		    console.log(`Element ${elementName} selected option ${_testData} to ${JSON.stringify(JSON.decycle(_data))} is failed`);
-		}
 	} catch (error) {
 		console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}`);
 	}
@@ -463,21 +518,21 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.verifyValue = function (elementName, pageData, dataColumn) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.verifyValue = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	try {
+		_element.getAttribute('value').then(function (text) {
+	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+	        	console.log(`Element ${elementName} get value ${_testData} to ${text} is passed`);
+	        } else {
+	        	console.log(`Element ${elementName} get value ${_testData} to ${text} is failed`);
+	        }
+		});
+		
 		let _data = _element.getAttribute('value');
-		
 		expect(_data).toEqual(_testData);
-		
-		if (_data === _testData) {
-        	console.log(`Element ${elementName} get value ${_testData} to ${_data} is passed`);
-        } else {
-        	console.log(`Element ${elementName} get value ${_testData} to ${_data} is failed`);
-        }
 	} catch (error) {
 		console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}`);
 	}
@@ -492,21 +547,21 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.verifyText = function (elementName, pageData, dataColumn) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.verifyText = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	try {
-		let _data = _element.getText();
+		_element.getText().then(function (text) {
+	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+	        	console.log(`Element ${elementName} get text ${_testData} to ${text} is passed`);
+	        } else {
+	        	console.error(`Element ${elementName} get text ${_testData} to ${text} is failed`);
+	        }
+		});
 			
+		let _data = _element.getText();
 		expect(_data).toEqual(_testData);
-        
-        if (_data === _testData) {
-        	console.log(`Element ${elementName} get text ${_testData} to ${_data} is passed`);
-        } else {
-        	console.error(`Element ${elementName} get text ${_testData} to ${_data} is failed`);
-        }
 	} catch (error) {
 		console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}`);
 	}
@@ -520,22 +575,43 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
  * 
  * @result: return type of action boolean (true/false)
  */
-exports.verifyPageTitle = function(pageData, dataColumn) {
-	
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.verifyPageTitle = function(pageData, dataColumn) {	
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	try {
-		let _data = browser.getTitle();
+		browser.getTitle().then(function (text) {
+	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+	        	console.log(`Verify title ${_testData} to ${_data} is passed`);
+	        } else {
+	        	console.log(`Verify title ${_testData} to ${_data} is failed`);
+	        }
+		});
 		
+		let _data = browser.getTitle();
 		expect(_data).toEqual(_testData);
-        
-        if (_data === _testData) {
-        	console.log(`Verify title ${_testData} to ${_data} is passed`);
-        } else {
-        	console.log(`Verify title ${_testData} to ${_data} is failed`);
-        }
 	} catch (error) {
 		console.error(`Verify title ${_testData} is failed, error: ${error.message}`);
+	}
+};
+
+exports.verifyAlertText = function (pageData, dataColumn) {	
+	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	try {
+		conditionsModule.alertIsPresent();
+		
+		browser.switchTo().alert().getText().then(function (text) {
+	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+	        	console.log(`Alert get text ${_testData} to ${text} is passed`);
+	        } else {
+	        	console.error(`Alert get text ${_testData} to ${text} is failed`);
+	        }
+		});
+		
+		let _data = browser.switchTo().alert().getText();
+		expect(_data).toEqual(_testData);
+	} catch (error) {
+		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}`);
 	}
 };
 
@@ -546,13 +622,11 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
  * 
  * @returns: return type of element action boolean (true/false)
  */
-exports.verifyElementIsDisplayed = function(elementName) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
+exports.verifyElementIsDisplayed = function(elementName) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	try {
 		let isDisplayed = _element.isDisplayed();
-		
 		expect(isDisplayed).toBeTruthy();
         
         if (isDisplayed) {
@@ -565,23 +639,20 @@ exports.verifyElementIsDisplayed = function(elementName) {
 	}
 };
 
-exports.verifyAlertText = function (pageData, dataColumn) {
-	
-	_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+exports.verifyElementIsNotPresent = function(elementName) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	try {
-		conditionsModule.alertIsPresent();
-		let _data = browser.switchTo().alert().getText();
-		
-		expect(_data).toEqual(_testData);
-		
-        if (_data === _testData) {
-        	console.log(`Alert get text ${_testData} to ${_data} is passed`);
+		let isPresent = _element.isPresent();
+		expect(isPresent).to.become(false).and.notify(next);
+        
+        if (!isPresent) {
+	        console.log(`Element ${elementName} is not displayed passed`);
         } else {
-        	console.error(`Alert get text ${_testData} to ${_data} is failed`);
+        	console.log(`Element ${elementName} is displayed failed`);
         }
 	} catch (error) {
-		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}`);
+		console.error(`Element ${elementName} is displayed failed, error: ${error.message}`);
 	}
 };
 
@@ -596,9 +667,8 @@ exports.verifyAlertText = function (pageData, dataColumn) {
  * 
  * @result: return type of element action boolean (true/false)
  */
-exports.click = function (elementName) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
+exports.click = function (elementName) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_element.click().then(() => {
 		console.log(`Element ${elementName} click is passed`);
@@ -615,8 +685,8 @@ exports.click = function (elementName) {
  * @return: return type of element action boolean (true/false)
  */
 exports.doubleClick = function(elementName) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
+	let _action = browser.actions();
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_action.doubleClick(_element).perform().then(() => {
 		console.log(`Element ${elementName} mouse double click is passed`);
@@ -633,8 +703,8 @@ exports.doubleClick = function(elementName) {
  * @return: return type of element action boolean (true/false)
  */
 exports.rightClick = function(elementName) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
+	let _action = browser.actions();
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_action.mouseMove(_element.getLocation()).perform().then(() => {
 		console.log(`Element ${elementName} mouse move is passed`);
@@ -657,8 +727,8 @@ exports.rightClick = function(elementName) {
  * @return: return type of element action boolean (true/false)
  */
 exports.mouseHoverAction = function(elementName) {
-	
-	_element = uiMapModule.getExcelUIMap(elementName);
+	let _action = browser.actions();	
+	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_action.mouseMove(_element).perform().then(() => {
 		console.log(`Element ${elementName} mouse over is passed`);
@@ -667,15 +737,15 @@ exports.mouseHoverAction = function(elementName) {
 	 });
 };
 
-dragAndDrop = function (elementFrom, elementTo) {
-	
-	_fromElement = uiMapModule.getExcelUIMap(elementFrom);
-	_toElement = uiMapModule.getExcelUIMap(elementTo);
+exports.dragAndDrop = function (elementFrom, elementTo) {
+	let _action = browser.actions();	
+	let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
+	let _toElement = uiMapModule.getExcelUIMap(elementTo);
 	
 	_action.dragAndDrop(_fromElement, _toElement).perform().then(() => {
-		console.log(`Element ${_fromElement} drag to Element ${_toElement} is passed`);
+		console.log(`Element ${elementFrom} drag to Element ${elementTo} is passed`);
     }).catch((error) => {
-      console.error(`Element ${_fromElement} drag to Element ${_toElement} is failed, error: ${error.message}`);
+      console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}`);
     });
 };
 
@@ -708,8 +778,8 @@ exports.checkIfAlertPresent = function () {
  */
 exports.checkIfElementClickable = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
-		return conditionsModule.waitForElementToBeClickable(_element)
+		let _element = uiMapModule.getExcelUIMap(elementName);
+		return conditionsModule.waitForElementToBeClickable(_element);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
 		return false;
@@ -728,8 +798,8 @@ exports.checkIfElementClickable = function (elementName) {
  */
 exports.checkIfElementTextPresent = function (elementName, pageData, dataColumn) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
-		_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+		let _element = uiMapModule.getExcelUIMap(elementName);
+		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.waitForElementTextToBePresentIn(_element, _testData);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -749,8 +819,8 @@ exports.checkIfElementTextPresent = function (elementName, pageData, dataColumn)
  */
 exports.checkIfElementValuePresent = function (elementName, pageData, dataColumn) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
-		_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+		let _element = uiMapModule.getExcelUIMap(elementName);
+		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.waitForElementTextToBePresentInValue(_element, _testData);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -768,7 +838,7 @@ exports.checkIfElementValuePresent = function (elementName, pageData, dataColumn
  */
 exports.checkIfTitleContains = function (pageData, dataColumn) {
 	try {
-		_testData = testDataModule.getExcelTestData(pageData, dataColumn);	
+		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);	
 		return conditionsModule.titleContains(_testData);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -787,7 +857,7 @@ exports.checkIfTitleContains = function (pageData, dataColumn) {
  */
 exports.checkIfTitleIs = function (pageData, dataColumn) {
 	try {
-		_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.titleIs(_testData);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -805,7 +875,7 @@ exports.checkIfTitleIs = function (pageData, dataColumn) {
  */
 exports.checkIfUrlContains = function (pageData, dataColumn) {	
 	try {
-		_testData = testDataModule.getExcelTestData(pageData, dataColumn);
+		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.urlContains(_testData);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -824,7 +894,7 @@ exports.checkIfUrlContains = function (pageData, dataColumn) {
  */
 exports.checkIfUrlIs = function (pageData, dataColumn) {	
 	try {
-		_testData = testDataModule.getExcelTestData(pageData, dataColumn);		
+		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);		
 		return conditionsModule.urlIs(_testData);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -841,7 +911,7 @@ exports.checkIfUrlIs = function (pageData, dataColumn) {
  */
 exports.checkIfElementPresent = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);	
+		let _element = uiMapModule.getExcelUIMap(elementName);	
 		return conditionsModule.waitForElementPresenceOf(_element);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -858,7 +928,7 @@ exports.checkIfElementPresent = function (elementName) {
  */
 exports.checkIfElementStale = function (elementName) {	
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);		
+		let _element = uiMapModule.getExcelUIMap(elementName);		
 		return conditionsModule.waitForElementStalenessOf(_element);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -875,8 +945,8 @@ exports.checkIfElementStale = function (elementName) {
  */
 exports.checkIfElementVisible = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
-		return conditionsModule.waitForElementVisiblity(_element)
+		let _element = uiMapModule.getExcelUIMap(elementName);
+		return conditionsModule.waitForElementVisiblity(_element);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
 		return false;
@@ -893,7 +963,7 @@ exports.checkIfElementVisible = function (elementName) {
  */
 exports.checkIfElementInvisible = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		return conditionsModule.waitForElementInvisibilityOf(_element);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -910,7 +980,7 @@ exports.checkIfElementInvisible = function (elementName) {
  */
 exports.checkIfElementSelected = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		return conditionsModule.waitForElementToBeSelected(_element);
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -927,7 +997,7 @@ exports.checkIfElementSelected = function (elementName) {
  */
 exports.checkIfElementIsDisplayed = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		return _element.isDisplayed();
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -941,7 +1011,7 @@ exports.checkIfElementIsDisplayed = function (elementName) {
 
 exports.highlightElement = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _element.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
 			console.log(`Giving highlight style to element ${elementName} ...`);
@@ -997,7 +1067,7 @@ exports.highlightWebElement = function (_elementName) {
 
 exports.unhideElement = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript(function (arguments) {
 		    arguments[0].style.visibility = 'visible'; 
@@ -1017,7 +1087,7 @@ exports.unhideElement = function (elementName) {
 
 exports.javaScriptClick = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('arguments[0].click();', _element.getWebElement()).then(() => {
 			console.log(`Java Script click on element ${elementName}`);
@@ -1034,7 +1104,7 @@ exports.javaScriptClick = function (elementName) {
 	
 exports.mouseHoverJavaScript = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('if(document.createEvent){var evObj = document.createEvent(\'MouseEvents\');evObj.initEvent(\'mouseover\', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent(\'onmouseover\');}', _element.getWebElement());
 		
@@ -1047,7 +1117,7 @@ exports.mouseHoverJavaScript = function (elementName) {
 	
 exports.scrollingToElement = function (elementName) {
 	try {
-		_element = uiMapModule.getExcelUIMap(elementName);
+		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('arguments[0].scrollIntoView(true);', _element.getWebElement()).then(() => {
 			console.log(`Scrolling onto element ${elementName}`);
@@ -1060,30 +1130,12 @@ exports.scrollingToElement = function (elementName) {
 		console.error(`error: ${error.message}`);
 		return false;
 	}
-};	
-
-exports.dragAndDropJavaScript = function (elementFrom, elementTo) {
-	try {
-		_fromElement = uiMapModule.getExcelUIMap(elementFrom);
-		_toElement = uiMapModule.getExcelUIMap(elementTo);
-		
-		browser.executeScript(simulateHTML5DragAndDrop(_fromElement.getWebElement(), _toElement.getWebElement())).then(() => {
-			console.log(`drag element ${elementFrom} to element ${elementTo}`);
-		}).catch((error) => {
-			console.error(`drag element ${elementFrom} to element ${elementTo} failed, error: ${error.message}`);
-		});
-		
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
 };
 	
 exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
 	try {
-		_fromElement = uiMapModule.getExcelUIMap(elementFrom);
-		_toElement = uiMapModule.getExcelUIMap(elementTo);
+		let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
+		let _toElement = uiMapModule.getExcelUIMap(elementTo);
 		
 		browser.executeScript(dragAndDrop, _fromElement, _toElement).then(() => {
 			console.log(`drag element ${elementFrom} to element ${elementTo}`);
@@ -1097,36 +1149,31 @@ exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
 		return false;
 	}
 };	
-	
-function createEvent(typeOfEvent) {
-    var event = document.createEvent('CustomEvent');
-    event.initCustomEvent(typeOfEvent, true, true, null);
-    event.dataTransfer = {
-        data: {},
-        setData: function (key, value) {
-            this.data[key] = value;
-        },
-        getData: function (key) {
-            return this.data[key];
-        }
-    };
-    return event;
-}
-function dispatchEvent(element, event, transferData) {
-    if (transferData !== undefined) {
-        event.dataTransfer = transferData;
-    }
-    if (element.dispatchEvent) {
-        element.dispatchEvent(event);
-    } else if (element.fireEvent) {
-        element.fireEvent('on' + event.type, event);
-    }
-}
-function simulateHTML5DragAndDrop(element, target) {
-    var dragStartEvent = createEvent('dragstart');
-    dispatchEvent(element, dragStartEvent);
-    var dropEvent = createEvent('drop');
-    dispatchEvent(target, dropEvent, dragStartEvent.dataTransfer);
-    var dragEndEvent = createEvent('dragend');
-    dispatchEvent(element, dragEndEvent, dropEvent.dataTransfer);
-}	
+
+/************************************************************
+ ********************* Utility Methods **********************
+ ***********************************************************/
+
+generateString = function() {
+	let text = "";
+	let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	for (let i = 0; i < 5; i++)
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+	return text;
+};
+
+generateCryptoHexString = function(length) {
+	if (typeof length !== 'number')
+		throw 'length should be a number';
+	return crypto.randomBytes(Math.floor(length/2)).toString('hex');
+};
+
+generateUUIDString = function() {
+	return uuid.v4();
+};
+
+getTimeStamp = function () {
+	return new Date().getTime();
+};

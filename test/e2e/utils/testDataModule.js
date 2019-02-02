@@ -6,7 +6,7 @@
  *                                        						       *
  ***********************************************************************/
 
-//Project location path
+// Project location path
 const dirPath = browser.params.dirPath;
 
 let XLSX = require('xlsx');

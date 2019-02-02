@@ -6,7 +6,7 @@
  *                                        						       *
  ***********************************************************************/
 
-//Project location path
+// Project location path
 const dirPath = browser.params.dirPath;
 
 /**
@@ -23,13 +23,13 @@ var SuperCalculator = function () {
 	/**
 	 * launchUrl method to launch application url which is under test
 	 */
-	this.launchUrl = function (_rowId, testCasePurpose) {
+	this.launchUrl = function (_rowId) {
 		if (_rowId === null || _rowId === undefined)
 			throw '_rowId cannot be null';
 		else 
 			pageData = 'launchUrl.' + _rowId;
 		
-		uiDriver.launchApplication(pageData, 'Navigate@URL', testCasePurpose);
+		uiDriver.launchApplication(pageData, 'Navigate@URL');
 	};
 	
 	/**

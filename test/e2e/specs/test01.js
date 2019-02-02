@@ -6,7 +6,7 @@
  *                                        						       *
  ***********************************************************************/
 
-//Project location path
+// Project location path
 const dirPath = browser.params.dirPath;
 
 const SuperCalculator = require(dirPath + '/test/e2e/scripts/Super-Calculator-Module.js');
@@ -18,7 +18,7 @@ let _SuperCalculator = new SuperCalculator();
 describe(testCasePurpose, function() {
 	
 	beforeAll(function() {
-		_SuperCalculator.launchUrl('_DefaultCompRow', testCasePurpose);
+		_SuperCalculator.launchUrl('_DefaultCompRow');
 	});
 	
 	beforeEach(function() {

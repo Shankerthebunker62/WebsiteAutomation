@@ -21,7 +21,12 @@ const TIMEOUT_IN_MILISECONDS = 30000;
  * @returns: promise
  */
 exports.waitForNotCondition = function (_condition) {
-	  return browser.wait(EC.not(_condition), TIMEOUT_IN_MILISECONDS);
+	  return browser.wait(EC.not(_condition), TIMEOUT_IN_MILISECONDS).then(() => {
+		  return true;
+	  }).catch((error) => {
+		  console.error(`error: ${error.message}`);
+		  return false;
+	  });
 };
 
 /**
@@ -32,7 +37,12 @@ exports.waitForNotCondition = function (_condition) {
  * @return: promise
  */
 exports.waitForAndCondition = function (_condition01, _condition02) {
-	  return browser.wait(EC.and(_condition01, _condition02), TIMEOUT_IN_MILISECONDS);
+	  return browser.wait(EC.and(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
+		  return true;
+	  }).catch((error) => {
+		  console.error(`error: ${error.message}`);
+		  return false;
+	  });
 };
 
 /**
@@ -43,7 +53,12 @@ exports.waitForAndCondition = function (_condition01, _condition02) {
  * @return: promise
  */
 exports.waitForOrCondition = function (_condition01, _condition02) {
-	  return browser.wait(EC.or(_condition01, _condition02), TIMEOUT_IN_MILISECONDS);
+	  return browser.wait(EC.or(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
+		  return true;
+	  }).catch((error) => {
+		  console.error(`error: ${error.message}`);
+		  return false;
+	  });
 };
 
 /**
@@ -52,7 +67,12 @@ exports.waitForOrCondition = function (_condition01, _condition02) {
  * @return: promise
  */
 exports.alertIsPresent = function () {
-	return browser.wait(EC.alertIsPresent(), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.alertIsPresent(), TIMEOUT_IN_MILISECONDS).then(() => {
+		return true;
+	}).catch((error) => {
+		console.error(`error: ${error.message}`);
+		return false;
+	});
 };
 
 /**
@@ -62,7 +82,12 @@ exports.alertIsPresent = function () {
  * @return: promise
  */
 exports.waitForElementToBeClickable = function (_element) {
-	  return browser.wait(EC.elementToBeClickable(_element), TIMEOUT_IN_MILISECONDS);
+	  return browser.wait(EC.elementToBeClickable(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+		  return true;
+	  }).catch((error) => {
+		  console.error(`error: ${error.message}`);
+		  return false;
+	  });
 };
 
 /**
@@ -73,7 +98,12 @@ exports.waitForElementToBeClickable = function (_element) {
  * @return: promise
  */
 exports.waitForElementTextToBePresentIn = function (_element, _text) {
-	  return browser.wait(EC.textToBePresentIn(_element, _text), TIMEOUT_IN_MILISECONDS);
+	  return browser.wait(EC.textToBePresentIn(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
+		  return true;
+	  }).catch((error) => {
+		  console.error(`error: ${error.message}`);
+		  return false;
+	  });
 };
 
 /**
@@ -84,7 +114,12 @@ exports.waitForElementTextToBePresentIn = function (_element, _text) {
  * @return: promise
  */
 exports.waitForElementTextToBePresentInValue = function (_element, _text) {
-	  return browser.wait(EC.textToBePresentInElementValue(_element, _text), TIMEOUT_IN_MILISECONDS);
+	  return browser.wait(EC.textToBePresentInElementValue(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
+		  return true;
+	  }).catch((error) => {
+		  console.error(`error: ${error.message}`);
+		  return false;
+	  });
 };
 
 /**
@@ -94,7 +129,12 @@ exports.waitForElementTextToBePresentInValue = function (_element, _text) {
  * @return: promise
  */
 exports.titleContains = function (_titleContains) {
-	return browser.wait(EC.titleContains(_titleContains), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.titleContains(_titleContains), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };
 
 /**
@@ -104,7 +144,12 @@ exports.titleContains = function (_titleContains) {
  * @return: promise
  */
 exports.titleIs = function (_title) {
-	return browser.wait(EC.titleIs(_title), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.titleIs(_title), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };
 
 /**
@@ -114,7 +159,12 @@ exports.titleIs = function (_title) {
  * @return: promise
  */
 exports.urlContains = function (_urlContains) {
-	return browser.wait(EC.urlContains(_urlContains), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.urlContains(_urlContains), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };
 
 /**
@@ -124,7 +174,12 @@ exports.urlContains = function (_urlContains) {
  * @return: promise
  */
 exports.urlIs = function (_url) {
-	return browser.wait(EC.urlIs(_url), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.urlIs(_url), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };
 
 /**
@@ -134,7 +189,12 @@ exports.urlIs = function (_url) {
  * @return: promise
  */
 exports.waitForElementPresenceOf = function (_element) {
-	  return browser.wait(EC.presenceOf(_element), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.presenceOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+		return true;
+	}).catch((error) => {
+		console.error(`error: ${error.message}`);
+		return false;
+	});
 };
 
 /**
@@ -144,7 +204,12 @@ exports.waitForElementPresenceOf = function (_element) {
  * @return: promise
  */
 exports.waitForElementStalenessOf = function (_element) {
-	  return browser.wait(EC.stalenessOf(_element), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.stalenessOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };
 
 /**
@@ -154,7 +219,12 @@ exports.waitForElementStalenessOf = function (_element) {
  * @return: promise
  */
 exports.waitForElementVisiblity = function (_element) {
-	  return browser.wait(EC.visibilityOf(_element), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.visibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };
 
 /**
@@ -164,7 +234,12 @@ exports.waitForElementVisiblity = function (_element) {
  * @return: promise
  */
 exports.waitForElementInvisibilityOf = function (_element) {
-	  return browser.wait(EC.invisibilityOf(_element), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.invisibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };
 
 /**
@@ -174,5 +249,10 @@ exports.waitForElementInvisibilityOf = function (_element) {
  * @return: promise
  */
 exports.waitForElementToBeSelected = function (_element) {
-	  return browser.wait(EC.elementToBeSelected(_element), TIMEOUT_IN_MILISECONDS);
+	return browser.wait(EC.elementToBeSelected(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+		 return true;
+	}).catch((error) => {
+		 console.error(`error: ${error.message}`);
+		 return false;
+	});
 };

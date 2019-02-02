@@ -11,6 +11,7 @@ const dirPath = browser.params.dirPath;
 
 let XLSX = require('xlsx');
 
+const TIMEOUT_IN_MILISECONDS = 1000;
 /**
  * read uiMap.xlsx using 'npm xlsx'
  */
@@ -39,6 +40,14 @@ toUIMapJson = function() {
 		console.error(error.message);
 		return null;
 	}
+}
+
+sleep = function (_sleepTimeOutInMilliSeconds) {
+	browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
+		console.log(`Waiting ...`);
+	}).catch((error) => {
+		 console.error(`Couldn't wait !!, error: ${error.message}`);
+	});
 }
 
 /**
@@ -147,6 +156,7 @@ exports.getExcelUIMap = function(elementName) {
 		let worksheet = workbook.Sheets['locators'];
 		let excelRows = XLSX.utils.sheet_to_row_object_array(worksheet);
 
+		sleep (TIMEOUT_IN_MILISECONDS);
 		for (let i = 0; i < excelRows.length; i++) {
 			if (excelRows[i].pageName === pageName && excelRows[i].elementName === locator) {
 				_element = fetchElementBy(excelRows[i].locatorTypes, excelRows[i].locator);
@@ -267,6 +277,7 @@ exports.getExcelUIMapList = function(elementName) {
 		let worksheet = workbook.Sheets['locators'];
 		let excelRows = XLSX.utils.sheet_to_row_object_array(worksheet);
 
+		sleep (TIMEOUT_IN_MILISECONDS);
 		for (let i = 0; i < excelRows.length; i++) {
 			if (excelRows[i].pageName === pageName && excelRows[i].elementName === locator) {
 				_element = fetchElementBy(excelRows[i].locatorTypes, excelRows[i].locator);

@@ -53,6 +53,7 @@ exports.config = {
 		},
 		
 		params: {
+			// Project location path
 			dirPath : '/Users/shankerthebunker/git/WebsiteAutomation'
 		},
 		

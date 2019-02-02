@@ -1,0 +1,15 @@
+{
+	"host": "",
+	"alm_userName": "",
+	"alm_password": "",
+	"release": "",
+	"domain": "",
+	"project": "",
+	"queryParam": "",
+	"fields": "",
+	"defectFieldMapping": [
+		"",
+		"",
+		""
+	]
+}
