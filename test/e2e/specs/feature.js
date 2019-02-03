@@ -19,11 +19,15 @@ const testCasePurpose03 = 'Protractor Demo App 03';
 describe(testCasePurpose01, function() {
 	
 	beforeAll(function() {
-		_SuperCalculator.launchUrl('_DefaultCompRow');
+		
 	});
 	
 	beforeEach(function() {
 		
+	});
+	
+	it('Launching Browser', function() {
+		_SuperCalculator.launchUrl('_DefaultCompRow');
 	});
 	
 	it('Multiply Two Numbers', function() {
@@ -46,23 +50,31 @@ describe(testCasePurpose01, function() {
 		_SuperCalculator.Substract('_DefaultCompRowTwo');
 	});
 	
+	it('Closing Browser', function() {
+		_SuperCalculator.closeBrowser();
+	});
+	
 	afterEach(function() {
 	    
 	});
 	
 	afterAll(function() {
-		_SuperCalculator.closeBrowser();
+		
 	});
 });
 
 describe(testCasePurpose02, function() {
 	
 	beforeAll(function() {
-		_SuperCalculator.launchUrl('_DefaultCompRow');
+		
 	});
 	
 	beforeEach(function() {
 		
+	});
+	
+	it('Launching Browser', function() {
+		_SuperCalculator.launchUrl('_DefaultCompRow');
 	});
 	
 	it('Multiply Two Numbers', function() {
@@ -85,23 +97,31 @@ describe(testCasePurpose02, function() {
 		_SuperCalculator.Substract('_DefaultCompRowTwo');
 	});
 	
+	it('Closing Browser', function() {
+		_SuperCalculator.closeBrowser();
+	});
+	
 	afterEach(function() {
 	    
 	});
 	
 	afterAll(function() {
-		_SuperCalculator.closeBrowser();
+		
 	});
 });
 
 describe(testCasePurpose03, function() {
 	
 	beforeAll(function() {
-		_SuperCalculator.launchUrl('_DefaultCompRow');
+		
 	});
 	
 	beforeEach(function() {
 		
+	});
+	
+	it('Launching Browser', function() {
+		_SuperCalculator.launchUrl('_DefaultCompRow');
 	});
 	
 	it('Multiply Two Numbers', function() {
@@ -124,11 +144,15 @@ describe(testCasePurpose03, function() {
 		_SuperCalculator.Substract('_DefaultCompRowOne');
 	});
 	
+	it('Closing Browser', function() {
+		_SuperCalculator.closeBrowser();
+	});
+	
 	afterEach(function() {
 	    
 	});
 	
 	afterAll(function() {
-		_SuperCalculator.closeBrowser();
+		
 	});
 });

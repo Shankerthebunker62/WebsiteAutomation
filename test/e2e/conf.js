@@ -12,7 +12,6 @@ let Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 let HtmlReporter = require('protractor-beautiful-reporter');
 let VideoReporter = require('protractor-video-reporter');
 let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
-let AllureReporter = require('jasmine-allure-reporter');
 
 let helper = require('./firefox.profile.helper.js');
 
@@ -66,7 +65,7 @@ exports.config = {
 			VideoReporter.prototype.jasmineStarted = function() {
 				var self = this;
 				if (self.options.singleVideo) {
-					var videoPath = Path.join(Path.normalize('./videos/'), 'protractor-specs-' + (new Date()) +'.mov');
+					var videoPath = Path.join(Path.normalize('./reports_videos/'), 'protractor-specs-' + (new Date()) +'.mov');
 
 					self._startScreencast(videoPath);
 
@@ -78,7 +77,7 @@ exports.config = {
 			};
 				    
 			jasmine.getEnv().addReporter(new VideoReporter({
-			    baseDirectory: Path.normalize('./videos/'),
+			    baseDirectory: Path.normalize('./reports_videos/'),
 			    
 			    singleVideo: true,
 			    createSubtitles: true,
@@ -131,22 +130,6 @@ exports.config = {
 			      
 			      customProcessors: []
 			}));
-			
-
-			jasmine.getEnv().addReporter(new AllureReporter({
-				allureReport: {
-		            resultsDir: 'allure-results'
-		        }
-		    }));
-			
-			jasmine.getEnv().afterEach(function(done) {
-				browser.takeScreenshot().then(function(png) {
-					allure.createAttachment('Screenshot', function() {
-						return new Buffer(png, 'base64')
-					}, 'image/png')();
-					done();
-				});
-			});
 			
 			jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
 				   savePath: './reports_HtmlReporter/',

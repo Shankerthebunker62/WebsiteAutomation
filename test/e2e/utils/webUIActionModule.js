@@ -40,17 +40,17 @@ let uuid = require('uuid');
  */
 exports.launchApplication = function(pageData, dataColumn) {
 	let _url = testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	browser.get(_url).then(() => {
+		console.log(`Opening URL ${_url} ...`);
+	}).catch((error) => {
+		console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}`);
+	});
 		
 	browser.driver.getSession().then((session) => {
 		console.debug(session);
 	}).catch((error) => {
 		console.error(`Couldn't get browser session !!, error: ${error.message}`);
-	});
-		
-	browser.get(_url).then(() => {
-		console.log(`Opening URL ${_url} ...`);
-	}).catch((error) => {
-		console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}`);
 	});
 };
 
@@ -60,16 +60,18 @@ exports.launchApplication = function(pageData, dataColumn) {
  * @return return type of action boolean (true/false)
  */
 exports.close = function () {
-	browser.manage().logs().get('browser').then((browserLog) => {
-		console.log('log: ' + require('util').inspect(browserLog));
-	}).catch((error) => {
-		console.error(`Couldn't gete browser logs !!, error: ${error.message}`);
-	});
-		
 	browser.close().then(() => {
 		console.log(`Closing browser ...`);
 	}).catch((error) => {
 		console.error(`Couldn't close browser !!, error: ${error.message}`);
+	});
+};
+
+exports.maximize = function () {
+	browser.driver.manage().window().maximize().then(() => {
+		console.log(`Maximizing browser window ...`);
+	}).catch((error) => {
+		console.error(`Couldn't maximize browser window !!, error: ${error.message}`);
 	});
 };
 
