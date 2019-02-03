@@ -15,7 +15,6 @@
 * gradle installGulp
 * gradle clean build --refresh-dependencies
 * gradle task e2e
-* gradle wrapper installGulp clean build --refresh-dependencies task e2e --scan
 * gradle --stop
 </br></br>
 
