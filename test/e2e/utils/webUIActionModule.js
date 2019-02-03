@@ -108,7 +108,7 @@ exports.clearSession = function () {
  */
 exports.restart = function () {
 	browser.restart().then(() => {
-		console.log(`Restarting ...`);
+		console.log(`Closing and Restarting browser ...`);
 	}).catch((error) => {
 		console.error(`Couldn't restart !!, error: ${error.message}`);
 	});

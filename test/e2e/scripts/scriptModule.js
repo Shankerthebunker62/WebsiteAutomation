@@ -30,6 +30,8 @@ var SuperCalculator = function () {
 			pageData = 'launchUrl.' + _rowId;
 		
 		uiDriver.launchApplication(pageData, 'Navigate@URL');
+		
+		uiDriver.maximize();
 	};
 	
 	/**
@@ -166,7 +168,7 @@ var SuperCalculator = function () {
 	 * Close  browser after application test has been performed
 	 */
 	this.closeBrowser = function () {
-		uiDriver.close();
+		uiDriver.restart();
 	};
 };
 
