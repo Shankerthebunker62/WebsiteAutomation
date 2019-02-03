@@ -11,6 +11,7 @@ const Path = require('path');
 let HtmlReporter = require('protractor-beautiful-reporter');
 let VideoReporter = require('protractor-video-reporter');
 let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+let helper = require('./firefox.profile.helper.js');
 
 exports.config = {
 		
@@ -29,16 +30,10 @@ exports.config = {
 	      'moz:firefoxOptions': {
 	          'args': ['--verbose', '--safe-mode'] // '--headless'
 	       }
-		*/
-
-		/**
-		 * Chrome Browser Setting
-		
-		  'browserName': 'chrome',
-		  'logName': 'Chrome - English',
-		  'chromeOptions': {
-			'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'] // '--headless'
-		  }
+	       
+	       or,
+	       
+	       getMultiCapabilities: helper.getFirefoxProfile
 		*/
 		
 		capabilities: {
@@ -48,7 +43,14 @@ exports.config = {
 			'browserName': 'chrome',
 			'logName': 'Chrome - English',
 			'chromeOptions': {
-				'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'] // '--headless'
+				'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'], // '--headless'
+				'prefs': {
+	                'download': {
+	                    'prompt_for_download': false,
+	                    'directory_upgrade': true,
+	                    'default_directory': '/Users/shankerthebunker/git/WebsiteAutomation' + '/test/e2e/resources/downloads/'
+	                }
+	            }
 			}
 		},
 		

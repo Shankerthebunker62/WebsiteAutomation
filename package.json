@@ -41,6 +41,7 @@
 		"cordova": "8.1.2",
 		"debug": "4.1.0",
 		"ffmpeg": "^0.0.4",
+		"firefox-profile": "1.2.0",
 		"fs-js": "1.0.6",
 		"forever": "0.15.3",
 		"grunt": "1.0.3",

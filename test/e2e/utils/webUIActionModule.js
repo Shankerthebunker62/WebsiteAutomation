@@ -20,7 +20,7 @@ const uiMapModule = require(dirPath + '/test/e2e/utils/uiMapModule.js');
 /**
  * UI webElement expected conditions creator method to be used
  */
-const conditionsModule = require(dirPath + '/test/e2e/utils/conditionsModule.js');
+const conditionsModule = require(dirPath + '/test/e2e/utils/additional/conditionsModule.js');
 
 // http://www.collectionsjs.com/ --> for collections alternative in .js
 
@@ -503,7 +503,7 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 		});
 		
 		let _data = element(_element.locator()).$('option:checked').getText();
-		expect(_data).toEqual(_testData);
+		expect(_data).toContain(_testData);
 	} catch (error) {
 		console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}`);
 	}
@@ -532,7 +532,7 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
 		});
 		
 		let _data = _element.getAttribute('value');
-		expect(_data).toEqual(_testData);
+		expect(_data).toContain(_testData);
 	} catch (error) {
 		console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}`);
 	}
@@ -561,7 +561,7 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
 		});
 			
 		let _data = _element.getText();
-		expect(_data).toEqual(_testData);
+		expect(_data).toContain(_testData);
 	} catch (error) {
 		console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}`);
 	}
@@ -588,7 +588,7 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
 		});
 		
 		let _data = browser.getTitle();
-		expect(_data).toEqual(_testData);
+		expect(_data).toContain(_testData);
 	} catch (error) {
 		console.error(`Verify title ${_testData} is failed, error: ${error.message}`);
 	}
@@ -609,7 +609,7 @@ exports.verifyAlertText = function (pageData, dataColumn) {
 		});
 		
 		let _data = browser.switchTo().alert().getText();
-		expect(_data).toEqual(_testData);
+		expect(_data).toContain(_testData);
 	} catch (error) {
 		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}`);
 	}
