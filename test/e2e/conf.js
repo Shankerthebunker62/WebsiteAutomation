@@ -8,9 +8,12 @@
 
 const Path = require('path');
 
+let Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
 let HtmlReporter = require('protractor-beautiful-reporter');
 let VideoReporter = require('protractor-video-reporter');
 let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+let AllureReporter = require('jasmine-allure-reporter');
+
 let helper = require('./firefox.profile.helper.js');
 
 exports.config = {
@@ -94,7 +97,7 @@ exports.config = {
 	        }));
 			
 			jasmine.getEnv().addReporter(new HtmlReporter({
-		         baseDirectory: './reports/HtmlReport_' + Date(),
+		         baseDirectory: './reports_BeautifulReporter/HtmlReport_' + Date(),
 		         
 		         docTitle: 'Protractor Automation Report',
 		         docName: 'Automation_Report.html',
@@ -127,6 +130,34 @@ exports.config = {
 			      },
 			      
 			      customProcessors: []
+			}));
+			
+
+			jasmine.getEnv().addReporter(new AllureReporter({
+				allureReport: {
+		            resultsDir: 'allure-results'
+		        }
+		    }));
+			
+			jasmine.getEnv().afterEach(function(done) {
+				browser.takeScreenshot().then(function(png) {
+					allure.createAttachment('Screenshot', function() {
+						return new Buffer(png, 'base64')
+					}, 'image/png')();
+					done();
+				});
+			});
+			
+			jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+				   savePath: './reports_HtmlReporter/',
+				   screenshotsFolder: 'images',
+				   takeScreenshots: true,
+				   takeScreenshotsOnlyOnFailures: true,
+				   fixedScreenshotName: true,
+				   consolidate: true,
+				   consolidateAll: true,
+				   cleanDestination: true,
+				   fileNameDateSuffix: true
 			}));
 			
 			browser.driver.manage().window().maximize();

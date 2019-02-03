@@ -11,7 +11,7 @@ const dirPath = browser.params.dirPath;
 
 let XLSX = require('xlsx');
 
-const TIMEOUT_IN_MILISECONDS = 1000;
+const TIMEOUT_IN_MILISECONDS = 500;
 /**
  * read uiMap.xlsx using 'npm xlsx'
  */

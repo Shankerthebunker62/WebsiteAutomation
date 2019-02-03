@@ -51,6 +51,7 @@
 		"install-cmake": "3.5.5",
 		"ios-deploy": "1.9.4",
 		"jake": "8.0.19",
+		"jasmine-allure-reporter": "1.0.2",
 		"java": "0.8.0",
 		"java-func-caller": "0.0.8",
 		"jsonfile": "5.0.0",
