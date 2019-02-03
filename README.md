@@ -1,6 +1,6 @@
 # "# WebsiteAutomation" 
 
-<i>Protractor</i> Data-Driven Automation Framework using Excel UI Object Repository as well as Test Data. This is a BDD model using Jasmine. Each Method under script acts as a <i>Component<i> which loads a different data row for test case. The <i>Components<i> are called in mutiple tesrt scenarios of BDD under each <i>Specs<i> for test cases to be used.
+<i>Protractor</i> Data-Driven Automation Framework using Excel UI Object Repository as well as Test Data. This is a BDD model using Jasmine. Each Method under script acts as a <i>Component</i> which loads a different data row for test case. The <i>Components</i> are called in mutiple tesrt scenarios of BDD under each <i>Specs</i> for test cases to be used.
 </br></br>
 
 # Pre-Requisite
