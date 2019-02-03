@@ -3,6 +3,12 @@
 <i>Protractor</i> Data-Driven Automation Framework using Excel data sheet for UI Object Repository as well as Test Data. This is a Action-Component based BDD model as Jasmine.
 </br></br>
 
+# Pre-Requisite
+
+* Java (1.8 or, higher)
+* Node Js
+* Gradle
+
 # Execution:
 
 * gradle wrapper
@@ -24,8 +30,7 @@
 
 # To Do:
 
-* locate the element in multiple window
-* locate the element in multiple frames
-* database connection module
-* autoIt/system process module
-* string from promise object
+* creating html report for step by step execution
+* creating a mail client or, execution
+* locate the element from multiple window
+* locate the element from multiple frames
