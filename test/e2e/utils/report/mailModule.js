@@ -9,5 +9,8 @@
 // Project location path
 const dirPath = browser.params.dirPath;
 
-// https://www.npmjs.com/package/fs-js
-let fs = require('fs-js');
+// https://www.npmjs.com/package/emailjs
+let emailjs = require('emailjs').email;
+
+// https://www.npmjs.com/package/nodemailer
+let nodemailer = require('nodemailer');

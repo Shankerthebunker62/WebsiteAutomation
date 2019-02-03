@@ -25,8 +25,8 @@ const conditionsModule = require(dirPath + '/test/e2e/utils/additional/condition
 // http://www.collectionsjs.com/ --> for collections alternative in .js
 
 let dragAndDrop = require('html-dnd').code;
-let crypto = require("crypto");
-let uuid = require("uuid");
+let crypto = require('crypto');
+let uuid = require('uuid');
 
 /************************************************************
  **************** Browser/Window/Alert Action ***************
