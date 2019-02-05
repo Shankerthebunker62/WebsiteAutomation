@@ -17,11 +17,11 @@ let helper = require('./firefox.profile.helper.js');
 
 const projectPath = '/Users/shankerthebunker/git/WebsiteAutomation';
 
-const ieBinary = '/test/e2e/resources/binary/IEDriverServer.exe';
-const edgeBinary = '/test/e2e/resources/binary/MicrosoftWebDriver.exe';
-const operaBinary = '/test/e2e/resources/binary/operadriver';
-const chromeBinary = '/test/e2e/resources/binary/chromedriver';
-const firefoxBinary = '/test/e2e/resources/binary/geckodriver';
+const ieBinary = (projectPath + '/test/e2e/resources/binary/IEDriverServer.exe');
+const edgeBinary = (projectPath + '/test/e2e/resources/binary/MicrosoftWebDriver.exe');
+const operaBinary = (projectPath + '/test/e2e/resources/binary/operadriver');
+const chromeBinary = (projectPath + '/test/e2e/resources/binary/chromedriver');
+const firefoxBinary = (projectPath + '/test/e2e/resources/binary/geckodriver');
 
 exports.config = {
 
@@ -33,7 +33,7 @@ exports.config = {
     directConnect: true,
     
     localSeleniumStandaloneOpts : {
-    	  jvmArgs : [`-Dwebdriver.ie.driver=${ieBinary}`, `-Dwebdriver.edge.driver=${edgeBinary}`, `-Dwebdriver.opera.driver=${operaBinary}`, `-Dwebdriver.chrome.driver=${chromeBinary}`, `-Dwebdriver.gecko.driver=${firefoxBinary}`]
+    	  jvmArgs : [`-Dwebdriver.ie.driver=${ieBinary}`, `-Dwebdriver.edge.driver=${edgeBinary}`, `-Dwebdriver.opera.driver=${operaBinary}`, `-Dwebdriver.chrome.driver=${chromeBinary}`, `-Dwebdriver.gecko.driver=${firefoxBinary}`, `-Dwebdriver.safari.noinstall=true`]
     },
 
     params: {
