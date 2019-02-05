@@ -11,6 +11,7 @@
 
 # Execution:
 
+* sudo npm install --unsafe-perm=true
 * gradle wrapper
 * gradle installGulp
 * gradle clean build --refresh-dependencies
@@ -24,3 +25,30 @@
 * creating a mail client or, execution
 * locate the element from multiple window
 * locate the element from multiple frames
+
+# Firefox
+
+<pre>
+'browserName': 'firefox',
+'logName': 'Firefox - English',
+'moz:firefoxOptions': {
+    'args': ['--verbose', '--safe-mode'] // '--headless'
+}
+</pre>
+
+# Chrome
+
+<pre>
+'browserName': 'chrome',
+'logName': 'Chrome - English',
+'chromeOptions': {
+	'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'], // '--headless'
+	'prefs': {
+		'download': {
+			'prompt_for_download': false,
+			'directory_upgrade': true,
+			'default_directory': '/Users/shankerthebunker/git/WebsiteAutomation' + '/test/e2e/resources/downloads/'
+		}
+	}
+}
+</pre>
