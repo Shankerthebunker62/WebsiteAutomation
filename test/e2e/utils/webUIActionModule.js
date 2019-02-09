@@ -30,10 +30,6 @@ const uiMapModule = require(dirPath + '/test/e2e/utils/uiMapModule.js');
  */
 const conditionsModule = require(dirPath + '/test/e2e/utils/additional/conditionsModule.js');
 /**
- * ALM Reporting method to be used
- */
-const almModule = require(dirPath + '/test/e2e/utils/alm/almModule.js');
-/**
  * autoIt/Shell/CMD/Bat/OAScript method to be used
  */
 const autoModule = require(dirPath + '/test/e2e/utils/auto/autoModule.js');

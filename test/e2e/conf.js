@@ -8,13 +8,13 @@
 
 const Path = require('path');
 
-const projectPath = '/Users/shankerthebunker/git/WebsiteAutomation';
+const projectPath = `/Users/shankerthebunker/git/WebsiteAutomation`;
 
-const ieBinary = (projectPath + '/test/e2e/resources/binary/IEDriverServer.exe');
-const edgeBinary = (projectPath + '/test/e2e/resources/binary/MicrosoftWebDriver.exe');
-const operaBinary = (projectPath + '/test/e2e/resources/binary/operadriver');
-const chromeBinary = (projectPath + '/test/e2e/resources/binary/chromedriver');
-const firefoxBinary = (projectPath + '/test/e2e/resources/binary/geckodriver');
+const ieBinary = (`${projectPath}/test/e2e/resources/binary/IEDriverServer.exe`);
+const edgeBinary = (`${projectPath}/test/e2e/resources/binary/MicrosoftWebDriver.exe`);
+const operaBinary = (`${projectPath}/test/e2e/resources/binary/operadriver`);
+const chromeBinary = (`${projectPath}/test/e2e/resources/binary/chromedriver`);
+const firefoxBinary = (`${projectPath}/test/e2e/resources/binary/geckodriver`);
 
 let HtmlReporter = require('protractor-beautiful-reporter');
 let VideoReporter = require('protractor-video-reporter');
@@ -38,9 +38,9 @@ exports.config = {
     params: {
         // Project location path
         dirPath: projectPath,
-        uploadPath = (projectPath + '/test/e2e/resources/uploads/'),
-        downloadPath = (projectPath + '/test/e2e/resources/downloads/'),
-        execFilePath = (projectPath + '/test/e2e/resources/execFile/')
+        uploadPath: (`${projectPath}/test/e2e/resources/uploads/`),
+        downloadPath: (`${projectPath}/test/e2e/resources/downloads/`),
+        execFilePath: (`${projectPath}/test/e2e/resources/execFile/`)
     },
 
    capabilities: {

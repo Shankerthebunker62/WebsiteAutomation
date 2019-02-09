@@ -8,12 +8,12 @@
 
 // Project location path
 const dirPath = browser.params.dirPath;
+// Resource Path
+const uploadPath = browser.params.uploadPath;
+const downloadPath = browser.params.downloadPath;
+const execFilePath = browser.params.execFilePath;
 
 const TIMEOUT_IN_MILISECONDS = 2000; 
-
-const uploadPath = (dirPath + '/test/e2e/resources/uploads/');
-const downloadPath = (dirPath + '/test/e2e/resources/downloads/');
-const execFilePath = (dirPath + '/test/e2e/resources/execFile/');
 
 // https://www.npmjs.com/package/autoit
 let autoit = require('autoit');
@@ -22,10 +22,10 @@ let autoit = require('autoit');
 let shell = require('shelljs');
 
 // https://www.npmjs.com/package/child_process
-let exec = require('child_process');
+const {execFile} = require('child_process');
 
 // https://www.npmjs.com/package/winreg
-let Registry = require('winreg');
+let registry = require('winreg');
 
 // https://www.npmjs.com/package/regedit
 let regedit = require('regedit');
@@ -37,48 +37,74 @@ let osascript = require('node-osascript');
 ********************** AutoIt Script ***********************
 ***********************************************************/
 
-exports.uploadFileAutoitXScript = function (_windowTitle, _fileToUpload) {
+exports.uploadFileIEAutoitXScript = function (_windowTitle, _fileToUpload) {
 	try {
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-		autoit.controlFocus(_windowTitle, "", "Edit1");
+		autoit.controlFocus(_windowTitle, '', 'Edit1');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-		autoit.ControlSetText(_windowTitle, "", "Edit1", _uploadPath + _fileToUpload);
+		autoit.ControlSetText(_windowTitle, '', 'Edit1', _uploadPath + _fileToUpload);
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-		auto.controlClick(_windowTitle, "", "Button1");
+		auto.controlClick(_windowTitle, '', 'Button1');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
 		console.error(error.message);
 	}
 };
 
-exports.downloadFileAutoitXScript = function (_windowTitle, _fileToDownload) {
+exports.downloadFileIEAutoitXScript = function (_windowTitle, _fileToDownload) {
 	try {
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('!{N}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{TAB}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{DOWN}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{DOWN}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{ENTER}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{DEL}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.ControlSetText('Save As', '', 'Edit1', _uploadPath + _fileToDownload);
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
 		console.error(error.message);
 	}
 };
 
-exports.closeDownloadAutoitXScript = function (_windowTitle) {
+exports.closeDownloadIEAutoitXScript = function () {
 	try {
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('!{N}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{TAB}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{TAB}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{TAB}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{ENTER}');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
 		console.error(error.message);
 	}
 };
 
-exports.windowSecurityAutoitXScript = function (_username, _password) {
+exports.windowSecurityIEAutoitXScript = function (_username, _password) {
 	try {
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 		autoit.WinWaitActive('Windows Security');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-		autoit.Send(_username);
+		autoit.controlFocus('Windows Security', '', 'Edit1');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-		autoit.Send('{TAB}');
+		autoit.ControlSetText('Windows Security', '', 'Edit1', _username);
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-		autoit.Send(_password);
+		autoit.controlFocus('Windows Security', '', 'Edit2');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-		autoit.Send('{ENTER}');
+		autoit.ControlSetText('Windows Security', '', 'Edit2', _password);
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.controlClick('Windows Security', '', 'Button2');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
 		console.error(error.message);
@@ -104,6 +130,14 @@ exports.loginAutoitXScript = function (_username, _password) {
 exports.printIEAutoitXScript = function () {
 	try {
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{TAB}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{ENTER}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{ENTER}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
+		autoit.Send('{ESC}');
+		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
 		console.error(error.message);
 	}
@@ -112,37 +146,7 @@ exports.printIEAutoitXScript = function () {
 exports.printChromeAutoitXScript = function () {
 	try {
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-	} catch (error) {
-		console.error(error.message);
-	}
-};
-
-exports.selectCertificateIEAutoitXScript = function () {
-	try {
-		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-	} catch (error) {
-		console.error(error.message);
-	}
-};
-
-exports.selectCertificateChromeAutoitXScript = function () {
-	try {
-		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-	} catch (error) {
-		console.error(error.message);
-	}
-};
-
-exports.acceptCertificateIEAutoitXScript = function () {
-	try {
-		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
-	} catch (error) {
-		console.error(error.message);
-	}
-};
-
-exports.denyCertificateIEAutoitXScript = function () {
-	try {
+		autoit.Send('{ENTER}');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
 		console.error(error.message);
@@ -150,12 +154,12 @@ exports.denyCertificateIEAutoitXScript = function () {
 };
 
 /***********************************************************
-*********************** Shell Script ***********************
+********************* osascript Script *********************
 ***********************************************************/
 
-// _osaScript = can also be script or, 'path/to/script.scpt' 
+// _osaScript = can also be script or, '/script.scpt'
 exports.executeOSAScript = function (_osaScript) {
-	osascript.execute(_osaScript, function(err, result, raw) {
+	osascript.execute(execFilePath+_osaScript, function(err, result, raw) {
 		if (err) return console.error(err);
 			console.log(result, raw);
 	});
@@ -181,7 +185,7 @@ exports.executeFileUploadOSAScript = function (_fileToUpload, _browserName) {
 
 // _fileName = can be shell command or, './someshellscript.sh'
 exports.executeShellFile = function(fileName) {
-	const { stdout, stderr, code } = sh.exec(fileName, { silent: true });
+	const { stdout, stderr, code } = sh.exec(execFilePath+fileName, { silent: true });
 	if (stderr) console.log(`stderr: ${stderr}`);
 	if (stdout) console.log(`stdout: ${stdout}`);
 	if (code) console.log(`code: ${code}`);
@@ -200,7 +204,7 @@ exports.executeShellFile = function(fileName) {
  */
 exports.executeFile = function(fileName, params, path) {
     let promise = new Promise((resolve, reject) => {
-        exec(fileName, params, { cwd: path }, (err, data) => {
+    	execFile(fileName, params, { cwd: path }, (err, data) => {
             if (err) reject(err);
             else resolve(data);
         });
@@ -216,20 +220,13 @@ exports.executeFile = function(fileName, params, path) {
  */
 exports.executeFile = function(fileName) {
     let promise = new Promise((resolve, reject) => {
-        exec(execFilePath+fileName, params, { cwd: path }, (err, data) => {
+    	execFile(execFilePath+fileName, params, { cwd: path }, (err, data) => {
             if (err) reject(err);
             else resolve(data);
         });
 
     });
     return promise;
-};
-
-exports.executeExeFile = function(fileName) {
-	exec(execFilePath+fileName, function(err, data) {  
-		if (err) console.log(err)
-		console.log(data.toString());                       
-	});  
 };
 
 /***********************************************************
@@ -249,4 +246,15 @@ exports.listAutoStartPrograms = function() {
 			for (var i=0; i<items.length; i++)
 				console.log('ITEM: '+items[i].name+'\t'+items[i].type+'\t'+items[i].value);
 	});
+};
+
+/***********************************************************
+************************ Exe Script ************************
+***********************************************************/
+
+exports.executeExeFile = function(fileName) {
+	execFile(execFilePath+fileName, function(error, data) {  
+		if (error) console.error(error.message);
+		console.log(data.toString());                       
+	});  
 };

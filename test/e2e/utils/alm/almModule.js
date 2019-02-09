@@ -12,8 +12,18 @@ const dirPath = browser.params.dirPath;
 // https://gist.github.com/jungleeforce/af83f36fec0aa9a102c6
 let https = require('https');
 let fs = require('fs');
-//this refers to a file where I have all my config like host, userName, password etc
-let config = JSON.parse(fs.readFileSync('almConfig.json'));
+//this refers to a place where I have all my config like host, userName, password etc
+let config = {
+	"host" : "",
+	"alm_userName" : "",
+	"alm_password" : "",
+	"release" : "",
+	"domain" : "",
+	"project" : "",
+	"queryParam" : "",
+	"fields" : "",
+	"defectFieldMapping" : [ "", "", "" ]
+};
 
 let options = {
 		host : config.host, 
