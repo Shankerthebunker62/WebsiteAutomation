@@ -65,7 +65,7 @@ exports.config = {
         VideoReporter.prototype.jasmineStarted = function() {
             var self = this;
             if (self.options.singleVideo) {
-                var videoPath = Path.join(Path.normalize('./reports_videos/'), 'protractor-specs-' + (new Date()) + '.mov');
+                var videoPath = Path.join(Path.normalize('./reports/'), 'protractor-specs-' +(new Date().getTime()) + '.mov');
 
                 self._startScreencast(videoPath);
 
@@ -77,7 +77,7 @@ exports.config = {
         };
 
         jasmine.getEnv().addReporter(new VideoReporter({
-            baseDirectory: Path.normalize('./reports_videos/'),
+            baseDirectory: Path.normalize('./reports/'),
 
             singleVideo: true,
             createSubtitles: true,
