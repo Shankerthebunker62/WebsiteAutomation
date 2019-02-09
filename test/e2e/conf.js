@@ -8,13 +8,6 @@
 
 const Path = require('path');
 
-let Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
-let HtmlReporter = require('protractor-beautiful-reporter');
-let VideoReporter = require('protractor-video-reporter');
-let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
-
-let helper = require('./firefox.profile.helper.js');
-
 const projectPath = '/Users/shankerthebunker/git/WebsiteAutomation';
 
 const ieBinary = (projectPath + '/test/e2e/resources/binary/IEDriverServer.exe');
@@ -22,6 +15,12 @@ const edgeBinary = (projectPath + '/test/e2e/resources/binary/MicrosoftWebDriver
 const operaBinary = (projectPath + '/test/e2e/resources/binary/operadriver');
 const chromeBinary = (projectPath + '/test/e2e/resources/binary/chromedriver');
 const firefoxBinary = (projectPath + '/test/e2e/resources/binary/geckodriver');
+
+let HtmlReporter = require('protractor-beautiful-reporter');
+let VideoReporter = require('protractor-video-reporter');
+let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+
+let helper = require('./firefox.profile.helper.js');
 
 exports.config = {
 
@@ -38,7 +37,10 @@ exports.config = {
 
     params: {
         // Project location path
-        dirPath: projectPath
+        dirPath: projectPath,
+        uploadPath = (projectPath + '/test/e2e/resources/uploads/'),
+        downloadPath = (projectPath + '/test/e2e/resources/downloads/'),
+        execFilePath = (projectPath + '/test/e2e/resources/execFile/')
     },
 
    capabilities: {
@@ -94,7 +96,7 @@ exports.config = {
         }));
 
         jasmine.getEnv().addReporter(new HtmlReporter({
-            baseDirectory: './reports_BeautifulReporter/HtmlReport_' + Date(),
+            baseDirectory: './reports/HtmlReport_' + (new Date().getTime()),
 
             docTitle: 'Protractor Automation Report',
             docName: 'Automation_Report.html',
@@ -127,18 +129,6 @@ exports.config = {
             },
 
             customProcessors: []
-        }));
-
-        jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
-            savePath: './reports_HtmlReporter/',
-            screenshotsFolder: 'images',
-            takeScreenshots: true,
-            takeScreenshotsOnlyOnFailures: true,
-            fixedScreenshotName: true,
-            consolidate: true,
-            consolidateAll: true,
-            cleanDestination: true,
-            fileNameDateSuffix: true
         }));
 
         browser.driver.manage().window().maximize();

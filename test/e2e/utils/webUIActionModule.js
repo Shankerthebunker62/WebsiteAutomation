@@ -8,6 +8,14 @@
 
 //Project location path
 const dirPath = browser.params.dirPath;
+// Resource Path
+const uploadPath = browser.params.uploadPath;
+const downloadPath = browser.params.downloadPath;
+const execFilePath = browser.params.execFilePath;
+
+// https://nodejs.org/api/timers.html#timers_settimeout_callback_delay_args
+const util = require('util');
+const setTimeoutPromise = util.promisify(setTimeout);
 
 /**
  * Web page test data fetch method to be used
@@ -21,11 +29,32 @@ const uiMapModule = require(dirPath + '/test/e2e/utils/uiMapModule.js');
  * UI webElement expected conditions creator method to be used
  */
 const conditionsModule = require(dirPath + '/test/e2e/utils/additional/conditionsModule.js');
+/**
+ * ALM Reporting method to be used
+ */
+const almModule = require(dirPath + '/test/e2e/utils/alm/almModule.js');
+/**
+ * autoIt/Shell/CMD/Bat/OAScript method to be used
+ */
+const autoModule = require(dirPath + '/test/e2e/utils/auto/autoModule.js');
+/**
+ * DB Validation method to be used
+ */
+const dbModule = require(dirPath + '/test/e2e/utils/db/dbModule.js');
+/**
+ * Reporting each step of execution method to be used
+ */
+const reportModule = require(dirPath + '/test/e2e/utils/report/reportModule.js');
 
 // http://www.collectionsjs.com/ --> for collections alternative in .js
 
+// Drag-n-Drop method to be used
 let dragAndDrop = require('html-dnd').code;
+
+// hex string method to be used
 let crypto = require('crypto');
+
+// UUID Generator method to be used
 let uuid = require('uuid');
 
 /************************************************************
@@ -264,6 +293,20 @@ exports.getWebElements = function (elementName) {
 	try {
 		let _elements = uiMapModule.getExcelUIMapList(elementName);
 		return _elements;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return null;
+	}
+};
+
+/************************************************************
+ ****************** Test Data String/Value ******************
+ ***********************************************************/
+
+exports.getTestData = function (pageData, dataColumn) {
+	try {
+		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+		return _testData;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
 		return null;
@@ -1178,4 +1221,204 @@ generateUUIDString = function() {
 
 getTimeStamp = function () {
 	return new Date().getTime();
+};
+
+/***********************************************************
+ ********************* OAScript Methods ********************
+ **********************************************************/
+
+exports.executeOSAScript = function (pageData, dataColumnOAScript) {
+	let _osaScript = testDataModule.getExcelTestData(pageData, dataColumnOAScript);
+	try {
+		autoModule.executeOSAScript(_osaScript);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.executeFileUploadOSAScript = function (pageData, dataColumnFileToUpload, dataColumnBrowserName) {
+	let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
+	let _browserName = testDataModule.getExcelTestData(pageData, dataColumnBrowserName);
+	try {
+		autoModule.executeFileUploadOSAScript(_fileToUpload, _browserName);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+/***********************************************************
+******************** Shell Script Methods ******************
+***********************************************************/
+
+exports.executeShellFile = function(pageData, dataColumnFileName) {
+	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+	try {
+		autoModule.executeShellFile(_fileName);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+/***********************************************************
+************************ CMD Script ************************
+***********************************************************/
+
+exports.executeFile = function(pageData, dataColumnFileName, dataColumnParams, dataColumnPath) {
+	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+	let _params = testDataModule.getExcelTestData(pageData, dataColumnParams);
+	let _path = testDataModule.getExcelTestData(pageData, dataColumnPath);
+	try {
+		autoModule.executeFile(_fileName,_params,_path);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.executeFile = function(pageData, dataColumnFileName) {
+	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+	try {
+		autoModule.executeFile(_fileName);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+/***********************************************************
+********************** RegEdit Script **********************
+***********************************************************/
+
+exports.listAutoStartPrograms = function() {
+	try {
+		autoModule.listAutoStartPrograms();
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+/***********************************************************
+ ********************* AutoIt Methods **********************
+ **********************************************************/
+
+exports.uploadFileIEAutoitXScript = function (pageData, dataColumnWindowsTitle, dataColumnFileToUpload) {
+	let _windowTitle = testDataModule.getExcelTestData(pageData, dataColumnWindowsTitle);
+	let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
+	try {
+		autoModule.uploadFileIEAutoitXScript(_windowTitle,_fileToUpload);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.downloadFileIEAutoitXScript = function (pageData, dataColumnWindowsTitle, dataColumnFileToDownload) {
+	let _windowTitle = testDataModule.getExcelTestData(pageData, dataColumnWindowsTitle);
+	let _fileToDownload = testDataModule.getExcelTestData(pageData, dataColumnFileToDownload);
+	try {
+		autoModule.downloadFileIEAutoitXScript(_windowTitle,_fileToDownload);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.closeDownloadIEAutoitXScript = function () {
+	try {
+		autoModule.closeDownloadIEAutoitXScript();
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.windowSecurityIEAutoitXScript = function (pageData, dataColumnUserName, dataColumnPassword) {
+	let _username = testDataModule.getExcelTestData(pageData, dataColumnUserName);
+	let _password = testDataModule.getExcelTestData(pageData, dataColumnPassword);
+	try {
+		autoModule.windowSecurityIEAutoitXScript(_username,_password);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.loginAutoitXScript = function (pageData, dataColumnUserName, dataColumnPassword) {
+	let _username = testDataModule.getExcelTestData(pageData, dataColumnUserName);
+	let _password = testDataModule.getExcelTestData(pageData, dataColumnPassword);
+	try {
+		autoModule.loginAutoitXScript(_username,_password);
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.printIEAutoitXScript = function () {
+	try {
+		autoModule.printIEAutoitXScript();
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.printChromeAutoitXScript = function () {
+	try {
+		autoModule.printChromeAutoitXScript();
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+/***********************************************************
+ ********************* Execute Methods *********************
+ **********************************************************/
+
+exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOut) {
+	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+	let _timeOutInMiliSeconds = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+	try {
+		setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
+			// boolean === true (passing values is optional)
+			// This is executed after about ${_timeOutInMiliSeconds} milliseconds.
+			autoModule.executeExeFile(_fileName);
+		});
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
+};
+
+exports.executeExeFile = function(_fileName, _timeOutInMiliSeconds) {
+	try {
+		setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
+			// boolean === true (passing values is optional)
+			// This is executed after about ${_timeOutInMiliSeconds} milliseconds.
+			autoModule.executeExeFile(_fileName);
+		});
+		return true;
+	} catch (error) {
+		console.error(`error: ${error.message}`);
+		return false;
+	}
 };
