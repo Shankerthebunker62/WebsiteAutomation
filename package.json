@@ -79,6 +79,7 @@
 		"protractor": "5.4.1",
 		"protractor-beautiful-reporter": "^1.2.7",
 		"protractor-jasmine2-html-reporter": "^0.0.7",
+		"protractor-take-screenshots-on-demand": "^1.2.0",
 		"protractor-video-reporter": "^0.3.0",
 		"react": "16.6.3",
 		"react-dom": "16.6.3",

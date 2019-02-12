@@ -20,6 +20,8 @@ let HtmlReporter = require('protractor-beautiful-reporter');
 let VideoReporter = require('protractor-video-reporter');
 let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
+let screenshots = require('protractor-take-screenshots-on-demand');
+
 let helper = require('./firefox.profile.helper.js');
 
 exports.config = {
@@ -40,7 +42,11 @@ exports.config = {
         dirPath: projectPath,
         uploadPath: (`${projectPath}/test/e2e/resources/uploads/`),
         downloadPath: (`${projectPath}/test/e2e/resources/downloads/`),
-        execFilePath: (`${projectPath}/test/e2e/resources/execFile/`)
+        execFilePath: (`${projectPath}/test/e2e/resources/execFile/`),
+        reportHeader: `Protractor Gradle Automation Report`,
+        feature: `Angular Calculator Function`,
+        environment: `QA`,
+        testType: `Regression`
     },
 
    capabilities: {
@@ -130,8 +136,13 @@ exports.config = {
 
             customProcessors: []
         }));
-
-        browser.driver.manage().window().maximize();
+        
+        //joiner between browser name and file name
+        screenshots.browserNameJoiner = ' - '; //this is the default
+        //folder of screenshots
+        screenshots.screenShotDirectory = 'target/screenshots';
+        //creates folder of screenshots
+        screenshots.createDirectory();
 
         browser.waitForAngularEnabled(true); //true for angular, false otherwise.
     },
