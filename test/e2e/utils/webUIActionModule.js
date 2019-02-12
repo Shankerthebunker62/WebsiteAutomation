@@ -6,8 +6,9 @@
  *                                        						       *
  ***********************************************************************/
 
-//Project location path
+// Project location path
 const dirPath = browser.params.dirPath;
+
 // Resource Path
 const uploadPath = browser.params.uploadPath;
 const downloadPath = browser.params.downloadPath;
@@ -21,22 +22,28 @@ const setTimeoutPromise = util.promisify(setTimeout);
  * Web page test data fetch method to be used
  */
 const testDataModule = require(dirPath + '/test/e2e/utils/testDataModule.js');
+
 /**
  * Web page UI webElement creator method to be used
  */
 const uiMapModule = require(dirPath + '/test/e2e/utils/uiMapModule.js');
+
 /**
  * UI webElement expected conditions creator method to be used
  */
 const conditionsModule = require(dirPath + '/test/e2e/utils/additional/conditionsModule.js');
+
 /**
  * autoIt/Shell/CMD/Bat/OAScript method to be used
  */
-const autoModule = require(dirPath + '/test/e2e/utils/auto/autoModule.js');
+const cmdModule = require(dirPath + '/test/e2e/utils/process/cmdModule.js');
+const shellModule = require(dirPath + '/test/e2e/utils/process/shellModule.js');
+
 /**
  * DB Validation method to be used
  */
 const dbModule = require(dirPath + '/test/e2e/utils/db/dbModule.js');
+
 /**
  * Reporting each step of execution method to be used
  */
@@ -60,8 +67,10 @@ let uuid = require('uuid');
 /**
  * launchApplication: launches to url of application under test
  * 
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * 
  * @param url: url of the said application
- * @result return type of action boolean (true/false)
  */
 exports.launchApplication = function(pageData, dataColumn) {
 	let _url = testDataModule.getExcelTestData(pageData, dataColumn);
@@ -92,6 +101,9 @@ exports.close = function () {
 	});
 };
 
+/**
+ * Maximize current window on focus
+ */
 exports.maximize = function () {
 	browser.driver.manage().window().maximize().then(() => {
 		console.log(`Maximizing browser window ...`);
@@ -163,6 +175,8 @@ exports.refresh = function () {
 
 /**
  * Wait on browser in milliseconds
+ * 
+ * @param _sleepTimeOutInMilliSeconds: sleep Time Out In MilliSeconds
  */
 exports.sleep = function (_sleepTimeOutInMilliSeconds) {
 	browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
@@ -174,6 +188,8 @@ exports.sleep = function (_sleepTimeOutInMilliSeconds) {
 
 /**
  * Sleep on webDriver instance in milliSeconds
+ * 
+ * @param _sleepTimeOutInMilliSeconds: sleep Time Out In MilliSeconds
  */
 exports.driverSleep = function (_sleepTimeOutInMilliSeconds) {
 	browser.driver.sleep(_sleepTimeOutInMilliSeconds).then(() => {
@@ -217,6 +233,12 @@ exports.acceptAlert  = function () {
 	});
 };
 
+/**
+ * Switch Window Handle: switching to a window whose title is provided
+ * 
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ */
 exports.switchToWindowHandle = function (pageData, dataColumn) {
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	let _result = false;
@@ -237,12 +259,20 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
 					break;
 			 };
 		});
+		
+		if (!_result)
+			console.log(`Failed to switch to window handle with title ${_testData}`);
+		
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return null;
 	}
 };
 
+/**
+ * switchToFrame: switching to the frame by locator
+ * 
+ * @param elementName: element of frame
+ */
 exports.switchToFrame = function(elementName) {
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
@@ -254,10 +284,12 @@ exports.switchToFrame = function(elementName) {
 		});
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return null;
 	}
 };
 
+/**
+ * switchToDefaultContent: switching out of any/all frames
+ */
 exports.switchToDefaultContent = function() {
 	try {
 		browser.switchTo().defaultContent().then(() => {
@@ -275,6 +307,12 @@ exports.switchToDefaultContent = function() {
  ****************** WebElement/WebElements ******************
  ***********************************************************/
 
+/**
+ * Get element under test
+ * 
+ * @param elementName: element locator
+ * @return element: web element fetched 
+ */
 exports.getWebElement = function (elementName) {
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
@@ -285,6 +323,12 @@ exports.getWebElement = function (elementName) {
 	}
 };
 
+/**
+ * Get element list under test
+ * 
+ * @param elementName: elements' locator
+ * @return elements: web element list fetched 
+ */
 exports.getWebElements = function (elementName) {
 	try {
 		let _elements = uiMapModule.getExcelUIMapList(elementName);
@@ -299,6 +343,13 @@ exports.getWebElements = function (elementName) {
  ****************** Test Data String/Value ******************
  ***********************************************************/
 
+/**
+ * Get test data to be used in test
+ * 
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ * @return _testData: data under test
+ */
 exports.getTestData = function (pageData, dataColumn) {
 	try {
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
@@ -314,13 +365,29 @@ exports.getTestData = function (pageData, dataColumn) {
  ***********************************************************/
 
 /**
+ * fileUpload: send keys on the element to upload file
+ * 
+ * @param elementName: element created to web page interaction
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ */
+exports.fileUpload = function (elementName, pageData, dataColumn) {	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	let _testData = uploadPath + testDataModule.getExcelTestData(pageData, dataColumn);
+	
+	_element.sendKeys(_testData).then(() => {
+		console.log(`Element ${elementName} setValue ${_testData} is passed`);
+	}).catch((error) => {
+	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}`);
+	});
+};
+
+/**
  * setValue: send keys on the element
  * 
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.setValue = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -345,8 +412,6 @@ exports.setValue = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.setValueRandom = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -376,8 +441,6 @@ exports.setValueRandom = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -407,8 +470,6 @@ exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.setValueEnter = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -433,8 +494,6 @@ exports.setValueEnter = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.setValueCharByChar = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -455,12 +514,18 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
 	        console.error(`Element ${elementName} setValue ${chars[i]} is failed, error: ${error.message}`);
 	      });
 		
-		browser.sleep(500).then(() => {
+		browser.sleep(250).then(() => {
 			console.log(`Waiting ...`);
 		}).catch((error) => {
 			 console.error(`Couldn't wait !!, error: ${error.message}`);
 		});
 	}
+	
+	_element.sendKeys(protractor.Key.ENTER).then(() => {
+		console.log(`Element ${elementName} send keys enter is passed`);
+	}).catch((error) => {
+	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}`);
+	});
 };
 
 /**
@@ -469,8 +534,6 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.select = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -487,8 +550,6 @@ exports.select = function (elementName, pageData, dataColumn) {
  * sendKeysEnter: perform click on the element
  * 
  * @param elementName: element created to web page interaction
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.sendKeysEnter = function (elementName) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -504,16 +565,14 @@ exports.sendKeysEnter = function (elementName) {
  * clear: perform clear on the element text field
  * 
  * @param elementName: element created to web page interaction
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.clear = function (elementName) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_element.clear().then((isTrue) => {
 		console.log(`Element ${elementName} clear is passed`);
-	 }) .catch((error) => {
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+	 }).catch((error) => {
+	   console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
 	 });
 };
 
@@ -527,8 +586,6 @@ exports.clear = function (elementName) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.verifySelectOption = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -556,8 +613,6 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.verifyValue = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -585,8 +640,6 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.verifyText = function (elementName, pageData, dataColumn) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -613,8 +666,6 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
  * 
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
- * 
- * @result: return type of action boolean (true/false)
  */
 exports.verifyPageTitle = function(pageData, dataColumn) {	
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
@@ -635,6 +686,12 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
 	}
 };
 
+/**
+ * verifyAlertText: validates if correct alert is open
+ * 
+ * @param pageData: sheetName and, _rowId from where to pick data
+ * @param dataColumn: column under which test data is to found
+ */
 exports.verifyAlertText = function (pageData, dataColumn) {	
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
@@ -660,8 +717,6 @@ exports.verifyAlertText = function (pageData, dataColumn) {
  * Verify if element is displayed or, not
  * 
  * @param elementName: element created to web page interaction
- * 
- * @returns: return type of element action boolean (true/false)
  */
 exports.verifyElementIsDisplayed = function(elementName) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -680,6 +735,11 @@ exports.verifyElementIsDisplayed = function(elementName) {
 	}
 };
 
+/**
+ * Verify if element is present or, not
+ * 
+ * @param elementName: element created to web page interaction
+ */
 exports.verifyElementIsNotPresent = function(elementName) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
@@ -705,8 +765,6 @@ exports.verifyElementIsNotPresent = function(elementName) {
  * click: perform click on the element
  * 
  * @param elementName: element created to web page interaction
- * 
- * @result: return type of element action boolean (true/false)
  */
 exports.click = function (elementName) {	
 	let _element = uiMapModule.getExcelUIMap(elementName);
@@ -722,8 +780,6 @@ exports.click = function (elementName) {
  * Performs double click action on an element
  * 
  * @param elementName: element created to web page interaction
- * 
- * @return: return type of element action boolean (true/false)
  */
 exports.doubleClick = function(elementName) {
 	let _action = browser.actions();
@@ -740,8 +796,6 @@ exports.doubleClick = function(elementName) {
  * Performs right click on a webElement
  * 
  * @param elementName: element created to web page interaction
- * 
- * @return: return type of element action boolean (true/false)
  */
 exports.rightClick = function(elementName) {
 	let _action = browser.actions();
@@ -764,8 +818,6 @@ exports.rightClick = function(elementName) {
  * Performs mouse hover action to check tool tips etc. 
  * 
  * @param elementName: element created to web page interaction
- * 
- * @return: return type of element action boolean (true/false)
  */
 exports.mouseHoverAction = function(elementName) {
 	let _action = browser.actions();	
@@ -778,6 +830,12 @@ exports.mouseHoverAction = function(elementName) {
 	 });
 };
 
+/**
+ * Performs drag-n-drop action. 
+ * 
+ * @param elementFrom: element created to be dragged from
+ * @param elementTo: element created to be dragged fromto
+ */
 exports.dragAndDrop = function (elementFrom, elementTo) {
 	let _action = browser.actions();	
 	let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
@@ -1050,6 +1108,11 @@ exports.checkIfElementIsDisplayed = function (elementName) {
  *********************JavaScript Action *********************
  ***********************************************************/
 
+/**
+ * Highlight element provided for about '1000 ms' with color '#FFFF00' 
+ * 
+ * @param elementName: element to be highlighted
+ */
 exports.highlightElement = function (elementName) {
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
@@ -1071,14 +1134,16 @@ exports.highlightElement = function (elementName) {
 		}).catch((error) => {
 			console.error(`Couldn't remove highlight style to element ${elementName} !!, error: ${error.message}`);
 		});
-		
-		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return false;
 	}
 };
 
+/**
+ * Highlight element provided for about '1000 ms' with color '#FFFF00' 
+ * 
+ * @param _elementName: web element to be highlighted
+ */
 exports.highlightWebElement = function (_elementName) {
 	try {
 		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _elementName.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
@@ -1098,14 +1163,16 @@ exports.highlightWebElement = function (_elementName) {
 		}).catch((error) => {
 			console.error(`Couldn't remove highlight style to element ${_elementName.locator()} !!, error: ${error.message}`);
 		});
-		
-		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return false;
 	}
 };
 
+/**
+ * Unlock/Unhide element to be used further use
+ * 
+ * @param elementName: element to unhide/made visible 
+ */
 exports.unhideElement = function (elementName) {
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
@@ -1118,14 +1185,16 @@ exports.unhideElement = function (elementName) {
 		}).catch((error) => {
 			console.error(`Failed to make element ${elementName} visible, error: ${error.message}`);
 		});
-		
-		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return false;
 	}
 };
 
+/**
+ * Performing java script action on element
+ * 
+ * @param elementName: element on which java script click is to be performed
+ */
 exports.javaScriptClick = function (elementName) {
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
@@ -1135,14 +1204,16 @@ exports.javaScriptClick = function (elementName) {
 		}).catch((error) => {
 			console.error(`Java Script click on element ${elementName} failed, error: ${error.message}`);
 		});
-		
-		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return false;
 	}
 };
 	
+/**
+ * Mouse hover action on a webelement using java script
+ * 
+ * @param elementName: element for mouse hover action
+ */
 exports.mouseHoverJavaScript = function (elementName) {
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
@@ -1156,6 +1227,11 @@ exports.mouseHoverJavaScript = function (elementName) {
 	}
 };	
 	
+/**
+ * Scroll element in view of web page in browser
+ * 
+ * @param elementName: element to be scrolled to
+ */
 exports.scrollingToElement = function (elementName) {
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
@@ -1165,14 +1241,18 @@ exports.scrollingToElement = function (elementName) {
 		}).catch((error) => {
 			console.error(`Scrolling onto element ${elementName} failed, error: ${error.message}`);
 		});
-		
-		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return false;
 	}
 };
-	
+
+/**
+ * Performs drag-n-drop action. It used external module html-dnd to
+ * achieve drag-n-drop action on browsers.
+ * 
+ * @param elementFrom: element created to be dragged from
+ * @param elementTo: element created to be dragged fromto
+ */
 exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
 	try {
 		let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
@@ -1183,11 +1263,8 @@ exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
 		}).catch((error) => {
 			console.error(`drag element ${elementFrom} to element ${elementTo} failed, error: ${error.message}`);
 		});
-		
-		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
-		return false;
 	}
 };	
 
@@ -1195,6 +1272,11 @@ exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
  ********************* Utility Methods **********************
  ***********************************************************/
 
+/**
+ * Generates alpha-numberic string
+ * 
+ * @returns string: alpha-numberic text
+ */
 generateString = function() {
 	let text = "";
 	let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -1205,16 +1287,31 @@ generateString = function() {
 	return text;
 };
 
+/**
+ * Return a crypto-hex string of expected length
+ * 
+ * @param length: string length expected 
+ * @returns string: alpha-numberic text
+ */
 generateCryptoHexString = function(length) {
 	if (typeof length !== 'number')
 		throw 'length should be a number';
 	return crypto.randomBytes(Math.floor(length/2)).toString('hex');
 };
 
+/**
+ * Return a UUID string
+ * @returns string: alpha-numberic uuid text
+ */
 generateUUIDString = function() {
 	return uuid.v4();
 };
 
+/**
+ * Returns current time stamp
+ * 
+ * @returns string: date-time stamp
+ */
 getTimeStamp = function () {
 	return new Date().getTime();
 };
@@ -1223,10 +1320,17 @@ getTimeStamp = function () {
  ********************* OAScript Methods ********************
  **********************************************************/
 
+/**
+ * Used to execute apple script .scpt file in nodeJs
+ * 
+ * @param name of the .scpt placed in 'execFile' folder
+ * @returns: true/false
+ */
 exports.executeOSAScript = function (pageData, dataColumnOAScript) {
 	let _osaScript = testDataModule.getExcelTestData(pageData, dataColumnOAScript);
 	try {
-		autoModule.executeOSAScript(_osaScript);
+		shellModule.executeOSAScript(_osaScript);
+		console.log(`Executing ${_osaScript}`);
 		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -1234,11 +1338,20 @@ exports.executeOSAScript = function (pageData, dataColumnOAScript) {
 	}
 };
 
+/**
+ * Used to execute apple-script to upload file on the browser
+ * The required file should be place in 'uploads' folder
+ * 
+ * @param fileToBeUpload: name of the file to upload
+ * @param BrowserName: name of the browser under focus
+ * @returns: true/false
+ */
 exports.executeFileUploadOSAScript = function (pageData, dataColumnFileToUpload, dataColumnBrowserName) {
 	let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
 	let _browserName = testDataModule.getExcelTestData(pageData, dataColumnBrowserName);
 	try {
-		autoModule.executeFileUploadOSAScript(_fileToUpload, _browserName);
+		shellModule.executeFileUploadOSAScript(_fileToUpload, _browserName);
+		console.log(`Executing apple script to upload file ${_fileToUpload} on browser ${_browserName}`);
 		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -1250,10 +1363,17 @@ exports.executeFileUploadOSAScript = function (pageData, dataColumnFileToUpload,
 ******************** Shell Script Methods ******************
 ***********************************************************/
 
+/**
+ * Executing shell '.sh' file name provided in data sheet
+ * 
+ * @param name of the .sh placed in 'execFile' folder
+ * @returns: true/false
+ */
 exports.executeShellFile = function(pageData, dataColumnFileName) {
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	try {
-		autoModule.executeShellFile(_fileName);
+		shellModule.executeShellFile(_fileName);
+		console.log(`Executing ${_fileName}`);
 		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -1265,12 +1385,21 @@ exports.executeShellFile = function(pageData, dataColumnFileName) {
 ************************ CMD Script ************************
 ***********************************************************/
 
+/**
+ * Executing .bat/.exe file with provided arguments and, file path
+ * 
+ * @param fileName: bat/exe file to be execute
+ * @param param: args to be passed onto exe/bat file
+ * @param path: location on exe/bat file
+ * @returns: true/false
+ */
 exports.executeFile = function(pageData, dataColumnFileName, dataColumnParams, dataColumnPath) {
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	let _params = testDataModule.getExcelTestData(pageData, dataColumnParams);
 	let _path = testDataModule.getExcelTestData(pageData, dataColumnPath);
 	try {
-		autoModule.executeFile(_fileName,_params,_path);
+		cmdModule.executeFile(_fileName,_params,_path);
+		console.log(`Executing ${_fileName} using param ${_params} on path ${_path}`);
 		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -1278,10 +1407,17 @@ exports.executeFile = function(pageData, dataColumnFileName, dataColumnParams, d
 	}
 };
 
+/**
+ * Executing .bat/.exe file 
+ * 
+ * @param fileName: bat/exe file to be execute
+ * @returns: true/false
+ */
 exports.executeFile = function(pageData, dataColumnFileName) {
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	try {
-		autoModule.executeFile(_fileName);
+		cmdModule.executeFile(_fileName);
+		console.log(`Executing ${_fileName}`);
 		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -1293,91 +1429,13 @@ exports.executeFile = function(pageData, dataColumnFileName) {
 ********************** RegEdit Script **********************
 ***********************************************************/
 
+/**
+ * Fetch regEdit settings of current user
+ */
 exports.listAutoStartPrograms = function() {
 	try {
-		autoModule.listAutoStartPrograms();
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
-};
-
-/***********************************************************
- ********************* AutoIt Methods **********************
- **********************************************************/
-
-exports.uploadFileIEAutoitXScript = function (pageData, dataColumnWindowsTitle, dataColumnFileToUpload) {
-	let _windowTitle = testDataModule.getExcelTestData(pageData, dataColumnWindowsTitle);
-	let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
-	try {
-		autoModule.uploadFileIEAutoitXScript(_windowTitle,_fileToUpload);
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
-};
-
-exports.downloadFileIEAutoitXScript = function (pageData, dataColumnWindowsTitle, dataColumnFileToDownload) {
-	let _windowTitle = testDataModule.getExcelTestData(pageData, dataColumnWindowsTitle);
-	let _fileToDownload = testDataModule.getExcelTestData(pageData, dataColumnFileToDownload);
-	try {
-		autoModule.downloadFileIEAutoitXScript(_windowTitle,_fileToDownload);
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
-};
-
-exports.closeDownloadIEAutoitXScript = function () {
-	try {
-		autoModule.closeDownloadIEAutoitXScript();
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
-};
-
-exports.windowSecurityIEAutoitXScript = function (pageData, dataColumnUserName, dataColumnPassword) {
-	let _username = testDataModule.getExcelTestData(pageData, dataColumnUserName);
-	let _password = testDataModule.getExcelTestData(pageData, dataColumnPassword);
-	try {
-		autoModule.windowSecurityIEAutoitXScript(_username,_password);
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
-};
-
-exports.loginAutoitXScript = function (pageData, dataColumnUserName, dataColumnPassword) {
-	let _username = testDataModule.getExcelTestData(pageData, dataColumnUserName);
-	let _password = testDataModule.getExcelTestData(pageData, dataColumnPassword);
-	try {
-		autoModule.loginAutoitXScript(_username,_password);
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
-};
-
-exports.printIEAutoitXScript = function () {
-	try {
-		autoModule.printIEAutoitXScript();
-		return true;
-	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
-	}
-};
-
-exports.printChromeAutoitXScript = function () {
-	try {
-		autoModule.printChromeAutoitXScript();
+		cmdModule.listAutoStartPrograms();
+		console.log(`Fetching list Auto Start Programs`);
 		return true;
 	} catch (error) {
 		console.error(`error: ${error.message}`);
@@ -1389,6 +1447,13 @@ exports.printChromeAutoitXScript = function () {
  ********************* Execute Methods *********************
  **********************************************************/
 
+/**
+ * Executing .bat/.exe file 
+ * 
+ * @param fileName: bat/exe file to be execute form data sheet
+ * @param timeOut: sleep until .exe/.bat is to be executed from data sheet
+ * @returns: true/false
+ */
 exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOut) {
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	let _timeOutInMiliSeconds = testDataModule.getExcelTestData(pageData, dataColumnFileName);
@@ -1396,7 +1461,8 @@ exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOu
 		setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
 			// boolean === true (passing values is optional)
 			// This is executed after about ${_timeOutInMiliSeconds} milliseconds.
-			autoModule.executeExeFile(_fileName);
+			cmdModule.executeExeFile(_fileName);
+			console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
 		});
 		return true;
 	} catch (error) {
@@ -1405,12 +1471,20 @@ exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOu
 	}
 };
 
+/**
+ * Executing .bat/.exe file 
+ * 
+ * @param fileName: bat/exe file to be execute
+ * @param timeOut: sleep until .exe/.bat is to be executed
+ * @returns: true/false
+ */
 exports.executeExeFile = function(_fileName, _timeOutInMiliSeconds) {
 	try {
 		setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
 			// boolean === true (passing values is optional)
 			// This is executed after about ${_timeOutInMiliSeconds} milliseconds.
-			autoModule.executeExeFile(_fileName);
+			cmdModule.executeExeFile(_fileName);
+			console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
 		});
 		return true;
 	} catch (error) {
