@@ -163,7 +163,7 @@ exports.back = function () {
 };
 
 /**
- * Refreshs the browser page
+ * Refresh the browser page
  */
 exports.refresh = function () {
 	browser.navigate().refresh().then(() => {
