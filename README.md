@@ -47,7 +47,7 @@
 		'download': {
 			'prompt_for_download': false,
 			'directory_upgrade': true,
-			'default_directory': '/Users/shankerthebunker/git/WebsiteAutomation' + '/test/e2e/resources/downloads/'
+			'default_directory': projectPath + '/test/e2e/resources/downloads/'
 		}
 	}
 }
