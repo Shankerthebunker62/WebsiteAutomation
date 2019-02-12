@@ -6,6 +6,8 @@
  *                                        						       *
  ***********************************************************************/
 
+//https://docs.microsoft.com/en-us/outlook/rest/node-tutorial
+
 // Project location path
 const dirPath = browser.params.dirPath;
 
@@ -14,3 +16,6 @@ let emailjs = require('emailjs').email;
 
 // https://www.npmjs.com/package/nodemailer
 let nodemailer = require('nodemailer');
+
+// https://www.npmjs.com/package/node-ews
+const EWS = require('node-ews');
