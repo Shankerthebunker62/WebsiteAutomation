@@ -9,13 +9,16 @@
 // Project location path
 const dirPath = browser.params.dirPath;
 
+// Application Name
+const appName = browser.params.appName;
+
 let XLSX = require('xlsx');
 
 /**
  * read testData.xlsx using 'npm xlsx'
  */
 readTestData = function () {
-	let workbook = XLSX.readFile(dirPath + '/test/e2e/resources/testData.xlsx');
+	let workbook = XLSX.readFile(dirPath + '/test/apps/' + appName + '/testData.xlsx');
 	return workbook;
 }
 

@@ -1,13 +1,28 @@
-/*******************************************************************************
- * * Author: Siddharth Shanker * Date: December, 2018. * GitHub:
- * https://github.com/Shankerthebunker62/WebsiteAutomation.git * *
- ******************************************************************************/
+/***********************************************************************
+ *                                        						       *
+ * Author: Siddharth Shanker               						       *
+ * Date: December, 2018.                            			   	   *
+ * GitHub: https://github.com/Shankerthebunker62/WebsiteAutomation.git *
+ *                                        						       *
+ ***********************************************************************/
 
 // Project location path
 const dirPath = browser.params.dirPath;
 
-// https://www.npmjs.com/package/fs-js
-let fs = require('fs-js');
+// https://www.w3schools.com/nodejs/nodejs_filesystem.asp
+let fs = require('fs');
+
+let os = require('os');
+
+// HTML Report Output file
+const fileName = browser.params.fileName;
+const reportHeader = browser.params.reportHeader;
+const feature = browser.params.feature;
+const environment = browser.params.environment;
+const testType = browser.params.testType;
+
+const operatingSystem = operatingSystem;
+const browser = browser;
 
 let heading = (`<!DOCTYPE HTML>
 <html>
@@ -786,7 +801,84 @@ table td[class*=\"col-\"], table th[class*=\"col-\"] {
 		</tr>
 	</table>
 
-	<table class='table table-striped' border='1'>`);
+	<table class='table table-striped' border='1'>
+		<tr>
+			<th>Sl.No.</th>
+			<th>Test Purpose</th>
+		</tr>
+		<tr>`);
 
+let mainTestBody = (`<td align='center'>${mainTestIndex}</td>
+			<td>${testPurpose}<br> <br>
+				<table class='table table-striped' border='1'>
+					<tr>
+						<th>Sl.No.</th>
+						<th>Pass/Fail</th>
+						<th>Sub Test Case</th>
+						<th>Expected Result</th>
+						<th>Actual Result</th>
+					</tr>`);
+
+let subTestBody = (`<tr>
+						<td align='center'>${subTestCount}</td>
+						<td align='center'><font color='${fontColour}'>${status}</font></td>
+						<td>${testStepPurpose}</td>
+						<td>${expectedResult}</td>
+						<td>${actualResult} ${imageAppender}</td>
+					</tr>`);
+
+let mainTestBodyEnd = (`</table>
+			</td>
+		</tr>`);
+
+let headingEnd = (`</table>
+		</body>
+		</html>`);
+	
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
+
+exports.createSummaryOutputFile = function () {
+	fs.unlink(fileName, function (err) {
+		if (err) throw err;
+		console.log('File deleted!');
+	});
+	
+	fs.open(fileName, 'w', function (err, file) {
+		if (err) throw err;
+		console.log('File Created!');
+	});
+	
+	fs.writeFile(fileName, heading, function (err) {
+		if (err) throw err;
+		console.log('Heading Added!');
+	});
+};
+
+exports.createMainTestBody = function () {
+	fs.writeFile(fileName, mainTestBody, function (err) {
+		if (err) throw err;
+		console.log('Main Test Body Added!');
+	});
+};
+
+exports.createSubTestBody = function () {
+	fs.writeFile(fileName, mainTestBody, function (err) {
+		if (err) throw err;
+		console.log('Main Test Body Added!');
+	});
+};
+
+exports.createMainTestBodyEnd = function () {
+	fs.writeFile(fileName, mainTestBodyEnd, function (err) {
+		if (err) throw err;
+		console.log('Main Test BodyEnded!');
+	});
+};
+
+exports.finalizeSummaryOutputFile = function() {
+	fs.writeFile(fileName, headingEnd, function (err) {
+		if (err) throw err;
+		console.log('Heading Ended!');
+	});
+};

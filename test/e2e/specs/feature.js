@@ -9,7 +9,12 @@
 // Project location path
 const dirPath = browser.params.dirPath;
 
-const SuperCalculator = require(dirPath + '/test/e2e/scripts/scriptModule.js');
+// Application Name
+const appName = browser.params.appName;
+
+let report = require(dirPath + '/test/e2e/utils/report/reportModule.js');
+
+const SuperCalculator = require(dirPath + '/test/apps/' + appName + '/scriptModule.js');
 let _SuperCalculator = new SuperCalculator();
 
 const testCasePurpose01 = 'Protractor Demo App 01';

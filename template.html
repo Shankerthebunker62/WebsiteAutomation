@@ -3,6 +3,7 @@
 <head>
 <title>${automationReport}</title>
 <style>
+
 html {
 	font-family: sans-serif;
 	-ms-text-size-adjust: 100%;
@@ -23,72 +24,9 @@ audio, canvas, progress, video {
 	vertical-align: baseline
 }
 
-audio
-
-
-
-
-
-
-:not
-
-
-
- 
-
-
-
-(
-[
-controls
-]
-
-
-
- 
-
-
-
-){
-display
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-none
-
-
-
-
-
-
-;
-height
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-0
+audio:not([controls]){
+	display:none;
+	height:0
 }
 [hidden], template {
 	display: none
@@ -147,55 +85,8 @@ img {
 	border: 0
 }
 
-svg
-
-
-
-
-
-
-:not
-
-
-
- 
-
-
-
-(
-:root
-
-
-
- 
-
-
-
-){
-overflow
-
-
-
-
-
-
-:
-
-
-
- 
-
-
-
-hidden
-
-
-
-
-
-
-
-
+svg:not(:root){
+	overflow:hidden
 }
 figure {
 	margin: 1em 40px
@@ -832,15 +723,15 @@ table td[class*=\"col-\"], table th[class*=\"col-\"] {
 					</tr>
 					<tr>
 						<th>Execution Start Time</th>
-						<td>${ExecutionStartTime}</td>
+						<td>${executionStartTime}</td>
 					</tr>
 					<tr>
 						<th>Execution End Time</th>
-						<td>${ExecutionEndTime}</td>
+						<td>${executionEndTime}</td>
 					</tr>
 					<tr>
 						<th>Execution Duration</th>
-						<td>${ExecutionDuratione}</td>
+						<td>${executionDuratione}</td>
 					</tr>
 				</table>
 			</td>
@@ -888,6 +779,76 @@ table td[class*=\"col-\"], table th[class*=\"col-\"] {
 		<tr>
 			<th>Sl.No.</th>
 			<th>Test Purpose</th>
+		</tr>
+		<tr>
+			<td align='center'>${mainTestIndex}</td>
+			<td>${testPurpose}<br> <br>
+				<table class='table table-striped' border='1'>
+					<tr>
+						<th>Sl.No.</th>
+						<th>Pass/Fail</th>
+						<th>Sub Test Case</th>
+						<th>Expected Result</th>
+						<th>Actual Result</th>
+					</tr>
+					<tr>
+						<td align='center'>${subTestCount}</td>
+						<td align='center'><font color='${fontColour}'>${status}</font></td>
+						<td>${testStepPurpose}</td>
+						<td>${expectedResult}</td>
+						<td>${actualResult} ${imageAppender}</td>
+					</tr>
+					<tr>
+						<td align='center'>${subTestCount}</td>
+						<td align='center'><font color='${fontColour}'>${status}</font></td>
+						<td>${testStepPurpose}</td>
+						<td>${expectedResult}</td>
+						<td>${actualResult} ${imageAppender}</td>
+					</tr>
+					<tr>
+						<td align='center'>${subTestCount}</td>
+						<td align='center'><font color='${fontColour}'>${status}</font></td>
+						<td>${testStepPurpose}</td>
+						<td>${expectedResult}</td>
+						<td>${actualResult} ${imageAppender}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align='center'>${mainTestIndex}</td>
+			<td>${testPurpose}<br> <br>
+				<table class='table table-striped' border='1'>
+					<tr>
+						<th>Sl.No.</th>
+						<th>Pass/Fail</th>
+						<th>Sub Test Case</font></th>
+						<th>Expected Result</th>
+						<th>Actual Result</th>
+					</tr>
+					<tr>
+						<td align='center'>${subTestCount}</td>
+						<td align='center'><font color='${fontColour}'>${status}</font></td>
+						<td>${testStepPurpose}</td>
+						<td>${expectedResult}</td>
+						<td>${actualResult} ${imageAppender}</td>
+					</tr>
+					<tr>
+						<td align='center'>${subTestCount}</td>
+						<td align='center'><font color='${fontColour}'>${status}</font></td>
+						<td>${testStepPurpose}</td>
+						<td>${expectedResult}</td>
+						<td>${actualResult} ${imageAppender}</td>
+					</tr>
+					<tr>
+						<td align='center'>${subTestCount}</td>
+						<td align='center'><font color='${fontColour}'>${status}</font></td>
+						<td>${testStepPurpose}</td>
+						<td>${expectedResult}</td>
+						<td>${actualResult} ${imageAppender}</td>
+					</tr>
+				</table>
+			</td>
 		</tr>
 		<tr>
 			<td align='center'>${mainTestIndex}</td>

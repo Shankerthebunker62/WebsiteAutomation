@@ -36,8 +36,8 @@ const conditionsModule = require(dirPath + '/test/e2e/utils/additional/condition
 /**
  * autoIt/Shell/CMD/Bat/OAScript method to be used
  */
-const cmdModule = require(dirPath + '/test/e2e/utils/process/cmdModule.js');
-const shellModule = require(dirPath + '/test/e2e/utils/process/shellModule.js');
+const cmdModule = require(dirPath + '/test/e2e/utils/script/cmdModule.js');
+const shellModule = require(dirPath + '/test/e2e/utils/script/shellModule.js');
 
 /**
  * DB Validation method to be used

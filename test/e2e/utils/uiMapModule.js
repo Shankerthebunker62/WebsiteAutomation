@@ -6,17 +6,21 @@
  *                                        						       *
  ***********************************************************************/
 
-//Project location path
+// Project location path
 const dirPath = browser.params.dirPath;
+
+// Application Name
+const appName = browser.params.appName;
 
 let XLSX = require('xlsx');
 
 const TIMEOUT_IN_MILISECONDS = 500;
+
 /**
  * read uiMap.xlsx using 'npm xlsx'
  */
 readUIMap = function() {
-	let workbook = XLSX.readFile(dirPath + '/test/e2e/resources/uiMap.xlsx');
+	let workbook = XLSX.readFile(dirPath + '/test/apps/' + appName + '/uiMap.xlsx');
 	return workbook;
 }
 
