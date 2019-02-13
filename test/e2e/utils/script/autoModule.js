@@ -38,7 +38,7 @@ exports.uploadFileIEAutoitXScript = function (_windowTitle, _fileToUpload) {
 		auto.controlClick(_windowTitle, '', 'Button1');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -60,7 +60,7 @@ exports.downloadFileIEAutoitXScript = function (_windowTitle, _fileToDownload) {
 		autoit.ControlSetText('Save As', '', 'Edit1', _uploadPath + _fileToDownload);
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -78,7 +78,7 @@ exports.closeDownloadIEAutoitXScript = function () {
 		autoit.Send('{ENTER}');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -98,7 +98,7 @@ exports.windowSecurityIEAutoitXScript = function (_username, _password) {
 		autoit.controlClick('Windows Security', '', 'Button2');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -114,7 +114,7 @@ exports.loginAutoitXScript = function (_username, _password) {
 		autoit.Send('{ENTER}');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -130,7 +130,7 @@ exports.printIEAutoitXScript = function () {
 		autoit.Send('{ESC}');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -140,6 +140,6 @@ exports.printChromeAutoitXScript = function () {
 		autoit.Send('{ENTER}');
 		autoit.Sleep(TIMEOUT_IN_MILISECONDS);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };

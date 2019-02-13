@@ -851,14 +851,14 @@ exports.createSummaryOutput = function () {
 	
 	fs.unlink(fileName, function (error) {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log('File deleted!');
 	});
 	
 	fs.open(fileName, 'w', function (error, file) {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log(`File: ${file}`);
 		console.log('File Created!');
@@ -866,7 +866,7 @@ exports.createSummaryOutput = function () {
 	
 	fs.writeFile(fileName, heading, function (error) {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log('Heading Added!');
 	});
@@ -889,7 +889,7 @@ exports.createSummaryOutputMainTestBody = function (testPurpose) {
 	
 	fs.appendFile(fileName, mainTestBody, function (error) {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log('Main Test Body Added!');
 	});
@@ -932,7 +932,7 @@ exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResu
 	
 	fs.appendFile(fileName, mainTestBody, function (error) {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log('Main Test Body Added!');
 	});
@@ -947,7 +947,7 @@ exports.createSummaryOutputMainTestBodyEnd = function () {
 	
 	fs.appendFile(fileName, mainTestBodyEnd, function (error) {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log('Main Test BodyEnded!');
 	});
@@ -960,14 +960,14 @@ exports.finalizeSummaryOutput = function() {
 	
 	fs.appendFile(fileName, headingEnd, function (error) {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log('Heading Ended!');
 	});
 	
 	fs.readFile(fileName, 'utf8', (error, data) => {
 		if (error) {
-			console.error(`error: ${error.message}`);
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		} else {
 			console.log(data);
 			
@@ -984,7 +984,7 @@ exports.finalizeSummaryOutput = function() {
 			
 			fs.writeFile(fileName, data, function (error) {
 				if (error) {
-					console.error(`error: ${error.message}`);
+					console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 				}
 				console.log('Finalized Automation Report!');
 			});

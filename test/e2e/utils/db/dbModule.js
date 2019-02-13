@@ -39,8 +39,11 @@ exports.executeMySqlQuery = function (_host, _user, _password, _database, _query
 	
 	connection.connect(function(err) {
 		if (err) throw err;
-		connection.query(_query, function (err, result, fields) {
-			if (err) throw err;
+		connection.query(_query, function (error, result, fields) {
+			if (error) {
+				console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+				throw error;
+			}
 			console.log(`Query: ${_query} fetches Result: ${result}`);
 			console.log(`${fields}`);
 			_result = result;
@@ -65,7 +68,7 @@ exports.executeMSSQLQuery = function (_server, _user, _password, _database, _que
 		    }
 	};
 	
-	mssql.connect(config, err => {
+	mssql.connect(config, error => {
 		// ... error checks
 		
 		const request = new mssql.Request();
@@ -78,8 +81,9 @@ exports.executeMSSQLQuery = function (_server, _user, _password, _database, _que
 	    request.on('row', row => {
 	        // Emitted for each row in a recordset
 	    });
-	    request.on('error', err => {
+	    request.on('error', error => {
 	        // May be emitted multiple times
+	    	console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	    });
 	    request.on('done', result => {
 	        // Always emitted as the last one
@@ -88,8 +92,9 @@ exports.executeMSSQLQuery = function (_server, _user, _password, _database, _que
 	    });
 	});
 	
-	mssql.on('error', err => {
+	mssql.on('error', error => {
 	    // ... error handler
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
 	return _result;
@@ -109,14 +114,16 @@ exports.executeOracleDBQuery = function (_server, _user, _password, _database, _
 		user          : _user,
 		password      : _password,
 		connectString : _server
-	}, function(err, connection) {
-			if (err) { 
-				console.error(err.message); return; 
+	}, function(error, connection) {
+			if (error) { 
+				console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+				return; 
 			}
 			connection.execute(_query,
 			      function(err, result) {
 			        if (err) { 
-			        	console.error(err.message); return; 
+			        	console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+			        	return; 
 			        }
 			        console.log(result.rows);
 			        _result = result.rows;

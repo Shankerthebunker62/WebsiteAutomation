@@ -80,16 +80,20 @@ let uuid = require('uuid');
 exports.launchApplication = function(pageData, dataColumn) {
 	let _url = testDataModule.getExcelTestData(pageData, dataColumn);
 	
+	let _result = true;
+	
 	browser.get(_url).then(() => {
 		console.log(`Opening URL ${_url} ...`);
 	}).catch((error) => {
-		console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 		
 	browser.driver.getSession().then((session) => {
 		console.log(session);
 	}).catch((error) => {
-		console.error(`Couldn't get browser session !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -99,10 +103,13 @@ exports.launchApplication = function(pageData, dataColumn) {
  * @return return type of action boolean (true/false)
  */
 exports.close = function () {
+	let _result = true;
+	
 	browser.close().then(() => {
 		console.log(`Closing browser ...`);
 	}).catch((error) => {
-		console.error(`Couldn't close browser !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't close browser !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -110,10 +117,13 @@ exports.close = function () {
  * Maximize current window on focus
  */
 exports.maximize = function () {
+	let _result = true;
+	
 	browser.driver.manage().window().maximize().then(() => {
 		console.log(`Maximizing browser window ...`);
 	}).catch((error) => {
-		console.error(`Couldn't maximize browser window !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't maximize browser window !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -121,10 +131,13 @@ exports.maximize = function () {
  * Clears all cookies on the browser
  */
 exports.clearCokkies = function () {
+	let _result = true;
+	
 	browser.manage().deleteAllCookies().then(() => {
 		console.log(`Deleting cookies ...`);
 	}).catch((error) => {
-		console.error(`Couldn't delete cookies !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't delete cookies !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -132,16 +145,20 @@ exports.clearCokkies = function () {
  * Clears any user/non-user session currently active on the browser
  */
 exports.clearSession = function () {
+	let _result = true;
+	
 	browser.executeScript('window.sessionStorage.clear();').then(() => {
 		console.log(`Executing window.sessionStorage.clear() ...`);
 	}).catch((error) => {
-		console.error(`Couldn't execute window.sessionStorage.clear() !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't execute window.sessionStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 		
 	browser.executeScript('window.localStorage.clear();').then(() => {
 		console.log(`Executing window.localStorage.clear() ...`);
 	}).catch((error) => {
-		console.error(`Couldn't execute window.localStorage.clear() !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't execute window.localStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -149,10 +166,13 @@ exports.clearSession = function () {
  * Restarts the browser instance
  */
 exports.restart = function () {
+	let _result = true;
+	
 	browser.restart().then(() => {
 		console.log(`Closing and Restarting browser ...`);
 	}).catch((error) => {
-		console.error(`Couldn't restart !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't restart !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -160,10 +180,13 @@ exports.restart = function () {
  * Navigate back a page on the browser
  */
 exports.back = function () {
+	let _result = true;
+	
 	browser.navigate().back().then(() => {
 		console.log(`Navigating back ...`);
 	}).catch((error) => {
-		console.error(`Couldn't navigate back !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't navigate back !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -171,10 +194,13 @@ exports.back = function () {
  * Refresh the browser page
  */
 exports.refresh = function () {
+	let _result = true;
+	
 	browser.navigate().refresh().then(() => {
 		console.log(`Refreshing ...`);
 	}).catch((error) => {
-		console.error(`Couldn't refresh !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't refresh !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -184,10 +210,13 @@ exports.refresh = function () {
  * @param _sleepTimeOutInMilliSeconds: sleep Time Out In MilliSeconds
  */
 exports.sleep = function (_sleepTimeOutInMilliSeconds) {
+	let _result = true;
+	
 	browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
 		console.log(`Waiting ...`);
 	}).catch((error) => {
-		 console.error(`Couldn't wait !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -197,10 +226,13 @@ exports.sleep = function (_sleepTimeOutInMilliSeconds) {
  * @param _sleepTimeOutInMilliSeconds: sleep Time Out In MilliSeconds
  */
 exports.driverSleep = function (_sleepTimeOutInMilliSeconds) {
+	let _result = true;
+	
 	browser.driver.sleep(_sleepTimeOutInMilliSeconds).then(() => {
 		console.log(`Waiting ...`);
 	}).catch((error) => {
-		 console.error(`Couldn't wait !!, error: ${error.message}`);
+		_result = false;
+		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -208,16 +240,20 @@ exports.driverSleep = function (_sleepTimeOutInMilliSeconds) {
  * Checks for an alert on the page and, dismisses it
  */
 exports.dismissAlert  = function () {
+	let _result = true;
+	
 	conditionsModule.alertIsPresent().then(() => {
 		console.log(`Alert is found`);
 		
 		browser.switchTo().alert().dismiss().then(() => {
 			console.log(`Alert is found and, dismissed`);
 		}).catch((error) => {
-		    console.error(`Alert dismiss failed, error: ${error.message}`);
+			_result = false;
+		    console.error(`Alert dismiss failed, error: ${error.message}, stackTrace ${error.stack}`);
 		});
       }).catch((error) => {
-        console.error(`Alert is not found, error: ${error.message}`);
+    	  _result = false;
+    	  console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
       });
 };
 
@@ -225,16 +261,20 @@ exports.dismissAlert  = function () {
  * Checks for an alert on the page and, accepts it
  */
 exports.acceptAlert  = function () {
+	let _result = true;
+	
 	conditionsModule.alertIsPresent().then(() => {
 		console.log(`Alert is found`);
 		
 		browser.switchTo().alert().accept().then(() => {
 			console.log(`Alert is found and, accepted`);
 		}).catch((error) => {
-			console.error(`Alert accept failed, error: ${error.message}`);
+			_result = false;
+			console.error(`Alert accept failed, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	}).catch((error) => {
-	    console.error(`Alert is not found, error: ${error.message}`);
+		_result = false;
+	    console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -269,7 +309,8 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
 			console.log(`Failed to switch to window handle with title ${_testData}`);
 		
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -279,16 +320,20 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
  * @param elementName: element of frame
  */
 exports.switchToFrame = function(elementName) {
+	let _result = true;
+	
+	let _element = uiMapModule.getExcelUIMap(elementName);
+	
 	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		
 		browser.switchTo().frame(_element).then(() => {
 			console.log(`Switched to frame ${elementName}`);
 		}).catch((error) => {
-			console.error(`Failed to switch to frame ${elementName}, error: ${error.message}`);
+			_result = false;
+			console.error(`Failed to switch to frame ${elementName}, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -296,15 +341,18 @@ exports.switchToFrame = function(elementName) {
  * switchToDefaultContent: switching out of any/all frames
  */
 exports.switchToDefaultContent = function() {
+	let _result = true;
+	
 	try {
 		browser.switchTo().defaultContent().then(() => {
 			console.log(`Switching back from frame`);
 		}).catch((error) => {
-			console.error(`Switching back from frame failed, error: ${error.message}`);
+			_result = false;
+			console.error(`Switching back from frame failed, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return null;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -323,7 +371,7 @@ exports.getWebElement = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		return _element;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return null;
 	}
 };
@@ -339,7 +387,7 @@ exports.getWebElements = function (elementName) {
 		let _elements = uiMapModule.getExcelUIMapList(elementName);
 		return _elements;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return null;
 	}
 };
@@ -360,7 +408,7 @@ exports.getTestData = function (pageData, dataColumn) {
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return _testData;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return null;
 	}
 };
@@ -376,14 +424,17 @@ exports.getTestData = function (pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.fileUpload = function (elementName, pageData, dataColumn) {	
+exports.fileUpload = function (elementName, pageData, dataColumn) {
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = uploadPath + testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.sendKeys(_testData).then(() => {
 		console.log(`Element ${elementName} setValue ${_testData} is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -395,19 +446,23 @@ exports.fileUpload = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.setValue = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 		
 	_element.sendKeys(_testData).then(() => {
 		console.log(`Element ${elementName} setValue ${_testData} is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -419,6 +474,8 @@ exports.setValue = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.setValueRandom = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
@@ -430,13 +487,15 @@ exports.setValueRandom = function (elementName, pageData, dataColumn) {
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 		
 	_element.sendKeys(_testData).then(() => {
 		console.log(`Element ${elementName} setValue ${_testData} is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -448,6 +507,8 @@ exports.setValueRandom = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
@@ -459,13 +520,15 @@ exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 		
 	_element.sendKeys(_testData).then(() => {
 		console.log(`Element ${elementName} setValue ${_testData} is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -477,19 +540,23 @@ exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.setValueEnter = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 		
 	_element.sendKeys(_testData + protractor.Key.ENTER).then(() => {
 		console.log(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is passed`);
 	}).catch((error) => {
-	   console.error(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is failed, error: ${error.message}`);
+		_result = false;
+		console.error(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -501,13 +568,16 @@ exports.setValueEnter = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.setValueCharByChar = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.clear().then(() => {
 		console.log(`Element ${elementName} clear is passed`);
       }).catch((error) => {
-        console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+    	  _result = false;
+    	  console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
       });
 	
 	let chars = _testData.split('');
@@ -516,20 +586,23 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
 		_element.sendKeys(chars[i]).then(() => {
 			console.log(`Element ${elementName} setValue ${chars[i]} is passed`);
 	      }).catch((error) => {
-	        console.error(`Element ${elementName} setValue ${chars[i]} is failed, error: ${error.message}`);
+	    	  _result = false;
+	    	  console.error(`Element ${elementName} setValue ${chars[i]} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	      });
 		
 		browser.sleep(250).then(() => {
 			console.log(`Waiting ...`);
 		}).catch((error) => {
-			 console.error(`Couldn't wait !!, error: ${error.message}`);
+			_result = false;
+			console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	}
 	
 	_element.sendKeys(protractor.Key.ENTER).then(() => {
 		console.log(`Element ${elementName} send keys enter is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -541,13 +614,16 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.select = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	_element.sendKeys(_testData).then(() => {
 		console.log(`Element ${elementName} select data ${_testData} is passed`);
 	 }).catch((error) => {
-	    console.error(`Element ${elementName} select data ${_testData} is failed, error: ${error.message}`);
+		 _result = false;
+	    console.error(`Element ${elementName} select data ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 };
 
@@ -557,12 +633,15 @@ exports.select = function (elementName, pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  */
 exports.sendKeysEnter = function (elementName) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_element.sendKeys(protractor.Key.ENTER).then(() => {
 		console.log(`Element ${elementName} send keys enter is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -572,12 +651,15 @@ exports.sendKeysEnter = function (elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.clear = function (elementName) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_element.clear().then((isTrue) => {
 		console.log(`Element ${elementName} clear is passed`);
 	 }).catch((error) => {
-	   console.error(`Element ${elementName} clear is failed, error: ${error.message}`);
+		 _result = false;
+		 console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 };
 
@@ -593,6 +675,8 @@ exports.clear = function (elementName) {
  * @param dataColumn: column under which test data is to found
  */
 exports.verifySelectOption = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
@@ -601,6 +685,7 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
 	        	console.log(`Element ${elementName} selected option ${_testData} to ${text} is passed`);
 	        } else {
+	        	_result = false;
 	        	console.log(`Element ${elementName} selected option ${_testData} to ${text} is failed`);
 	        }
 		});
@@ -608,7 +693,8 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 		let _data = element(_element.locator()).$('option:checked').getText();
 		expect(_data).toContain(_testData);
 	} catch (error) {
-		console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+		console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -620,6 +706,8 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.verifyValue = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
@@ -628,6 +716,7 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
 	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
 	        	console.log(`Element ${elementName} get value ${_testData} to ${text} is passed`);
 	        } else {
+	        	_result = false;
 	        	console.log(`Element ${elementName} get value ${_testData} to ${text} is failed`);
 	        }
 		});
@@ -635,7 +724,8 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
 		let _data = _element.getAttribute('value');
 		expect(_data).toContain(_testData);
 	} catch (error) {
-		console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+		console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -647,6 +737,8 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.verifyText = function (elementName, pageData, dataColumn) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
@@ -655,6 +747,7 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
 	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
 	        	console.log(`Element ${elementName} get text ${_testData} to ${text} is passed`);
 	        } else {
+	        	_result = false;
 	        	console.error(`Element ${elementName} get text ${_testData} to ${text} is failed`);
 	        }
 		});
@@ -662,7 +755,8 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
 		let _data = _element.getText();
 		expect(_data).toContain(_testData);
 	} catch (error) {
-		console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+		console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -673,6 +767,8 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.verifyPageTitle = function(pageData, dataColumn) {	
+	let _result = true;
+	
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	try {
@@ -680,6 +776,7 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
 	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
 	        	console.log(`Verify title ${_testData} to ${_data} is passed`);
 	        } else {
+	        	_result = false;
 	        	console.log(`Verify title ${_testData} to ${_data} is failed`);
 	        }
 		});
@@ -687,7 +784,8 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
 		let _data = browser.getTitle();
 		expect(_data).toContain(_testData);
 	} catch (error) {
-		console.error(`Verify title ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+		console.error(`Verify title ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -698,6 +796,8 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
  * @param dataColumn: column under which test data is to found
  */
 exports.verifyAlertText = function (pageData, dataColumn) {	
+	let _result = true;
+	
 	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	try {
@@ -707,6 +807,7 @@ exports.verifyAlertText = function (pageData, dataColumn) {
 	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
 	        	console.log(`Alert get text ${_testData} to ${text} is passed`);
 	        } else {
+	        	_result = false;
 	        	console.error(`Alert get text ${_testData} to ${text} is failed`);
 	        }
 		});
@@ -714,7 +815,8 @@ exports.verifyAlertText = function (pageData, dataColumn) {
 		let _data = browser.switchTo().alert().getText();
 		expect(_data).toContain(_testData);
 	} catch (error) {
-		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}`);
+		_result = false;
+		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -724,6 +826,8 @@ exports.verifyAlertText = function (pageData, dataColumn) {
  * @param elementName: element created to web page interaction
  */
 exports.verifyElementIsDisplayed = function(elementName) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	try {
@@ -733,10 +837,12 @@ exports.verifyElementIsDisplayed = function(elementName) {
         if (isDisplayed) {
 	        console.log(`Element ${elementName} is displayed passed`);
         } else {
+        	_result = false;
         	console.log(`Element ${elementName} is displayed failed`);
         }
 	} catch (error) {
-		console.error(`Element ${elementName} is displayed failed, error: ${error.message}`);
+		_result = false;
+		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -746,6 +852,8 @@ exports.verifyElementIsDisplayed = function(elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.verifyElementIsNotPresent = function(elementName) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	try {
@@ -755,10 +863,12 @@ exports.verifyElementIsNotPresent = function(elementName) {
         if (!isPresent) {
 	        console.log(`Element ${elementName} is not displayed passed`);
         } else {
+        	_result = false;
         	console.log(`Element ${elementName} is displayed failed`);
         }
 	} catch (error) {
-		console.error(`Element ${elementName} is displayed failed, error: ${error.message}`);
+		_result = false;
+		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -772,12 +882,15 @@ exports.verifyElementIsNotPresent = function(elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.click = function (elementName) {	
+	let _result = true;
+	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_element.click().then(() => {
 		console.log(`Element ${elementName} click is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} click is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} click is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -787,13 +900,16 @@ exports.click = function (elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.doubleClick = function(elementName) {
+	let _result = true;
+	
 	let _action = browser.actions();
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_action.doubleClick(_element).perform().then(() => {
 		console.log(`Element ${elementName} mouse double click is passed`);
 	}).catch((error) => {
-	    console.error(`Element ${elementName} mouse double click is failed, error: ${error.message}`);
+		_result = false;
+	    console.error(`Element ${elementName} mouse double click is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };
 
@@ -803,19 +919,23 @@ exports.doubleClick = function(elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.rightClick = function(elementName) {
+	let _result = true;
+	
 	let _action = browser.actions();
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_action.mouseMove(_element.getLocation()).perform().then(() => {
 		console.log(`Element ${elementName} mouse move is passed`);
 	 }).catch((error) => {
-	    console.error(`Element ${elementName} mouse move is failed, error: ${error.message}`);
+		 _result = false;
+	    console.error(`Element ${elementName} mouse move is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 		
 	_action.click(protractor.Button.RIGHT).perform().then(() => {
 		console.log(`Element ${elementName} mouse click right is passed`);
 	 }).catch((error) => {
-	    console.error(`Element ${elementName} mouse click right is failed, error: ${error.message}`);
+		 _result = false;
+	    console.error(`Element ${elementName} mouse click right is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 };
 
@@ -825,13 +945,16 @@ exports.rightClick = function(elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.mouseHoverAction = function(elementName) {
+	let _result = true;
+	
 	let _action = browser.actions();	
 	let _element = uiMapModule.getExcelUIMap(elementName);
 	
 	_action.mouseMove(_element).perform().then(() => {
 		console.log(`Element ${elementName} mouse over is passed`);
 	 }).catch((error) => {
-	    console.error(`Element ${elementName} mouse over is failed, error: ${error.message}`);
+		 _result = false;
+	    console.error(`Element ${elementName} mouse over is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 };
 
@@ -842,6 +965,8 @@ exports.mouseHoverAction = function(elementName) {
  * @param elementTo: element created to be dragged fromto
  */
 exports.dragAndDrop = function (elementFrom, elementTo) {
+	let _result = true;
+	
 	let _action = browser.actions();	
 	let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
 	let _toElement = uiMapModule.getExcelUIMap(elementTo);
@@ -849,7 +974,8 @@ exports.dragAndDrop = function (elementFrom, elementTo) {
 	_action.dragAndDrop(_fromElement, _toElement).perform().then(() => {
 		console.log(`Element ${elementFrom} drag to Element ${elementTo} is passed`);
     }).catch((error) => {
-      console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}`);
+    	_result = false;
+    	console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     });
 };
 
@@ -868,7 +994,7 @@ exports.checkIfAlertPresent = function () {
 	try {
 		return conditionsModule.alertIsPresent();
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -885,7 +1011,7 @@ exports.checkIfElementClickable = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		return conditionsModule.waitForElementToBeClickable(_element);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -906,7 +1032,7 @@ exports.checkIfElementTextPresent = function (elementName, pageData, dataColumn)
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.waitForElementTextToBePresentIn(_element, _testData);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -927,7 +1053,7 @@ exports.checkIfElementValuePresent = function (elementName, pageData, dataColumn
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.waitForElementTextToBePresentInValue(_element, _testData);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -945,7 +1071,7 @@ exports.checkIfTitleContains = function (pageData, dataColumn) {
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);	
 		return conditionsModule.titleContains(_testData);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -964,7 +1090,7 @@ exports.checkIfTitleIs = function (pageData, dataColumn) {
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.titleIs(_testData);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -982,7 +1108,7 @@ exports.checkIfUrlContains = function (pageData, dataColumn) {
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
 		return conditionsModule.urlContains(_testData);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1001,7 +1127,7 @@ exports.checkIfUrlIs = function (pageData, dataColumn) {
 		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);		
 		return conditionsModule.urlIs(_testData);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1018,7 +1144,7 @@ exports.checkIfElementPresent = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);	
 		return conditionsModule.waitForElementPresenceOf(_element);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1035,7 +1161,7 @@ exports.checkIfElementStale = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);		
 		return conditionsModule.waitForElementStalenessOf(_element);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1052,7 +1178,7 @@ exports.checkIfElementVisible = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		return conditionsModule.waitForElementVisiblity(_element);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1070,7 +1196,7 @@ exports.checkIfElementInvisible = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		return conditionsModule.waitForElementInvisibilityOf(_element);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1087,7 +1213,7 @@ exports.checkIfElementSelected = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		return conditionsModule.waitForElementToBeSelected(_element);
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1104,7 +1230,7 @@ exports.checkIfElementIsDisplayed = function (elementName) {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		return _element.isDisplayed();
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	}
 };
@@ -1119,28 +1245,34 @@ exports.checkIfElementIsDisplayed = function (elementName) {
  * @param elementName: element to be highlighted
  */
 exports.highlightElement = function (elementName) {
+	let _result = true;
+	
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _element.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
 			console.log(`Giving highlight style to element ${elementName} ...`);
 		}).catch((error) => {
-			console.error(`Couldn't give highlight style to element ${elementName} !!, error: ${error.message}`);
+			_result = false;
+			console.error(`Couldn't give highlight style to element ${elementName} !!, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 		
 		browser.sleep(1000).then(() => {
 			console.log(`Waiting ...`);
 		}).catch((error) => {
-			console.error(`Couldn't wait !!, error: ${error.message}`);
+			_result = false;
+			console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 		
 		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _element.getWebElement(), '').then(() => {
 			console.log(`Removing highlight style to element ${elementName} ...`);
 		}).catch((error) => {
-			console.error(`Couldn't remove highlight style to element ${elementName} !!, error: ${error.message}`);
+			_result = false;
+			console.error(`Couldn't remove highlight style to element ${elementName} !!, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1150,26 +1282,32 @@ exports.highlightElement = function (elementName) {
  * @param _elementName: web element to be highlighted
  */
 exports.highlightWebElement = function (_elementName) {
+	let _result = true;
+	
 	try {
 		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _elementName.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
 			console.log(`Giving highlight style to element ${_elementName.locator()} ...`);
 		}).catch((error) => {
-			console.error(`Couldn't give highlight style to element ${_elementName.locator()} !!, error: ${error.message}`);
+			_result = false;
+			console.error(`Couldn't give highlight style to element ${_elementName.locator()} !!, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 		
 		browser.sleep(2000).then(() => {
 			console.log(`Waiting ...`);
 		}).catch((error) => {
-			console.error(`Couldn't wait !!, error: ${error.message}`);
+			_result = false;
+			console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 		
 		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _elementName.getWebElement(), '').then(() => {
 			console.log(`Removing highlight style to element ${_elementName.locator()} ...`);
 		}).catch((error) => {
-			console.error(`Couldn't remove highlight style to element ${_elementName.locator()} !!, error: ${error.message}`);
+			_result = false;
+			console.error(`Couldn't remove highlight style to element ${_elementName.locator()} !!, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1179,6 +1317,8 @@ exports.highlightWebElement = function (_elementName) {
  * @param elementName: element to unhide/made visible 
  */
 exports.unhideElement = function (elementName) {
+	let _result = true;
+	
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		
@@ -1188,10 +1328,12 @@ exports.unhideElement = function (elementName) {
 		}, _element.getWebElement()).then(() => {
 			console.log(`Making element ${elementName} visible`);
 		}).catch((error) => {
-			console.error(`Failed to make element ${elementName} visible, error: ${error.message}`);
+			_result = false;
+			console.error(`Failed to make element ${elementName} visible, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1201,16 +1343,20 @@ exports.unhideElement = function (elementName) {
  * @param elementName: element on which java script click is to be performed
  */
 exports.javaScriptClick = function (elementName) {
+	let _result = true;
+	
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('arguments[0].click();', _element.getWebElement()).then(() => {
 			console.log(`Java Script click on element ${elementName}`);
 		}).catch((error) => {
-			console.error(`Java Script click on element ${elementName} failed, error: ${error.message}`);
+			_result = false;
+			console.error(`Java Script click on element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 	
@@ -1220,15 +1366,15 @@ exports.javaScriptClick = function (elementName) {
  * @param elementName: element for mouse hover action
  */
 exports.mouseHoverJavaScript = function (elementName) {
+	let _result = true;
+	
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('if(document.createEvent){var evObj = document.createEvent(\'MouseEvents\');evObj.initEvent(\'mouseover\', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent(\'onmouseover\');}', _element.getWebElement());
-		
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };	
 	
@@ -1238,16 +1384,20 @@ exports.mouseHoverJavaScript = function (elementName) {
  * @param elementName: element to be scrolled to
  */
 exports.scrollingToElement = function (elementName) {
+	let _result = true;
+	
 	try {
 		let _element = uiMapModule.getExcelUIMap(elementName);
 		
 		browser.executeScript('arguments[0].scrollIntoView(true);', _element.getWebElement()).then(() => {
 			console.log(`Scrolling onto element ${elementName}`);
 		}).catch((error) => {
-			console.error(`Scrolling onto element ${elementName} failed, error: ${error.message}`);
+			_result = false;
+			console.error(`Scrolling onto element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1259,6 +1409,8 @@ exports.scrollingToElement = function (elementName) {
  * @param elementTo: element created to be dragged fromto
  */
 exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
+	let _result = true;
+	
 	try {
 		let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
 		let _toElement = uiMapModule.getExcelUIMap(elementTo);
@@ -1266,10 +1418,12 @@ exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
 		browser.executeScript(dragAndDrop, _fromElement, _toElement).then(() => {
 			console.log(`drag element ${elementFrom} to element ${elementTo}`);
 		}).catch((error) => {
-			console.error(`drag element ${elementFrom} to element ${elementTo} failed, error: ${error.message}`);
+			_result = false;
+			console.error(`drag element ${elementFrom} to element ${elementTo} failed, error: ${error.message}, stackTrace ${error.stack}`);
 		});
 	} catch (error) {
-		console.error(`error: ${error.message}`);
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };	
 
@@ -1332,14 +1486,15 @@ getTimeStamp = function () {
  * @returns: true/false
  */
 exports.executeOSAScript = function (pageData, dataColumnOAScript) {
+	let _result = true;
+	
 	let _osaScript = testDataModule.getExcelTestData(pageData, dataColumnOAScript);
 	try {
 		shellModule.executeOSAScript(_osaScript);
 		console.log(`Executing ${_osaScript}`);
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1352,15 +1507,16 @@ exports.executeOSAScript = function (pageData, dataColumnOAScript) {
  * @returns: true/false
  */
 exports.executeFileUploadOSAScript = function (pageData, dataColumnFileToUpload, dataColumnBrowserName) {
+	let _result = true;
+	
 	let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
 	let _browserName = testDataModule.getExcelTestData(pageData, dataColumnBrowserName);
 	try {
 		shellModule.executeFileUploadOSAScript(_fileToUpload, _browserName);
 		console.log(`Executing apple script to upload file ${_fileToUpload} on browser ${_browserName}`);
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1375,14 +1531,15 @@ exports.executeFileUploadOSAScript = function (pageData, dataColumnFileToUpload,
  * @returns: true/false
  */
 exports.executeShellFile = function(pageData, dataColumnFileName) {
+	let _result = true;
+	
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	try {
 		shellModule.executeShellFile(_fileName);
 		console.log(`Executing ${_fileName}`);
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1399,16 +1556,17 @@ exports.executeShellFile = function(pageData, dataColumnFileName) {
  * @returns: true/false
  */
 exports.executeFile = function(pageData, dataColumnFileName, dataColumnParams, dataColumnPath) {
+	let _result = true;
+	
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	let _params = testDataModule.getExcelTestData(pageData, dataColumnParams);
 	let _path = testDataModule.getExcelTestData(pageData, dataColumnPath);
 	try {
 		cmdModule.executeFile(_fileName,_params,_path);
 		console.log(`Executing ${_fileName} using param ${_params} on path ${_path}`);
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1419,14 +1577,15 @@ exports.executeFile = function(pageData, dataColumnFileName, dataColumnParams, d
  * @returns: true/false
  */
 exports.executeFile = function(pageData, dataColumnFileName) {
+	let _result = true;
+	
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	try {
 		cmdModule.executeFile(_fileName);
 		console.log(`Executing ${_fileName}`);
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1438,13 +1597,14 @@ exports.executeFile = function(pageData, dataColumnFileName) {
  * Fetch regEdit settings of current user
  */
 exports.listAutoStartPrograms = function() {
+	let _result = true;
+	
 	try {
 		cmdModule.listAutoStartPrograms();
 		console.log(`Fetching list Auto Start Programs`);
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1460,6 +1620,8 @@ exports.listAutoStartPrograms = function() {
  * @returns: true/false
  */
 exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOut) {
+	let _result = true;
+	
 	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	let _timeOutInMiliSeconds = testDataModule.getExcelTestData(pageData, dataColumnFileName);
 	try {
@@ -1469,10 +1631,9 @@ exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOu
 			cmdModule.executeExeFile(_fileName);
 			console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
 		});
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };
 
@@ -1484,6 +1645,8 @@ exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOu
  * @returns: true/false
  */
 exports.executeExeFile = function(_fileName, _timeOutInMiliSeconds) {
+	let _result = true;
+	
 	try {
 		setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
 			// boolean === true (passing values is optional)
@@ -1491,9 +1654,8 @@ exports.executeExeFile = function(_fileName, _timeOutInMiliSeconds) {
 			cmdModule.executeExeFile(_fileName);
 			console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
 		});
-		return true;
 	} catch (error) {
-		console.error(`error: ${error.message}`);
-		return false;
+		_result = false;
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 };

@@ -33,9 +33,12 @@ const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
 
 // _osaScript = can also be script or, '/script.scpt'
 exports.executeOSAScript = function (_osaScript) {
-	osascript.execute(execFilePath+_osaScript, function(err, result, raw) {
-		if (err) return console.error(err);
-			console.log(result, raw);
+	osascript.execute(execFilePath+_osaScript, function(error, result, raw) {
+		if (error) {
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+			return;
+		}
+		console.log(result, raw);
 	});
 };
 
@@ -47,9 +50,12 @@ exports.executeFileUploadOSAScript = function (_fileToUpload, _browserName) {
 	+ "\n delay 3" + "\n keystroke posixpath" + "\n delay 3" + "\n keystroke return"
 	+ "\n delay 3" + "\n keystroke return" + "\n end tell" + "\n end tell"
 		
-	osascript.execute(osaScript, function(err, result, raw) {
-		if (err) return console.error(err);
-			console.log(result, raw);
+	osascript.execute(osaScript, function(error, result, raw) {
+		if (error) {
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+			return;
+		}
+		console.log(result, raw);
 	});
 };
 
@@ -60,7 +66,7 @@ exports.executeFileUploadOSAScript = function (_fileToUpload, _browserName) {
 // _fileName = can be shell command or, './someshellscript.sh'
 exports.executeShellFile = function(fileName) {
 	const { stdout, stderr, code } = shell.exec(execFilePath+fileName, { silent: true });
-	if (stderr) console.log(`stderr: ${stderr}`);
-	if (stdout) console.log(`stdout: ${stdout}`);
+	if (stderr) console.error(`stderr: ${stderr}`);
+	if (stdout) console.debug(`stdout: ${stdout}`);
 	if (code) console.log(`code: ${code}`);
 };

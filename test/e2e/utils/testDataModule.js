@@ -44,7 +44,7 @@ toTestDataJson = function () {
 		});
 		return jsonResult;
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return null;
 	}
 }
@@ -110,7 +110,7 @@ exports.getExcelTestData = function (pageData, dataColumn) {
 		
 		console.debug(`TestData is found as: ${testData}`);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	return testData;
 }

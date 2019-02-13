@@ -43,8 +43,11 @@ const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
  */
 exports.executeFile = function(fileName, params, path) {
     let promise = new Promise((resolve, reject) => {
-    	execFile(fileName, params, { cwd: path }, (err, data) => {
-            if (err) reject(err);
+    	execFile(fileName, params, { cwd: path }, (error, data) => {
+            if (error) {
+            	console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+            	reject(error);
+            }
             else resolve(data);
         });
 
@@ -59,8 +62,11 @@ exports.executeFile = function(fileName, params, path) {
  */
 exports.executeFile = function(fileName) {
     let promise = new Promise((resolve, reject) => {
-    	execFile(execFilePath+fileName, params, { cwd: path }, (err, data) => {
-            if (err) reject(err);
+    	execFile(execFilePath+fileName, params, { cwd: path }, (error, data) => {
+            if (error) {
+            	console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+            	reject(error);
+            }
             else resolve(data);
         });
 
@@ -78,9 +84,9 @@ exports.listAutoStartPrograms = function() {
 		key :  '\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' 	// key containing autostart programs
 	});
 	
-	regKey.values(function (err, items /* array of RegistryItem */) {
-		if (err)
-			console.log('ERROR: '+err);
+	regKey.values(function (error, items /* array of RegistryItem */) {
+		if (error)
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		else
 			for (var i=0; i<items.length; i++)
 				console.log('ITEM: '+items[i].name+'\t'+items[i].type+'\t'+items[i].value);
@@ -93,7 +99,8 @@ exports.listAutoStartPrograms = function() {
 
 exports.executeExeFile = function(fileName) {
 	execFile(execFilePath+fileName, function(error, data) {  
-		if (error) console.error(error.message);
+		if (error) 
+			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		console.log(data.toString());                       
 	});  
 };

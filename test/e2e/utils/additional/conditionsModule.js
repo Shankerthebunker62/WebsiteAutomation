@@ -29,7 +29,7 @@ exports.waitForNotCondition = function (_condition) {
 	  return browser.wait(EC.not(_condition), TIMEOUT_IN_MILISECONDS).then(() => {
 		  return true;
 	  }).catch((error) => {
-		  console.error(`error: ${error.message}`);
+		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		  return false;
 	  });
 };
@@ -45,7 +45,7 @@ exports.waitForAndCondition = function (_condition01, _condition02) {
 	  return browser.wait(EC.and(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
 		  return true;
 	  }).catch((error) => {
-		  console.error(`error: ${error.message}`);
+		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		  return false;
 	  });
 };
@@ -61,7 +61,7 @@ exports.waitForOrCondition = function (_condition01, _condition02) {
 	  return browser.wait(EC.or(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
 		  return true;
 	  }).catch((error) => {
-		  console.error(`error: ${error.message}`);
+		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		  return false;
 	  });
 };
@@ -75,7 +75,7 @@ exports.alertIsPresent = function () {
 	return browser.wait(EC.alertIsPresent(), TIMEOUT_IN_MILISECONDS).then(() => {
 		return true;
 	}).catch((error) => {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	});
 };
@@ -90,7 +90,7 @@ exports.waitForElementToBeClickable = function (_element) {
 	  return browser.wait(EC.elementToBeClickable(_element), TIMEOUT_IN_MILISECONDS).then(() => {
 		  return true;
 	  }).catch((error) => {
-		  console.error(`error: ${error.message}`);
+		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		  return false;
 	  });
 };
@@ -106,7 +106,7 @@ exports.waitForElementTextToBePresentIn = function (_element, _text) {
 	  return browser.wait(EC.textToBePresentIn(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
 		  return true;
 	  }).catch((error) => {
-		  console.error(`error: ${error.message}`);
+		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		  return false;
 	  });
 };
@@ -122,7 +122,7 @@ exports.waitForElementTextToBePresentInValue = function (_element, _text) {
 	  return browser.wait(EC.textToBePresentInElementValue(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
 		  return true;
 	  }).catch((error) => {
-		  console.error(`error: ${error.message}`);
+		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		  return false;
 	  });
 };
@@ -137,7 +137,7 @@ exports.titleContains = function (_titleContains) {
 	return browser.wait(EC.titleContains(_titleContains), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };
@@ -152,7 +152,7 @@ exports.titleIs = function (_title) {
 	return browser.wait(EC.titleIs(_title), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };
@@ -167,7 +167,7 @@ exports.urlContains = function (_urlContains) {
 	return browser.wait(EC.urlContains(_urlContains), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };
@@ -182,7 +182,7 @@ exports.urlIs = function (_url) {
 	return browser.wait(EC.urlIs(_url), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };
@@ -197,7 +197,7 @@ exports.waitForElementPresenceOf = function (_element) {
 	return browser.wait(EC.presenceOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
 		return true;
 	}).catch((error) => {
-		console.error(`error: ${error.message}`);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return false;
 	});
 };
@@ -212,7 +212,7 @@ exports.waitForElementStalenessOf = function (_element) {
 	return browser.wait(EC.stalenessOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };
@@ -227,7 +227,7 @@ exports.waitForElementVisiblity = function (_element) {
 	return browser.wait(EC.visibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };
@@ -242,7 +242,7 @@ exports.waitForElementInvisibilityOf = function (_element) {
 	return browser.wait(EC.invisibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };
@@ -257,7 +257,7 @@ exports.waitForElementToBeSelected = function (_element) {
 	return browser.wait(EC.elementToBeSelected(_element), TIMEOUT_IN_MILISECONDS).then(() => {
 		 return true;
 	}).catch((error) => {
-		 console.error(`error: ${error.message}`);
+		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		 return false;
 	});
 };

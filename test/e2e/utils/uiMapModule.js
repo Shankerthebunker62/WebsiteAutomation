@@ -46,7 +46,7 @@ toUIMapJson = function() {
 		});
 		return jsonResult;
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		return null;
 	}
 }
@@ -55,7 +55,7 @@ sleep = function (_sleepTimeOutInMilliSeconds) {
 	browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
 		console.log(`Waiting ...`);
 	}).catch((error) => {
-		 console.error(`Couldn't wait !!, error: ${error.message}`);
+		 console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 }
 
@@ -142,7 +142,7 @@ fetchElementBy = function(locatorType, locator) {
 			throw 'No Such Element Locator Type Found';
 		}
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
 	return _element;
@@ -175,7 +175,7 @@ exports.getExcelUIMap = function(elementName) {
 		
 		console.debug(`Element is found as: ${_element.locator()}`);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	return _element;
 }
@@ -263,7 +263,7 @@ fetchElementsBy = function(locatorType, locator) {
 			throw 'No Such Element Locator Type Found';
 		}
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
 	return _element;
@@ -296,7 +296,7 @@ exports.getExcelUIMapList = function(elementName) {
 		
 		console.debug(`Element is found as: ${_element.locator()}`);
 	} catch (error) {
-		console.error(error.message);
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	return _element;
 }
