@@ -991,6 +991,8 @@ exports.finalizeSummaryOutput = function() {
 				}
 				console.log('Finalized Automation Report!');
 			});
+			
+			console.log(data);
 		}
 	});
 };
