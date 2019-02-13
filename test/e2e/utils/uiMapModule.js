@@ -17,6 +17,11 @@ let XLSX = require('xlsx');
 const TIMEOUT_IN_MILISECONDS = 500;
 
 /**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
+/**
  * read uiMap.xlsx using 'npm xlsx'
  */
 readUIMap = function() {

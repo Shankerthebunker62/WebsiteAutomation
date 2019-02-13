@@ -19,6 +19,11 @@ const TIMEOUT_IN_MILISECONDS = 2000;
 // https://www.npmjs.com/package/autoit
 let autoit = require('autoit');
 
+/**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
 /***********************************************************
 ********************** AutoIt Script ***********************
 ***********************************************************/

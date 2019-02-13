@@ -25,6 +25,11 @@ let registry = require('winreg');
 // https://www.npmjs.com/package/regedit
 let regedit = require('regedit');
 
+/**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
 /***********************************************************
 ************************ CMD Script ************************
 ***********************************************************/

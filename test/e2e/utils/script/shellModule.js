@@ -22,6 +22,11 @@ let shell = require('shelljs');
 //https://www.npmjs.com/package/node-osascript
 let osascript = require('node-osascript');
 
+/**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
 /***********************************************************
 ********************* osascript Script *********************
 ***********************************************************/

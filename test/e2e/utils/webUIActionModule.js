@@ -19,6 +19,11 @@ const util = require('util');
 const setTimeoutPromise = util.promisify(setTimeout);
 
 /**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
+/**
  * Web page test data fetch method to be used
  */
 const testDataModule = require(dirPath + '/test/e2e/utils/testDataModule.js');
@@ -82,7 +87,7 @@ exports.launchApplication = function(pageData, dataColumn) {
 	});
 		
 	browser.driver.getSession().then((session) => {
-		console.debug(session);
+		console.log(session);
 	}).catch((error) => {
 		console.error(`Couldn't get browser session !!, error: ${error.message}`);
 	});

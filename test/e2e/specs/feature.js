@@ -24,7 +24,7 @@ const testCasePurpose03 = 'Protractor Demo App 03';
 describe(testCasePurpose01, function() {
 	
 	beforeAll(function() {
-		
+		report.createSummaryOutputMainTestBody(testCasePurpose01);
 	});
 	
 	beforeEach(function() {
@@ -64,14 +64,14 @@ describe(testCasePurpose01, function() {
 	});
 	
 	afterAll(function() {
-		
+		report.createSummaryOutputMainTestBodyEnd();
 	});
 });
 
 describe(testCasePurpose02, function() {
 	
 	beforeAll(function() {
-		
+		report.createSummaryOutputMainTestBody(testCasePurpose02);
 	});
 	
 	beforeEach(function() {
@@ -111,14 +111,14 @@ describe(testCasePurpose02, function() {
 	});
 	
 	afterAll(function() {
-		
+		report.createSummaryOutputMainTestBodyEnd();
 	});
 });
 
 describe(testCasePurpose03, function() {
 	
 	beforeAll(function() {
-		
+		report.createSummaryOutputMainTestBody(testCasePurpose03);
 	});
 	
 	beforeEach(function() {
@@ -158,6 +158,6 @@ describe(testCasePurpose03, function() {
 	});
 	
 	afterAll(function() {
-		
+		report.createSummaryOutputMainTestBodyEnd();
 	});
 });

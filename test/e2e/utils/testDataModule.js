@@ -15,6 +15,11 @@ const appName = browser.params.appName;
 let XLSX = require('xlsx');
 
 /**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
+/**
  * read testData.xlsx using 'npm xlsx'
  */
 readTestData = function () {

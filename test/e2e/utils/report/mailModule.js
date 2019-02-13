@@ -19,3 +19,8 @@ let nodemailer = require('nodemailer');
 
 // https://www.npmjs.com/package/node-ews
 const EWS = require('node-ews');
+
+/**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');

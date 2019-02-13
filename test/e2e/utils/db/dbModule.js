@@ -21,6 +21,11 @@ let mssql = require('mssql');
 // https://www.npmjs.com/package/oracledb
 let oracledb = require('oracledb');
 
+/**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
 exports.executeMySqlQuery = function (_host, _user, _password, _database, _query) {
 	// sql query result
 	let _result = null;

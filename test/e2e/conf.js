@@ -35,8 +35,9 @@ let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 let screenshots = require('protractor-take-screenshots-on-demand');
 
 // Profile settings
-let profiles = require('./profiles.js');
+let profiles = require(projectPath + '/test/e2e/utils/profile/profiles.js');
 
+// HTML Execution Report
 let report = require(projectPath + '/test/e2e/utils/report/reportModule.js');
 
 exports.config = {
@@ -115,18 +116,14 @@ exports.config = {
         // the folder under which script, testData and, uiMap is kept
         appName: 'SuperCalculator',
         
-        // HTML Output Report Args
-        reportHeader: `Protractor Gradle Automation Report`,
-        feature: `Angular Calculator Function`,
-        fileName: `output.html`,
-        environment: `QA`,
-        testType: `Regression`,
-        
-        operatingSystem: `Mac OS X`,
-        browser: `Google Chrome`,
+        executionStartTime: new Date(),
         
         mainTestIndex: 0,
-        subTestCount: 0
+        subTestCount: 0,
+        
+        totalSubTestCount: 0,
+        passedSubTestCount: 0,
+        failedSubTestCount: 0
     },
     
 
@@ -284,7 +281,7 @@ exports.config = {
      * purpose of this function should be to bring up test dependencies.
      */
     beforeLaunch: function() {
-    	output.createOutputFile ();
+    	report.createSummaryOutput ();
     },
 
     /**
@@ -306,7 +303,7 @@ exports.config = {
         VideoReporter.prototype.jasmineStarted = function() {
             var self = this;
             if (self.options.singleVideo) {
-                var videoPath = Path.join(Path.normalize('./reports/'), 'protractor-specs-' +(new Date().getTime()) + '.mov');
+                var videoPath = Path.join(Path.normalize('./reports/'), 'protractor-specs-' + (new Date().getTime()) + '.mov');
 
                 self._startScreencast(videoPath);
 
@@ -391,6 +388,6 @@ exports.config = {
      * available.
      */
     onComplete: function() {
-    	output.finalizeOutputFile ();
+    	report.finalizeSummaryOutput ();
     }
 };

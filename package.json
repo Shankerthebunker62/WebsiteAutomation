@@ -43,6 +43,7 @@
 		"collections": "^5.1.6",
 		"commander": "2.19.0",
 		"cordova": "8.1.2",
+		"countdown": "^2.6.0",
 		"debug": "4.1.0",
 		"emailjs": "2.2.0",
 		"ffmpeg": "^0.0.4",

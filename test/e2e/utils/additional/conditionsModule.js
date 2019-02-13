@@ -15,6 +15,11 @@ let EC = protractor.ExpectedConditions;
 const TIMEOUT_IN_MILISECONDS = 30000;
 
 /**
+ * Conversion of the log4js framework to work with node.
+ */
+const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+
+/**
  * An expected condition that returns the negated value.
  * 
  * @param: _condition to be negated
