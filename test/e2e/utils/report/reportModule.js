@@ -12,8 +12,7 @@ const dirPath = '/Users/shankerthebunker/git/WebsiteAutomation';
 // https://www.w3schools.com/nodejs/nodejs_filesystem.asp
 let fs = require('fs');
 
-// https://nodejs.org/api/os.html#os_os_platform
-const os = require('os');
+const TIMEOUT_IN_MILISECONDS = 1000;
 
 // HTML Report Output file
 const fileName = `output.html`;
@@ -34,6 +33,14 @@ const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
 	
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
+
+sleep = function (_sleepTimeOutInMilliSeconds) {
+	browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
+		console.log(`Waiting ...`);
+	}).catch((error) => {
+		 console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+	});
+}
 
 getDate = function() {
 	let date = new Date(),
@@ -61,7 +68,7 @@ getExecutionDurationDifference = function (startTime, endTime) {
 	minutes = minutes-(days*24*60)-(hours*60);
 	seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
 	
-	return `${days}:${hours}:${minutes}:${seconds}`;
+	return `${days} days: ${hours} hrs : ${minutes} mins : ${seconds} secs`;
 };
 
 exports.createSummaryOutput = function () {
@@ -834,7 +841,6 @@ exports.createSummaryOutput = function () {
 				</table>
 
 				<table class='table table-striped'>
-					<tr></tr>
 					<tr>
 						<th colspan='2' style='text-align: center' bgcolor='#78BCFF'>
 							Results
@@ -846,8 +852,7 @@ exports.createSummaryOutput = function () {
 					<tr>
 						<th>Sl.No.</th>
 						<th>Test Purpose</th>
-					</tr>
-					<tr>`);
+					</tr>`);
 	
 	fs.unlink(fileName, function (error) {
 		if (error) {
@@ -870,12 +875,15 @@ exports.createSummaryOutput = function () {
 		}
 		console.log('Heading Added!');
 	});
+	
+	sleep (TIMEOUT_IN_MILISECONDS);
 };
 
 exports.createSummaryOutputMainTestBody = function (testPurpose) {
 	let mainTestIndex = (browser.params.mainTestIndex) + 1;
 	
-	let mainTestBody = (`<td align='center'>${mainTestIndex}</td>
+	let mainTestBody = (`<tr>
+			<td align='center'>${mainTestIndex}</td>
 			<td>${testPurpose}<br> <br>
 				<table class='table table-striped' border='1'>
 					<tr>
@@ -895,6 +903,9 @@ exports.createSummaryOutputMainTestBody = function (testPurpose) {
 	});
 	
 	browser.params.mainTestIndex = mainTestIndex;
+	browser.params.subTestCount = 0;
+	
+	sleep (TIMEOUT_IN_MILISECONDS);
 };
 
 exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResult, result) {
@@ -906,7 +917,7 @@ exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResu
 	let screnshotFile = (new Date().getTime());
     // take screenshots
     screenshots.takeScreenshot(screnshotFile);
-	let imageFilePath = dirPath + '/target/screenshots/' + screnshotFile;
+	let imageFilePath = `${dirPath}/target/screenshots/chrome-${screnshotFile}.png`;
 	
 	let subTestCount = (browser.params.subTestCount) + 1;
 	
@@ -933,7 +944,7 @@ exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResu
 			<td>${imageAppender}</td>
 		</tr>`);
 	
-	fs.appendFile(fileName, mainTestBody, function (error) {
+	fs.appendFile(fileName, subTestBody, function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -941,6 +952,8 @@ exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResu
 	});
 	
 	browser.params.subTestCount = subTestCount;
+	
+	sleep (TIMEOUT_IN_MILISECONDS);
 };
 
 exports.createSummaryOutputMainTestBodyEnd = function () {
@@ -954,6 +967,8 @@ exports.createSummaryOutputMainTestBodyEnd = function () {
 		}
 		console.log('Main Test BodyEnded!');
 	});
+	
+	sleep (TIMEOUT_IN_MILISECONDS);
 };
 
 exports.finalizeSummaryOutput = function() {
@@ -967,6 +982,8 @@ exports.finalizeSummaryOutput = function() {
 		}
 		console.log('Heading Ended!');
 	});
+	
+	sleep (TIMEOUT_IN_MILISECONDS);
 	
 	fs.readFile(fileName, 'utf8', (error, data) => {
 		if (error) {
@@ -991,8 +1008,8 @@ exports.finalizeSummaryOutput = function() {
 				}
 				console.log('Finalized Automation Report!');
 			});
-			
-			console.log(data);
 		}
 	});
+	
+	sleep (TIMEOUT_IN_MILISECONDS);
 };

@@ -21,7 +21,8 @@
 
 # To Do:
 
-* creating html report for step by step execution
+* creating summary html report for step by step execution
+* creating testCase html report for step by step execution
 * creating a mail client or, execution
 * locate the element from multiple window
 * locate the element from multiple frames

@@ -370,7 +370,7 @@ exports.config = {
          }));
         
          // joiner between browser name and file name
-         screenshots.browserNameJoiner = ' - '; //this is the default
+         screenshots.browserNameJoiner = '-'; //this is the default
          // folder of screenshots
          screenshots.screenShotDirectory = 'target/screenshots';
          // creates folder of screenshots

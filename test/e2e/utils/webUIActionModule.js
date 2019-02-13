@@ -95,6 +95,8 @@ exports.launchApplication = function(pageData, dataColumn) {
 		_result = false;
 		console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -111,6 +113,8 @@ exports.close = function () {
 		_result = false;
 		console.error(`Couldn't close browser !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -125,6 +129,8 @@ exports.maximize = function () {
 		_result = false;
 		console.error(`Couldn't maximize browser window !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -139,6 +145,8 @@ exports.clearCokkies = function () {
 		_result = false;
 		console.error(`Couldn't delete cookies !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -160,6 +168,8 @@ exports.clearSession = function () {
 		_result = false;
 		console.error(`Couldn't execute window.localStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -174,6 +184,8 @@ exports.restart = function () {
 		_result = false;
 		console.error(`Couldn't restart !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -188,6 +200,8 @@ exports.back = function () {
 		_result = false;
 		console.error(`Couldn't navigate back !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -202,6 +216,8 @@ exports.refresh = function () {
 		_result = false;
 		console.error(`Couldn't refresh !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -218,6 +234,8 @@ exports.sleep = function (_sleepTimeOutInMilliSeconds) {
 		_result = false;
 		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -234,6 +252,8 @@ exports.driverSleep = function (_sleepTimeOutInMilliSeconds) {
 		_result = false;
 		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -255,6 +275,8 @@ exports.dismissAlert  = function () {
     	  _result = false;
     	  console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
       });
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -276,6 +298,8 @@ exports.acceptAlert  = function () {
 		_result = false;
 	    console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -312,6 +336,8 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -335,6 +361,8 @@ exports.switchToFrame = function(elementName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -354,6 +382,8 @@ exports.switchToDefaultContent = function() {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /************************************************************
@@ -436,6 +466,8 @@ exports.fileUpload = function (elementName, pageData, dataColumn) {
 		_result = false;
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -464,6 +496,8 @@ exports.setValue = function (elementName, pageData, dataColumn) {
 		_result = false;
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -497,6 +531,8 @@ exports.setValueRandom = function (elementName, pageData, dataColumn) {
 		_result = false;
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -530,6 +566,8 @@ exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {
 		_result = false;
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -558,6 +596,8 @@ exports.setValueEnter = function (elementName, pageData, dataColumn) {
 		_result = false;
 		console.error(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -604,6 +644,8 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
 		_result = false;
 	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -625,6 +667,8 @@ exports.select = function (elementName, pageData, dataColumn) {
 		 _result = false;
 	    console.error(`Element ${elementName} select data ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -643,6 +687,8 @@ exports.sendKeysEnter = function (elementName) {
 		_result = false;
 	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -661,6 +707,8 @@ exports.clear = function (elementName) {
 		 _result = false;
 		 console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /************************************************************
@@ -696,6 +744,8 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 		_result = false;
 		console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -727,6 +777,8 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
 		_result = false;
 		console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -758,6 +810,8 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
 		_result = false;
 		console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -787,6 +841,8 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
 		_result = false;
 		console.error(`Verify title ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -818,6 +874,8 @@ exports.verifyAlertText = function (pageData, dataColumn) {
 		_result = false;
 		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -844,6 +902,8 @@ exports.verifyElementIsDisplayed = function(elementName) {
 		_result = false;
 		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -870,6 +930,8 @@ exports.verifyElementIsNotPresent = function(elementName) {
 		_result = false;
 		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /************************************************************
@@ -892,6 +954,8 @@ exports.click = function (elementName) {
 		_result = false;
 	    console.error(`Element ${elementName} click is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -911,6 +975,8 @@ exports.doubleClick = function(elementName) {
 		_result = false;
 	    console.error(`Element ${elementName} mouse double click is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -937,6 +1003,8 @@ exports.rightClick = function(elementName) {
 		 _result = false;
 	    console.error(`Element ${elementName} mouse click right is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -956,6 +1024,8 @@ exports.mouseHoverAction = function(elementName) {
 		 _result = false;
 	    console.error(`Element ${elementName} mouse over is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -977,6 +1047,8 @@ exports.dragAndDrop = function (elementFrom, elementTo) {
     	_result = false;
     	console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     });
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /************************************************************
@@ -1274,6 +1346,8 @@ exports.highlightElement = function (elementName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -1309,6 +1383,8 @@ exports.highlightWebElement = function (_elementName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -1335,6 +1411,8 @@ exports.unhideElement = function (elementName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -1358,6 +1436,8 @@ exports.javaScriptClick = function (elementName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 	
 /**
@@ -1376,6 +1456,8 @@ exports.mouseHoverJavaScript = function (elementName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };	
 	
 /**
@@ -1399,6 +1481,8 @@ exports.scrollingToElement = function (elementName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -1425,6 +1509,8 @@ exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };	
 
 /************************************************************
@@ -1496,6 +1582,8 @@ exports.executeOSAScript = function (pageData, dataColumnOAScript) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -1518,6 +1606,8 @@ exports.executeFileUploadOSAScript = function (pageData, dataColumnFileToUpload,
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /***********************************************************
@@ -1541,6 +1631,8 @@ exports.executeShellFile = function(pageData, dataColumnFileName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /***********************************************************
@@ -1568,6 +1660,8 @@ exports.executeFile = function(pageData, dataColumnFileName, dataColumnParams, d
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -1587,6 +1681,8 @@ exports.executeFile = function(pageData, dataColumnFileName) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /***********************************************************
@@ -1606,6 +1702,8 @@ exports.listAutoStartPrograms = function() {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /***********************************************************
@@ -1635,6 +1733,8 @@ exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOu
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
 
 /**
@@ -1658,4 +1758,6 @@ exports.executeExeFile = function(_fileName, _timeOutInMiliSeconds) {
 		_result = false;
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
+	
+	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
 };
