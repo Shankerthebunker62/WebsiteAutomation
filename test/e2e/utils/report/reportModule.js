@@ -901,13 +901,12 @@ exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResu
 	let fontColour = '';
 	let status = '';
 	let imageAppender = '';
+	let actualResult = '';
 	
 	let screnshotFile = (new Date().getTime());
     // take screenshots
     screenshots.takeScreenshot(screnshotFile);
 	let imageFilePath = dirPath + '/target/screenshots/' + screnshotFile;
-	
-	let actualResult = expectedResult + ' passed';
 	
 	let subTestCount = (browser.params.subTestCount) + 1;
 	
@@ -915,10 +914,14 @@ exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResu
 	    status = 'PASS';
 		fontColour = 'green';
 		imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
+		
+		actualResult = expectedResult + ' passed';
 	} else {
 	    status = 'FAIL';
 		fontColour = 'red';
 		imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
+		
+		actualResult = expectedResult + ' failed';
 	}
 	
 	let subTestBody = (`<tr>
