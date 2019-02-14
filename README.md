@@ -14,7 +14,7 @@
 <pre>
 git clone https://github.com/Shankerthebunker62/WebsiteAutomation.git
 cd WebsiteAutomation
-sudo npm install --unsafe-perm=true
+npm install --unsafe-perm=true
 </pre>
 
 # Execution:
