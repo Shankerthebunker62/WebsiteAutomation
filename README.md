@@ -1,5 +1,5 @@
 <p>
-	<a href="https://www.npmjs.com/@angular/core" rel="nofollow"><img src="https://camo.githubusercontent.com/3cb4eb3c991f38eddc8092d7d9c8c5b5d8888a33/68747470733a2f2f62616467652e667572792e696f2f6a732f253430616e67756c6172253246636f72652e737667" alt="npm version" data-canonical-src="https://badge.fury.io/js/%40angular%2Fcore.svg" style="max-width:100%;"></a>
+	<a href="https://www.npmjs.com/" rel="nofollow"></a>
 </p>
 
 # "# WebsiteAutomation" 
