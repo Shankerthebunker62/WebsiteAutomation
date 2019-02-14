@@ -869,7 +869,7 @@ exports.createSummaryOutput = async function () {
 		console.log('File Created!');
 	});
 	
-	fs.writeFile(fileName, heading, function (error) {
+	fs.appendFile(fileName, heading, function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -923,20 +923,17 @@ exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expect
 	    // take screenshots
 	    screenshots.takeScreenshot(screnshotFile);
 		imageFilePath = `${dirPath}/target/screenshots/chrome-${screnshotFile}.png`;
+		imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
 	}
 	
 	if (result) {
 	    status = 'PASS';
 		fontColour = 'green';
-		imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
-		
-		actualResult = expectedResult + ' passed';
+		actualResult = expectedResult + ' :passed';
 	} else {
 	    status = 'FAIL';
 		fontColour = 'red';
-		imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
-		
-		actualResult = expectedResult + ' failed';
+		actualResult = expectedResult + ' :failed';
 	}
 	
 	let subTestBody = (`<tr>
