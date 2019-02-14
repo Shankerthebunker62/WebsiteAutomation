@@ -9,9 +9,16 @@
 * Node Js
 * Gradle
 
+# Setup
+
+<pre>
+git clone https://github.com/Shankerthebunker62/WebsiteAutomation.git
+cd WebsiteAutomation
+sudo npm install --unsafe-perm=true
+</pre>
+
 # Execution:
 
-* sudo npm install --unsafe-perm=true
 * gradle wrapper
 * gradle installGulp
 * gradle clean build --refresh-dependencies
