@@ -913,13 +913,17 @@ exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expect
 	let status = '';
 	let imageAppender = '';
 	let actualResult = '';
-	
-	let screnshotFile = (new Date().getTime());
-    // take screenshots
-    screenshots.takeScreenshot(screnshotFile);
-	let imageFilePath = `${dirPath}/target/screenshots/chrome-${screnshotFile}.png`;
+	let imageFilePath = '';
 	
 	let subTestCount = (browser.params.subTestCount) + 1;
+	
+	if (!result) {
+		let screnshotFile = (new Date().getTime());
+		
+	    // take screenshots
+	    screenshots.takeScreenshot(screnshotFile);
+		imageFilePath = `${dirPath}/target/screenshots/chrome-${screnshotFile}.png`;
+	}
 	
 	if (result) {
 	    status = 'PASS';
