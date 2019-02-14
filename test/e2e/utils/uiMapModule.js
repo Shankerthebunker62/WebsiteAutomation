@@ -14,7 +14,7 @@ const appName = browser.params.appName;
 
 let XLSX = require('xlsx');
 
-const TIMEOUT_IN_MILISECONDS = 250;
+const TIMEOUT_IN_MILISECONDS = 100;
 
 /**
  * Conversion of the log4js framework to work with node.

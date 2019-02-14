@@ -12,10 +12,10 @@ const dirPath = '/Users/shankerthebunker/git/WebsiteAutomation';
 // https://www.w3schools.com/nodejs/nodejs_filesystem.asp
 let fs = require('fs');
 
-const TIMEOUT_IN_MILISECONDS = 1000;
+const TIMEOUT_IN_MILISECONDS = 250;
 
 // HTML Report Output file
-const fileName = `output.html`;
+const fileName = `SummaryReport.html`;
 
 const automationReport = `Protractor Gradle Automation Report`;
 const reportHeader = `Protractor Gradle Automation Report`;
@@ -35,7 +35,7 @@ const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
 let screenshots = require('protractor-take-screenshots-on-demand');
 
 sleep = function (_sleepTimeOutInMilliSeconds) {
-	browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
+	return new Promise(resolve => setTimeout(resolve, _sleepTimeOutInMilliSeconds)).then(() => {
 		console.log(`Waiting ...`);
 	}).catch((error) => {
 		 console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
@@ -71,7 +71,7 @@ getExecutionDurationDifference = function (startTime, endTime) {
 	return `${days} days: ${hours} hrs : ${minutes} mins : ${seconds} secs`;
 };
 
-exports.createSummaryOutput = function () {
+exports.createSummaryOutput = async function () {
 	let executionStartTime = getDate();
 	
 	let heading = (`<!DOCTYPE HTML>
@@ -876,10 +876,10 @@ exports.createSummaryOutput = function () {
 		console.log('Heading Added!');
 	});
 	
-	sleep (TIMEOUT_IN_MILISECONDS);
+	await sleep (TIMEOUT_IN_MILISECONDS);
 };
 
-exports.createSummaryOutputMainTestBody = function (testPurpose) {
+exports.createSummaryOutputMainTestBody = async function (testPurpose) {
 	let mainTestIndex = (browser.params.mainTestIndex) + 1;
 	
 	let mainTestBody = (`<tr>
@@ -905,10 +905,10 @@ exports.createSummaryOutputMainTestBody = function (testPurpose) {
 	browser.params.mainTestIndex = mainTestIndex;
 	browser.params.subTestCount = 0;
 	
-	sleep (TIMEOUT_IN_MILISECONDS);
+	await sleep (TIMEOUT_IN_MILISECONDS);
 };
 
-exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResult, result) {
+exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expectedResult, result) {
 	let fontColour = '';
 	let status = '';
 	let imageAppender = '';
@@ -953,10 +953,10 @@ exports.createSummaryOutputSubTestBody = function (testStepPurpose, expectedResu
 	
 	browser.params.subTestCount = subTestCount;
 	
-	sleep (TIMEOUT_IN_MILISECONDS);
+	await sleep (TIMEOUT_IN_MILISECONDS);
 };
 
-exports.createSummaryOutputMainTestBodyEnd = function () {
+exports.createSummaryOutputMainTestBodyEnd = async function () {
 	let mainTestBodyEnd = (`</table>
 			</td>
 		</tr>`);
@@ -968,10 +968,10 @@ exports.createSummaryOutputMainTestBodyEnd = function () {
 		console.log('Main Test BodyEnded!');
 	});
 	
-	sleep (TIMEOUT_IN_MILISECONDS);
+	await sleep (TIMEOUT_IN_MILISECONDS);
 };
 
-exports.finalizeSummaryOutput = function() {
+exports.finalizeSummaryOutput = async function() {
 	let headingEnd = (`</table>
 			</body>
 			</html>`);
@@ -983,7 +983,7 @@ exports.finalizeSummaryOutput = function() {
 		console.log('Heading Ended!');
 	});
 	
-	sleep (TIMEOUT_IN_MILISECONDS);
+	await sleep (TIMEOUT_IN_MILISECONDS);
 	
 	fs.readFile(fileName, 'utf8', (error, data) => {
 		if (error) {
@@ -1011,5 +1011,5 @@ exports.finalizeSummaryOutput = function() {
 		}
 	});
 	
-	sleep (TIMEOUT_IN_MILISECONDS);
+	await sleep (TIMEOUT_IN_MILISECONDS);
 };
