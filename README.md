@@ -1,7 +1,3 @@
-<p>
-	<a href="https://www.npmjs.com/" rel="nofollow"></a>
-</p>
-
 # "# WebsiteAutomation" 
 
 <i>Protractor</i> Data-Driven Automation Framework using Excel UI Object Repository as well as Test Data. This is a BDD model using Jasmine. Each Method under script acts as a <i>Component</i> which loads a different data row for test case. The <i>Components</i> are called in mutiple test scenarios of BDD under each <i>Specs</i> for test cases to be used.
