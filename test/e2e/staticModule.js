@@ -55,8 +55,8 @@ let StaticModule = function () {
 	this.reportHeader = function () { 
 		return `Protractor Gradle Automation Report`;
 	};
-	this.feature = function () { return 
-		`Angular Calculator Function`;
+	this.feature = function () { 
+		return `Angular Calculator Function`;
 	};
 	this.environment = function () { 
 		return `QA`;
