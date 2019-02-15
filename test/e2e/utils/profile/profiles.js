@@ -6,8 +6,12 @@
  *                                        						       *
  ***********************************************************************/
 
+// Fetches static variables
+const StaticModule = require(`/Users/shankerthebunker/git/WebsiteAutomation/test/e2e/staticModule.js`);
+let _StaticModule = new StaticModule();
+
 //Project location path
-const dirPath =  '/Users/shankerthebunker/git/WebsiteAutomation';
+const dirPath = _StaticModule.projectPath();
 
 /**
  * Conversion of the log4js framework to work with node.
@@ -35,7 +39,7 @@ exports.getFirefoxProfile = function() {
     
     // file download
     firefoxProfile.setPreference('browser.download.folderList', '2');
-    firefoxProfile.setPreference('browser.download.dir', dirPath + '/test/e2e/resources/downloads/');
+    firefoxProfile.setPreference('browser.download.dir', _StaticModule.downloadPath());
     firefoxProfile.setPreference('browser.helperApps.neverAsk.saveToDisk', 'application/zip');
     
     // done with prefs?

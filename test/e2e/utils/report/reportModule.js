@@ -6,30 +6,19 @@
  *                                        						       *
  ***********************************************************************/
 
-// Project location path
-const dirPath = '/Users/shankerthebunker/git/WebsiteAutomation';
+// Fetches static variables
+const StaticModule = require(`/Users/shankerthebunker/git/WebsiteAutomation/test/e2e/staticModule.js`);
+let _StaticModule = new StaticModule();
 
 // https://www.w3schools.com/nodejs/nodejs_filesystem.asp
 let fs = require('fs');
 
-const TIMEOUT_IN_MILISECONDS = 250;
-
-// HTML Report Output file
-const fileName = `SummaryReport.html`;
-
-const automationReport = `Protractor Gradle Automation Report`;
-const reportHeader = `Protractor Gradle Automation Report`;
-const feature = `Angular Calculator Function`;
-const environment = `QA`;
-const testType = `Regression`;
-
-const operatingSystem = `Mac OS X`;
-const browserName = `Google Chrome`;
+const TIMEOUT_IN_MILISECONDS = 500;
 
 /**
  * Conversion of the log4js framework to work with node.
  */
-const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+const console = require(_StaticModule.projectPath() + '/test/e2e/utils/logger/logModule.js');
 	
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
@@ -77,7 +66,7 @@ exports.createSummaryOutput = async function () {
 	let heading = (`<!DOCTYPE HTML>
 			<html>
 			<head>
-			<title>${automationReport}</title>
+			<title>${_StaticModule.automationReport()}</title>
 			<style>
 
 			html {
@@ -774,26 +763,26 @@ exports.createSummaryOutput = async function () {
 
 			<body>
 				<br>
-				<h3 align='center' style='color: #0d10df'>${reportHeader}</h3>
+				<h3 align='center' style='color: #0d10df'>${_StaticModule.reportHeader()}</h3>
 				<table class='table table-striped'>
 					<tr></tr>
 					<tr>
-						<th colspan='2' style='text-align: center' bgcolor='#78BCFF' id="feature">${feature}</th>
+						<th colspan='2' style='text-align: center' bgcolor='#78BCFF' id="feature">${_StaticModule.feature()}</th>
 					</tr>
 					<tr>
 						<td>
 							<table class='table table-hover'>
 								<tr>
 									<th>Operating System</th>
-									<td id="os">${operatingSystem}</td>
+									<td id="os">${_StaticModule.operatingSystem()}</td>
 								</tr>
 								<tr>
 									<th>Environment</th>
-									<td>${environment}</td>
+									<td>${_StaticModule.environment()}</td>
 								</tr>
 								<tr>
 									<th>Browser</th>
-									<td id="browser">${browserName}</td>
+									<td id="browser">${_StaticModule.browserName()}</td>
 								</tr>
 								<tr>
 									<th>Execution Start Time</th>
@@ -813,7 +802,7 @@ exports.createSummaryOutput = async function () {
 							<table class='table table-hover'>
 								<tr>
 									<th>Test Type</th>
-									<td>${testType}</td>
+									<td>${_StaticModule.testType()}</td>
 								</tr>
 								<tr>
 									<th>Total Main Tests</th>
@@ -854,14 +843,14 @@ exports.createSummaryOutput = async function () {
 						<th>Test Purpose</th>
 					</tr>`);
 	
-	fs.unlink(fileName, function (error) {
+	fs.unlink(_StaticModule.fileName(), function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
 		console.log('File deleted!');
 	});
 	
-	fs.open(fileName, 'w', function (error, file) {
+	fs.open(_StaticModule.fileName(), 'w', function (error, file) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -869,7 +858,7 @@ exports.createSummaryOutput = async function () {
 		console.log('File Created!');
 	});
 	
-	fs.appendFile(fileName, heading, function (error) {
+	fs.appendFile(_StaticModule.fileName(), heading, function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -895,7 +884,7 @@ exports.createSummaryOutputMainTestBody = async function (testPurpose) {
 						<th>Screenshot Result</th>
 					</tr>`);
 	
-	fs.appendFile(fileName, mainTestBody, function (error) {
+	fs.appendFile(_StaticModule.fileName(), mainTestBody, function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -930,10 +919,14 @@ exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expect
 	    status = 'PASS';
 		fontColour = 'green';
 		actualResult = expectedResult + ' :passed';
+		
+		browser.params.passedSubTestCount += 1;
 	} else {
 	    status = 'FAIL';
 		fontColour = 'red';
 		actualResult = expectedResult + ' :failed';
+		
+		browser.params.failedSubTestCount += 1;
 	}
 	
 	let subTestBody = (`<tr>
@@ -945,7 +938,7 @@ exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expect
 			<td>${imageAppender}</td>
 		</tr>`);
 	
-	fs.appendFile(fileName, subTestBody, function (error) {
+	fs.appendFile(_StaticModule.fileName(), subTestBody, function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -953,6 +946,7 @@ exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expect
 	});
 	
 	browser.params.subTestCount = subTestCount;
+	browser.params.totalSubTestCount += 1;
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
 };
@@ -962,7 +956,7 @@ exports.createSummaryOutputMainTestBodyEnd = async function () {
 			</td>
 		</tr>`);
 	
-	fs.appendFile(fileName, mainTestBodyEnd, function (error) {
+	fs.appendFile(_StaticModule.fileName(), mainTestBodyEnd, function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -977,7 +971,7 @@ exports.finalizeSummaryOutput = async function() {
 			</body>
 			</html>`);
 	
-	fs.appendFile(fileName, headingEnd, function (error) {
+	fs.appendFile(_StaticModule.fileName(), headingEnd, function (error) {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		}
@@ -986,12 +980,10 @@ exports.finalizeSummaryOutput = async function() {
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
 	
-	fs.readFile(fileName, 'utf8', (error, data) => {
+	fs.readFile(_StaticModule.fileName(), 'utf8', (error, data) => {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		} else {
-			console.log(data);
-			
 			let executionStartTime = browser.params.executionStartTime;
 			let executionEndTime = new Date();
 			let executionDuration = getExecutionDurationDifference(executionStartTime, executionEndTime);
@@ -1003,12 +995,35 @@ exports.finalizeSummaryOutput = async function() {
 			data = data.replace('$executionEndTime', getDate());
 			data = data.replace('$executionDuration', executionDuration);
 			
-			fs.writeFile(fileName, data, function (error) {
+			let mainTestCount = browser.params.mainTestIndex;
+			let totalSubTestCount = browser.params.totalSubTestCount;
+			let passedSubTestCount = browser.params.passedSubTestCount;
+			let failedSubTestCount = browser.params.failedSubTestCount;
+			
+			data = data.replace('$mainTestCount', mainTestCount);
+			data = data.replace('$totalSubTestCount', totalSubTestCount);
+			data = data.replace('$passedSubTestCount', passedSubTestCount);
+			data = data.replace('$failedSubTestCount', failedSubTestCount);
+			
+			console.log(`Total Main Tests: ${mainTestCount}`);
+			console.log(`Total Sub Tests: ${totalSubTestCount}`);
+			console.log(`Passed Sub Tests: ${passedSubTestCount}`);
+			console.log(`Failed Sub Tests: ${failedSubTestCount}`);
+			
+			let passPercentage = ((passedSubTestCount/totalSubTestCount) * 100);
+			
+			data = data.replace('$passPercentage', passPercentage + ' %');
+			
+			console.log(`Pass Percentage: ${passPercentage} %`);
+			
+			fs.writeFile(_StaticModule.fileName(), data, function (error) {
 				if (error) {
 					console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 				}
 				console.log('Finalized Automation Report!');
 			});
+			
+			console.log(data);
 		}
 	});
 	

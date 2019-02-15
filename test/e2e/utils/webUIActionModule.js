@@ -96,7 +96,7 @@ exports.launchApplication = function(pageData, dataColumn) {
 		console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url` ,`Launching application url ${_url}` , _result);
 };
 
 /**
@@ -114,7 +114,7 @@ exports.close = function () {
 		console.error(`Couldn't close browser !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to close the current open browser` ,`Closing the current browser` , _result);
 };
 
 /**
@@ -130,7 +130,7 @@ exports.maximize = function () {
 		console.error(`Couldn't maximize browser window !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to maximize the current browser` ,`Maximizing the current browser` , _result);
 };
 
 /**
@@ -146,7 +146,7 @@ exports.clearCokkies = function () {
 		console.error(`Couldn't delete cookies !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current session cokkies` ,`Clearing the current session cokkies` , _result);
 };
 
 /**
@@ -169,7 +169,7 @@ exports.clearSession = function () {
 		console.error(`Couldn't execute window.localStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current browser session` ,`Clearing the current browser session` , _result);
 };
 
 /**
@@ -185,7 +185,7 @@ exports.restart = function () {
 		console.error(`Couldn't restart !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to restart the browser` ,`Restarting the browser` , _result);
 };
 
 /**
@@ -201,7 +201,7 @@ exports.back = function () {
 		console.error(`Couldn't navigate back !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate back in the browser` ,`Navigate back in the browser` , _result);
 };
 
 /**
@@ -217,7 +217,7 @@ exports.refresh = function () {
 		console.error(`Couldn't refresh !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to refresh the current browser` ,`Refreshing the current browser` , _result);
 };
 
 /**
@@ -235,7 +235,7 @@ exports.sleep = function (_sleepTimeOutInMilliSeconds) {
 		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout` ,`Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds` , _result);
 };
 
 /**
@@ -253,7 +253,7 @@ exports.driverSleep = function (_sleepTimeOutInMilliSeconds) {
 		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout` ,`Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds` , _result);
 };
 
 /**
@@ -276,7 +276,7 @@ exports.dismissAlert  = function () {
     	  console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
       });
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to dismiss the alert if present` ,`Dismissing the alert when found` , _result);
 };
 
 /**
@@ -299,7 +299,7 @@ exports.acceptAlert  = function () {
 	    console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to accept the alert if present` ,`Accepting the alert when found` , _result);
 };
 
 /**
@@ -318,7 +318,7 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
 				 browser.switchTo().window(windowHandle);
 				 
 				 browser.getTitle().then(function(title){
-					if(title == '_testData' && _result === false){
+					if(title === _testData && _result === false){
 						console.log(`Successfully switched to window handle with title ${_testData}`);
 						_result = true;
 					}
@@ -337,7 +337,7 @@ exports.switchToWindowHandle = function (pageData, dataColumn) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to window with title ${_testData}` ,`Switching to window with title ${_testData}` , _result);
 };
 
 /**
@@ -362,7 +362,7 @@ exports.switchToFrame = function(elementName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to frame ${elementName}` ,`Switching to frame ${elementName}` , _result);
 };
 
 /**
@@ -383,7 +383,7 @@ exports.switchToDefaultContent = function() {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to default content` ,`Switching to default content` , _result);
 };
 
 /************************************************************
@@ -467,7 +467,7 @@ exports.fileUpload = function (elementName, pageData, dataColumn) {
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload the file ${_testData}` ,`Uploading the file ${_testData} on element ${elementName}` , _result);
 };
 
 /**
@@ -497,7 +497,7 @@ exports.setValue = function (elementName, pageData, dataColumn) {
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}` ,`Setting value ${_testData} on element ${elementName}` , _result);
 };
 
 /**
@@ -532,7 +532,7 @@ exports.setValueRandom = function (elementName, pageData, dataColumn) {
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}` ,`Setting value ${_testData} on element ${elementName}` , _result);
 };
 
 /**
@@ -567,7 +567,7 @@ exports.setValueTimeStamp = function (elementName, pageData, dataColumn) {
 	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}` ,`Setting value ${_testData} on element ${elementName}` , _result);
 };
 
 /**
@@ -597,7 +597,7 @@ exports.setValueEnter = function (elementName, pageData, dataColumn) {
 		console.error(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} and, press enter` ,`Setting value ${_testData} on element ${elementName} and, press enter` , _result);
 };
 
 /**
@@ -645,7 +645,7 @@ exports.setValueCharByChar = function (elementName, pageData, dataColumn) {
 	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} character by character` ,`Setting value ${_testData} on element ${elementName} character by character` , _result);
 };
 
 /**
@@ -668,7 +668,7 @@ exports.select = function (elementName, pageData, dataColumn) {
 	    console.error(`Element ${elementName} select data ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to select option ${_testData} from dropdown on element ${elementName}` ,`Select option ${_testData} from dropdown on element ${elementName}` , _result);
 };
 
 /**
@@ -688,7 +688,7 @@ exports.sendKeysEnter = function (elementName) {
 	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to press enter key on element ${elementName}` ,`Press enter on element ${elementName}` , _result);
 };
 
 /**
@@ -708,7 +708,7 @@ exports.clear = function (elementName) {
 		 console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear data on element ${elementName}` ,`Clearing data on element ${elementName}` , _result);
 };
 
 /************************************************************
@@ -745,7 +745,7 @@ exports.verifySelectOption = function (elementName, pageData, dataColumn) {
 		console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to validated the dropdown option ${_testData} on element ${elementName}` ,`Validating dropdown option ${_testData} on element ${elementName}` , _result);
 };
 
 /**
@@ -778,7 +778,7 @@ exports.verifyValue = function (elementName, pageData, dataColumn) {
 		console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate value ${_testData} on element ${elementName}` ,`Validating value ${_testData} on element ${elementName}` , _result);
 };
 
 /**
@@ -811,7 +811,7 @@ exports.verifyText = function (elementName, pageData, dataColumn) {
 		console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate text ${_testData} on element ${elementName}` ,`Validating text ${_testData} on element ${elementName}` , _result);
 };
 
 /**
@@ -842,7 +842,7 @@ exports.verifyPageTitle = function(pageData, dataColumn) {
 		console.error(`Verify title ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate page title as ${_testData}` ,`Validating page title as ${_testData}` , _result);
 };
 
 /**
@@ -875,7 +875,7 @@ exports.verifyAlertText = function (pageData, dataColumn) {
 		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate alert text as ${_testData}` ,`Validating alert text as ${_testData}` , _result);
 };
 
 /**
@@ -903,7 +903,7 @@ exports.verifyElementIsDisplayed = function(elementName) {
 		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is displayed` ,`Validating element ${elementName} is displayed` , _result);
 };
 
 /**
@@ -931,7 +931,7 @@ exports.verifyElementIsNotPresent = function(elementName) {
 		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is not displayed` ,`Validating element ${elementName} is not displayed` , _result);
 };
 
 /************************************************************
@@ -955,7 +955,7 @@ exports.click = function (elementName) {
 	    console.error(`Element ${elementName} click is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to click on element ${elementName}` ,`Clicking on element ${elementName}` , _result);
 };
 
 /**
@@ -976,7 +976,7 @@ exports.doubleClick = function(elementName) {
 	    console.error(`Element ${elementName} mouse double click is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	});
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to double click on element ${elementName}` ,`Double click on element ${elementName}` , _result);
 };
 
 /**
@@ -1004,7 +1004,7 @@ exports.rightClick = function(elementName) {
 	    console.error(`Element ${elementName} mouse click right is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to right click on element ${elementName}` ,`Right click on element ${elementName}` , _result);
 };
 
 /**
@@ -1025,7 +1025,7 @@ exports.mouseHoverAction = function(elementName) {
 	    console.error(`Element ${elementName} mouse over is failed, error: ${error.message}, stackTrace ${error.stack}`);
 	 });
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to hover mouse over the element ${elementName}` ,`Mouse hover on element ${elementName}` , _result);
 };
 
 /**
@@ -1048,7 +1048,7 @@ exports.dragAndDrop = function (elementFrom, elementTo) {
     	console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     });
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} to ${elementTo}` ,`Drag and drop ${elementFrom} to ${elementTo}` , _result);
 };
 
 /************************************************************
@@ -1347,7 +1347,7 @@ exports.highlightElement = function (elementName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight ${elementName}` ,`Highlight ${elementName}` , _result);
 };
 
 /**
@@ -1384,7 +1384,7 @@ exports.highlightWebElement = function (_elementName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight webElement ${_elementName.locator()}` ,`Highlight webElement ${_elementName.locator()}` , _result);
 };
 
 /**
@@ -1412,7 +1412,7 @@ exports.unhideElement = function (elementName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to unhide ${elementName}` ,`Unhiding ${elementName}` , _result);
 };
 
 /**
@@ -1437,7 +1437,7 @@ exports.javaScriptClick = function (elementName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform javaScript click on ${elementName}` ,`JavaScript clicking on ${elementName}` , _result);
 };
 	
 /**
@@ -1457,7 +1457,7 @@ exports.mouseHoverJavaScript = function (elementName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform mouse hover action using javaScript on ${elementName}` ,`Perform javaScript mouse hover action on ${elementName}` , _result);
 };	
 	
 /**
@@ -1482,7 +1482,7 @@ exports.scrollingToElement = function (elementName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to scroll ${elementName} into view` ,`Scroll ${elementName} into view` , _result);
 };
 
 /**
@@ -1510,7 +1510,7 @@ exports.dragAndDropHtmlDnD = function (elementFrom, elementTo) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} and, drop to ${elementTo} using HtmlDnD module` ,`Drag ${elementFrom} and, drop to ${elementTo}` , _result);
 };	
 
 /************************************************************
@@ -1583,7 +1583,7 @@ exports.executeOSAScript = function (pageData, dataColumnOAScript) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute apple script ${_osaScript}` ,`Executing apple script ${_osaScript}` , _result);
 };
 
 /**
@@ -1607,7 +1607,7 @@ exports.executeFileUploadOSAScript = function (pageData, dataColumnFileToUpload,
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload file ${_fileToUpload} in browser ${_browserName} using apple script` ,`Uploading file ${_fileToUpload} in browser ${_browserName} using apple script` , _result);
 };
 
 /***********************************************************
@@ -1632,7 +1632,7 @@ exports.executeShellFile = function(pageData, dataColumnFileName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute shell-script ${_fileName}` ,`Executing shell-script ${_fileName}` , _result);
 };
 
 /***********************************************************
@@ -1661,7 +1661,7 @@ exports.executeFile = function(pageData, dataColumnFileName, dataColumnParams, d
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute CMD: ${_fileName} ${_params} ${_path}` ,`Executing CMD: ${_fileName} ${_params} ${_path}` , _result);
 };
 
 /**
@@ -1682,7 +1682,7 @@ exports.executeFile = function(pageData, dataColumnFileName) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute CMD: ${_fileName}` ,`Executing CMD: ${_fileName}` , _result);
 };
 
 /***********************************************************
@@ -1703,7 +1703,7 @@ exports.listAutoStartPrograms = function() {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to run regEdit to list all auto start programs` ,`Running regEdit to list all auto start programs` , _result);
 };
 
 /***********************************************************
@@ -1734,7 +1734,7 @@ exports.executeExeFile = function(pageData, dataColumnFileName, dataColumnTimeOu
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` ,`Executing EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` , _result);
 };
 
 /**
@@ -1759,5 +1759,5 @@ exports.executeExeFile = function(_fileName, _timeOutInMiliSeconds) {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	}
 	
-	reportModule.createSummaryOutputSubTestBody(`` ,`` , _result);
+	reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` ,`Executing EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` , _result);
 };

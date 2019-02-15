@@ -11,18 +11,6 @@
 
 const Path = require('path');
 
-// Project Path location
-const projectPath = `/Users/shankerthebunker/git/WebsiteAutomation`;
-
-// binary path location
-const ieBinary = (`${projectPath}/test/e2e/resources/binary/IEDriverServer.exe`);
-const edgeBinary = (`${projectPath}/test/e2e/resources/binary/MicrosoftWebDriver.exe`);
-const operaBinary = (`${projectPath}/test/e2e/resources/binary/operadriver`);
-const chromeBinary = (`${projectPath}/test/e2e/resources/binary/chromedriver`);
-const firefoxBinary = (`${projectPath}/test/e2e/resources/binary/geckodriver`);
-
-// protractor automation reports BDD html/video/console
-
 // https://www.npmjs.com/package/protractor-beautiful-reporter
 let HtmlReporter = require('protractor-beautiful-reporter');
 // https://www.npmjs.com/package/protractor-video-reporter
@@ -30,15 +18,18 @@ let VideoReporter = require('protractor-video-reporter');
 // https://www.npmjs.com/package/jasmine-spec-reporter
 let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 
-// Protractor take screenshots on demand makes screenshot in any place where it is needed
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
 
+// Fetches static variables
+const StaticModule = require('./staticModule.js');
+let _StaticModule = new StaticModule();
+
 // Profile settings
-let profiles = require(projectPath + '/test/e2e/utils/profile/profiles.js');
+let profiles = require(_StaticModule.projectPath() + '/test/e2e/utils/profile/profiles.js');
 
 // HTML Execution Report
-let report = require(projectPath + '/test/e2e/utils/report/reportModule.js');
+let report = require(_StaticModule.projectPath() + '/test/e2e/utils/report/reportModule.js');
 
 exports.config = {
 
@@ -82,7 +73,7 @@ exports.config = {
      * `seleniumArgs`.
      */
     localSeleniumStandaloneOpts : {
-    	  jvmArgs : [`-Dwebdriver.ie.driver=${ieBinary}`, `-Dwebdriver.edge.driver=${edgeBinary}`, `-Dwebdriver.opera.driver=${operaBinary}`, `-Dwebdriver.chrome.driver=${chromeBinary}`, `-Dwebdriver.gecko.driver=${firefoxBinary}`, `-Dwebdriver.safari.noinstall=true`]
+    	  jvmArgs : [`-Dwebdriver.ie.driver=${_StaticModule.ieBinary()}`, `-Dwebdriver.edge.driver=${_StaticModule.edgeBinary()}`, `-Dwebdriver.opera.driver=${_StaticModule.operaBinary()}`, `-Dwebdriver.chrome.driver=${_StaticModule.chromeBinary()}`, `-Dwebdriver.gecko.driver=${_StaticModule.firefoxBinary()}`, `-Dwebdriver.safari.noinstall=true`]
     },
     
 
@@ -105,12 +96,12 @@ exports.config = {
      */
     params: {
         // Project location path
-        dirPath: projectPath,
+        dirPath: _StaticModule.projectPath(),
         
         // Resource location path
-        uploadPath: (`${projectPath}/test/e2e/resources/uploads/`),
-        downloadPath: (`${projectPath}/test/e2e/resources/downloads/`),
-        execFilePath: (`${projectPath}/test/e2e/resources/execFile/`),
+        uploadPath: _StaticModule.uploadPath(),
+        downloadPath: _StaticModule.downloadPath(),
+        execFilePath: _StaticModule.execFilePath(),
         
         // Application under test should be same as 
         // the folder under which script, testData and, uiMap is kept
@@ -263,7 +254,7 @@ exports.config = {
                 'download': {
                     'prompt_for_download': false,
                     'directory_upgrade': true,
-                    'default_directory': projectPath + '/test/e2e/resources/downloads/'
+                    'default_directory': _StaticModule.downloadPath()
                 }
             }
         }

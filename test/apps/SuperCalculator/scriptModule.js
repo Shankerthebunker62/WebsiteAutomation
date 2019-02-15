@@ -18,7 +18,7 @@ const uiDriver = require(dirPath + '/test/e2e/utils/webUIActionModule.js');
  * Super Calculator Class to script/add components for
  * activity flow diagram which is to be performed
  */
-var SuperCalculator = function () {
+let SuperCalculator = function () {
 	
 	/**
 	 * launchUrl method to launch application url which is under test
