@@ -1,4 +1,5 @@
-limit = 6;
+#!/bin/sh
+limit=6;
 
 echo "Running gradle task in loop"
 
