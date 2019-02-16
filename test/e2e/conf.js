@@ -294,7 +294,7 @@ exports.config = {
         VideoReporter.prototype.jasmineStarted = function() {
             var self = this;
             if (self.options.singleVideo) {
-                var videoPath = Path.join(Path.normalize('./reports/video'), 'protractor-specs-' + (new Date().getTime()) + '.mov');
+                var videoPath = Path.join(Path.normalize('./reports/video'), (new Date().getTime()) + '.mov');
 
                 self._startScreencast(videoPath);
 
