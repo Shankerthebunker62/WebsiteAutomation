@@ -1022,8 +1022,6 @@ exports.finalizeSummaryOutput = async function() {
 				}
 				console.log('Finalized Automation Report!');
 			});
-			
-			console.log(data);
 		}
 	});
 	

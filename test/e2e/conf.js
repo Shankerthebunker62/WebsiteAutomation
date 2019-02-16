@@ -31,6 +31,9 @@ let profiles = require(_StaticModule.projectPath() + '/test/e2e/utils/profile/pr
 // HTML Execution Report
 let report = require(_StaticModule.projectPath() + '/test/e2e/utils/report/reportModule.js');
 
+// Mail HTML Execution Report
+let mailSummaryReport = require(_StaticModule.projectPath() + '/test/e2e/utils/report/mailModule.js');
+
 exports.config = {
 
     /**
@@ -249,7 +252,7 @@ exports.config = {
         'browserName': 'chrome',
         'logName': 'Chrome - English',
         'chromeOptions': {
-            'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'], // '--headless'
+            'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars', '--headless'], // '--headless'
             'prefs': {
                 'download': {
                     'prompt_for_download': false,
@@ -380,5 +383,6 @@ exports.config = {
      */
     onComplete: function() {
     	report.finalizeSummaryOutput ();
+    	mailSummaryReport.sendMail ();
     }
 };

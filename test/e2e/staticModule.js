@@ -71,6 +71,25 @@ let StaticModule = function () {
 	this.browserName = function () { 
 		return `Google Chrome`;
 	};
+	
+	this.userName = function () {
+		return `username@domain.com`;
+	};
+	this.password = function () {
+		return `password`;
+	};
+	this.sender = function () {
+		return `QA_Automation@qa.team.com`;
+	};
+	this.host = function () {
+		return `smtp.gmail.com`;
+	};
+	this.port = function () {
+		return `465`; // can be 465 or 587
+	};
+	this.mailRecipients = function () {
+		return `recipients01@domain.com,recipients01@domain.com`;
+	};
 };
 
 module.exports = StaticModule;
