@@ -78,6 +78,8 @@ let uuid = require('uuid');
  * @param url: url of the said application
  */
 exports.launchApplication = function(pageData, dataColumn) {
+	browser.waitForAngularEnabled(true); //true for angular, false otherwise.
+	
 	let _url = testDataModule.getExcelTestData(pageData, dataColumn);
 	
 	let _result = true;

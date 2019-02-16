@@ -16,6 +16,12 @@ let fs = require('fs');
 // https://www.npmjs.com/package/nodemailer
 let nodemailer = require('nodemailer');
 
+//https://www.npmjs.com/package/emailjs
+let email 	= require('emailjs');
+
+// https://www.npmjs.com/package/email
+let Email = require('email').Email;
+
 // https://www.npmjs.com/package/node-ews
 const EWS = require('node-ews');
 
@@ -39,9 +45,9 @@ fetchMailBody = function () {
 	return mailBody;
 };
 
-exports.sendMail = async function () {
+exports.sendMailI = async function () {
 	let smtpConfig = {
-			service: _StaticModule.service(), // when using service block host and, port config
+			// service: _StaticModule.service(), // when using service block host and, port config
 		    
 		    host: _StaticModule.host(),
 		    port: _StaticModule.port(),
@@ -52,7 +58,7 @@ exports.sendMail = async function () {
 
 		    },
 		    tls: {
-		        ciphers:'SSLv3',
+		        ciphers: 'SSLv3',
 		        rejectUnauthorized: false
 		    },
 		    
@@ -87,5 +93,120 @@ exports.sendMail = async function () {
 		} else {
 			console.log(`Email sent: ${info.response}`);
 		}
+	});
+};
+
+exports.sendMailII = async function () {
+	const sendmail = require('sendmail')({
+		  logger: {
+		    debug: console.log,
+		    info: console.info,
+		    warn: console.warn,
+		    error: console.error
+		  },
+		  silent: false,
+		  auth: {
+		        user: _StaticModule.userName(),
+		        pass: _StaticModule.password()
+
+		  },
+		  dkim: { // Default: False
+		    privateKey: fs.readFileSync(_StaticModule.projectPath() + '/test/e2e/utils/report/dkim-private.pem', 'utf8'),
+		    keySelector: 'mydomainkey'
+		  },
+		  smtpPort: _StaticModule.port(), // Default: 25
+		  smtpHost: _StaticModule.host()  // Default: -1 - extra smtp host after resolveMX
+		});
+	
+	sendmail({
+	    from: _StaticModule.sender(),
+	    to: _StaticModule.mailRecipients(),
+	    subject: `${_StaticModule.feature()} via Node.js`,
+	    html: fetchMailBody(),
+	  }, function(error, info) {
+			if (error) {
+				console.error(`Email sending failed, error: ${error.message}, stackTrace ${error.stack}`);
+			} else {
+				console.dir(`Email sent: ${info.response}`);
+			}
+	});
+};
+
+exports.sendMailIII = async function () {
+	let server 	= email.server.connect({
+	   user:	 _StaticModule.userName(), 
+	   password: _StaticModule.password(), 
+	   host:		_StaticModule.host(), 
+	   tls: {
+		   ciphers: 'SSLv3'
+	   }
+	});
+	
+	let message	= {
+			text:	fetchMailBody(), 
+			from:	_StaticModule.sender(), 
+			to:		_StaticModule.mailRecipients(),
+			cc:		_StaticModule.userName(),
+			subject: `${_StaticModule.feature()} via Node.js`,
+	};
+	
+	server.send(message, function(error, info) { 
+		if (error) {
+			console.error(`Email sending failed, error: ${error.message}, stackTrace ${error.stack}`);
+		} else {
+			console.dir(`Email sent: ${info.response}`);
+		}
+	});
+};
+
+exports.sendMailIV = async function () {
+	let message = new Email({ 
+		from: _StaticModule.sender(), 
+		to:   _StaticModule.mailRecipients(),
+		subject: `${_StaticModule.feature()} via Node.js`,
+		body: fetchMailBody()
+	});
+	
+	message.send(function(error) {
+		if (error) {
+			console.error(`Email sending failed, error: ${error.message}, stackTrace ${error.stack}`);
+		} else {
+			console.dir(`Email sent successfully !!`);
+		}
+	});
+};
+
+exports.sendMailIV = async function () {
+	// exchange server connection info
+	const ewsConfig = {
+	  username: _StaticModule.userName(),
+	  password: _StaticModule.password(),
+	  host: 'https://ews.domain.com' // _StaticModule.host()
+	};
+	
+	const options = {
+			rejectUnauthorized: false,
+			strictSSL: false
+	};
+	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+			
+	// initialize node-ews
+	const ews = new EWS(ewsConfig, options);
+	
+	// define ews api function
+	const ewsFunction = 'ExpandDL';
+
+	// define ews api function args
+	const ewsArgs = {
+	  'Mailbox': {
+	    'EmailAddress': _StaticModule.mailRecipients()
+	  }
+	};
+
+	// query EWS and print resulting JSON to console
+	ews.run(ewsFunction, ewsArgs).then(result => {
+		console.log(JSON.stringify(result));
+	}).catch(error => {
+		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	});
 };

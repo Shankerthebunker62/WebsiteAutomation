@@ -28,14 +28,6 @@ npm install --unsafe-perm=true
 * gradle --stop
 </br></br>
 
-# To Do:
-
-* creating summary html report for step by step execution
-* creating testCase html report for step by step execution
-* creating a mail client or, execution
-* locate the element from multiple window
-* locate the element from multiple frames
-
 # Firefox
 
 <pre>
@@ -57,7 +49,7 @@ npm install --unsafe-perm=true
 		'download': {
 			'prompt_for_download': false,
 			'directory_upgrade': true,
-			'default_directory': projectPath + '/test/e2e/resources/downloads/'
+			'default_directory': _StaticModule.downloadPath()
 		}
 	}
 }

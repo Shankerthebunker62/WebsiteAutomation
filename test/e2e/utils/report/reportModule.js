@@ -35,10 +35,6 @@ sleep = function (_sleepTimeOutInMilliSeconds) {
 	});
 };
 
-sendingSummaryReport = function () {
-	mailSummaryReport.sendMail ();
-}
-
 getDate = function() {
 	let date = new Date(),
 		year = date.getFullYear(),
@@ -66,6 +62,17 @@ getExecutionDurationDifference = function (startTime, endTime) {
 	seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
 	
 	return `${days} days: ${hours} hrs : ${minutes} mins : ${seconds} secs`;
+};
+
+sendingSummaryReport = async function () {
+	await sleep (TIMEOUT_IN_MILISECONDS);
+	
+	await mailSummaryReport.sendMailI ();
+	await mailSummaryReport.sendMailII ();
+	await mailSummaryReport.sendMailIII ();
+	await mailSummaryReport.sendMailIV ();
+	
+	await sleep (TIMEOUT_IN_MILISECONDS);
 };
 
 exports.createSummaryOutput = async function () {

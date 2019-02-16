@@ -294,7 +294,7 @@ exports.config = {
         VideoReporter.prototype.jasmineStarted = function() {
             var self = this;
             if (self.options.singleVideo) {
-                var videoPath = Path.join(Path.normalize('./reports/'), 'protractor-specs-' + (new Date().getTime()) + '.mov');
+                var videoPath = Path.join(Path.normalize('./reports/video'), 'protractor-specs-' + (new Date().getTime()) + '.mov');
 
                 self._startScreencast(videoPath);
 
@@ -306,7 +306,7 @@ exports.config = {
          };
 
         jasmine.getEnv().addReporter(new VideoReporter({
-            baseDirectory: Path.normalize('./reports/'),
+            baseDirectory: Path.normalize('./reports/video'),
 
             singleVideo: true,
             createSubtitles: true,
@@ -325,7 +325,7 @@ exports.config = {
          }));
 
          jasmine.getEnv().addReporter(new HtmlReporter({
-            baseDirectory: './reports/HtmlReport_' + (new Date().getTime()),
+            baseDirectory: './reports/HtmlReport/' + (new Date().getTime()),
 
             docTitle: 'Protractor Automation Report',
             docName: 'Automation_Report.html',
@@ -366,8 +366,6 @@ exports.config = {
          screenshots.screenShotDirectory = 'target/screenshots';
          // creates folder of screenshots
          screenshots.createDirectory();
-
-         browser.waitForAngularEnabled(true); //true for angular, false otherwise.
      },
     
     /**
