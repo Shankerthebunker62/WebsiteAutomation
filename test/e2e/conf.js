@@ -31,9 +31,6 @@ let profiles = require(_StaticModule.projectPath() + '/test/e2e/utils/profile/pr
 // HTML Execution Report
 let report = require(_StaticModule.projectPath() + '/test/e2e/utils/report/reportModule.js');
 
-// Mail HTML Execution Report
-let mailSummaryReport = require(_StaticModule.projectPath() + '/test/e2e/utils/report/mailModule.js');
-
 exports.config = {
 
     /**
@@ -383,6 +380,5 @@ exports.config = {
      */
     onComplete: function() {
     	report.finalizeSummaryOutput ();
-    	mailSummaryReport.sendMail ();
     }
 };

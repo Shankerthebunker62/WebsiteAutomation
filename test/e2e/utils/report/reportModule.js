@@ -19,6 +19,10 @@ const TIMEOUT_IN_MILISECONDS = 500;
  * Conversion of the log4js framework to work with node.
  */
 const console = require(_StaticModule.projectPath() + '/test/e2e/utils/logger/logModule.js');
+/**
+ * Mail HTML Execution Report
+ */
+let mailSummaryReport = require(_StaticModule.projectPath() + '/test/e2e/utils/report/mailModule.js');
 	
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
@@ -29,6 +33,10 @@ sleep = function (_sleepTimeOutInMilliSeconds) {
 	}).catch((error) => {
 		 console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
 	});
+};
+
+sendingSummaryReport = function () {
+	mailSummaryReport.sendMail ();
 }
 
 getDate = function() {
@@ -1024,6 +1032,10 @@ exports.finalizeSummaryOutput = async function() {
 			});
 		}
 	});
+	
+	await sleep (TIMEOUT_IN_MILISECONDS);
+	
+	await sendingSummaryReport ();
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
 };

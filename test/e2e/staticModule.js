@@ -72,23 +72,27 @@ let StaticModule = function () {
 		return `Google Chrome`;
 	};
 	
+	// e-Mail Setup
 	this.userName = function () {
 		return `username@domain.com`;
 	};
 	this.password = function () {
-		return `password`;
+		return `appPassword`;
 	};
 	this.sender = function () {
 		return `QA_Automation@qa.team.com`;
 	};
+	this.service = function () {
+		return `serviceName`; // Gmail, hotmail, icloud
+	};
 	this.host = function () {
-		return `smtp.gmail.com`;
+		return `smtp.domain.com`; // smtp.gmail.com, smtp.office365.com, smtp-mail.outlook.com, smtp.mail.me.com
 	};
 	this.port = function () {
-		return `465`; // can be 465 or 587
+		return `465`; // 465 for gmail or, 587 for others
 	};
 	this.mailRecipients = function () {
-		return `recipients01@domain.com,recipients01@domain.com`;
+		return `recipients@domain.com`;
 	};
 };
 

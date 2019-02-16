@@ -31,7 +31,7 @@ fetchMailBody = function () {
 		if (error) {
 			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 		} else {
-			console.log(`Attaching report to mail body: ${data}`);
+			console.log(`Attaching report to mail body`);
 			mailBody = data;
 		}
 	});
@@ -39,17 +39,28 @@ fetchMailBody = function () {
 	return mailBody;
 };
 
-exports.sendMail = function () {
+exports.sendMail = async function () {
 	let smtpConfig = {
-			service : _StaticModule.host(),
-			port: _StaticModule.port(),
-			logger: true,
-			debug: true,
-			secure: true, // use SSL
-			auth : {
-				user : _StaticModule.userName(),
-				pass : _StaticModule.password()
-			}	
+			service: _StaticModule.service(), // when using service block host and, port config
+		    
+		    host: _StaticModule.host(),
+		    port: _StaticModule.port(),
+
+		    auth: {
+		        user: _StaticModule.userName(),
+		        pass: _StaticModule.password()
+
+		    },
+		    tls: {
+		        ciphers:'SSLv3',
+		        rejectUnauthorized: false
+		    },
+		    
+		    requireTLS: true,
+		    secureConnection: true,
+		    
+		    debug: true,
+		    logger: true
 	};
 	
 	let mailOptions = {
@@ -63,16 +74,18 @@ exports.sendMail = function () {
 	
 	transporter.verify((error, success) => {
 	    if (error)
-	    	console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	    else
+	    	console.error(`Your config is incorrect, error: ${error.message}, stackTrace ${error.stack}`);
+	    else {
 	    	console.log(`Your config is correct, success: ${success}`);
+	    	console.log(`Sending email to mail recipents: ${_StaticModule.mailRecipients()}`);
+	    }
 	});
-
+	
 	transporter.sendMail(mailOptions, function(error, info) {
 		if (error) {
-			console.log(error);
+			console.error(`Email sending failed, error: ${error.message}, stackTrace ${error.stack}`);
 		} else {
-			console.log('Email sent: ' + info.response);
+			console.log(`Email sent: ${info.response}`);
 		}
 	});
 };
