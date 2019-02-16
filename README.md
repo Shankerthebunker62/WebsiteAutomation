@@ -1,4 +1,4 @@
-<p><a href="https://www.npmjs.org/package/jsonfile" rel="nofollow"><img src="https://img.shields.io/npm/v/jsonfile.svg?style=flat-square" alt="npm Package"></a> <a href="http://travis-ci.org/jprichardson/node-jsonfile" rel="nofollow"><img src="https://secure.travis-ci.org/jprichardson/node-jsonfile.svg" alt="build status"></a> <a href="https://ci.appveyor.com/project/jprichardson/node-jsonfile/branch/master" rel="nofollow"><img src="https://img.shields.io/appveyor/ci/jprichardson/node-jsonfile/master.svg?label=windows%20build" alt="windows Build status"></a></p>
+<p><a href="https://travis-ci.org/angular/protractor" rel="nofollow"><img src="https://travis-ci.org/angular/protractor.svg?branch=master" alt="Build Status"></a> <a href="https://circleci.com/gh/angular/protractor" rel="nofollow"><img src="https://circleci.com/gh/angular/protractor.svg?style=shield" alt="CircleCI Status"></a> <a href="https://gitter.im/angular/protractor" rel="nofollow"><img src="https://badges.gitter.im/angular/protractor.svg" alt="Join the chat at https://gitter.im/angular/protractor"></a></p>
 
 # "# WebsiteAutomation" 
 
