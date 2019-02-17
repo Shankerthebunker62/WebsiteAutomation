@@ -47,10 +47,10 @@ fetchMailBody = function () {
 
 exports.sendMailI = async function () {
 	let smtpConfig = {
-			// service: _StaticModule.service(), // when using service block host and, port config
+			service: _StaticModule.service(), // when using service block host and, port config
 		    
-		    host: _StaticModule.host(),
-		    port: _StaticModule.port(),
+		    // host: _StaticModule.host(),
+		    // port: _StaticModule.port(),
 
 		    auth: {
 		        user: _StaticModule.userName(),
@@ -94,6 +94,8 @@ exports.sendMailI = async function () {
 			console.log(`Email sent: ${info.response}`);
 		}
 	});
+	
+	return;
 };
 
 exports.sendMailII = async function () {
@@ -130,6 +132,8 @@ exports.sendMailII = async function () {
 				console.dir(`Email sent: ${info.response}`);
 			}
 	});
+	
+	return;
 };
 
 exports.sendMailIII = async function () {
@@ -157,6 +161,8 @@ exports.sendMailIII = async function () {
 			console.dir(`Email sent: ${info.response}`);
 		}
 	});
+	
+	return;
 };
 
 exports.sendMailIV = async function () {
@@ -174,6 +180,8 @@ exports.sendMailIV = async function () {
 			console.dir(`Email sent successfully !!`);
 		}
 	});
+	
+	return;
 };
 
 exports.sendMailIV = async function () {
@@ -209,4 +217,6 @@ exports.sendMailIV = async function () {
 	}).catch(error => {
 		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
 	});
+	
+	return;
 };

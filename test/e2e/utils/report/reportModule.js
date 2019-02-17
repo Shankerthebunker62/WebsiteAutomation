@@ -881,6 +881,8 @@ exports.createSummaryOutput = async function () {
 	});
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
+	
+	return;
 };
 
 exports.createSummaryOutputMainTestBody = async function (testPurpose) {
@@ -910,6 +912,8 @@ exports.createSummaryOutputMainTestBody = async function (testPurpose) {
 	browser.params.subTestCount = 0;
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
+	
+	return;
 };
 
 exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expectedResult, result) {
@@ -964,6 +968,8 @@ exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expect
 	browser.params.totalSubTestCount += 1;
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
+	
+	return;
 };
 
 exports.createSummaryOutputMainTestBodyEnd = async function () {
@@ -979,6 +985,8 @@ exports.createSummaryOutputMainTestBodyEnd = async function () {
 	});
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
+	
+	return;
 };
 
 exports.finalizeSummaryOutput = async function() {
@@ -1045,4 +1053,6 @@ exports.finalizeSummaryOutput = async function() {
 	await sendingSummaryReport ();
 	
 	await sleep (TIMEOUT_IN_MILISECONDS);
+	
+	return;
 };
