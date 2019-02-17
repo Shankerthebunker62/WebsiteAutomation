@@ -83,7 +83,7 @@ let StaticModule = function () {
 		return `QA_Automation@qa.team.com`;
 	};
 	this.service = function () {
-		return `serviceName`; // Gmail, hotmail, icloud
+		return `serviceName`; // gmail, hotmail, icloud
 	};
 	this.host = function () {
 		return `smtp.domain.com`; // smtp.gmail.com, smtp.office365.com, smtp-mail.outlook.com, smtp.mail.me.com

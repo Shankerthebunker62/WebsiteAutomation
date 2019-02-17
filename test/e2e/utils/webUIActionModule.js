@@ -202,6 +202,7 @@ exports.launchApplication = async function(pageData, dataColumn) {
 	}).catch((error) => {
 		_result = false;
 		console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
+		
 	});
 	
 	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url` ,`Launching application url ${_url}` , _result);

@@ -46,31 +46,32 @@ fetchMailBody = function () {
 };
 
 exports.sendMailI = async function () {
-	let smtpConfig = {
+	const smtpConfig = {
 			service: _StaticModule.service(), // when using service block host and, port config
 		    
-		    // host: _StaticModule.host(),
-		    // port: _StaticModule.port(),
+		    host: _StaticModule.host(),
+		    port: _StaticModule.port(),
 
 		    auth: {
 		        user: _StaticModule.userName(),
 		        pass: _StaticModule.password()
 
 		    },
-		    tls: {
-		        ciphers: 'SSLv3',
-		        rejectUnauthorized: false
-		    },
 		    
 		    requireTLS: true,
 		    secureConnection: true,
+		    
+		    tls: {
+		        ciphers: 'SSLv3',
+		        rejectUnauthorized: true
+		    },
 		    
 		    debug: true,
 		    logger: true
 	};
 	
-	let mailOptions = {
-			from : _StaticModule.sender(),
+	const mailOptions = {
+			from : _StaticModule.userName(),
 			to : _StaticModule.mailRecipients(),
 			subject : `${_StaticModule.feature()} via Node.js`,
 			html : fetchMailBody()
