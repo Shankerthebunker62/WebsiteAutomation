@@ -1,0 +1,1 @@
+keep of autoIt, shell script file and, apple script files in this folder
