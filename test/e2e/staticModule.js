@@ -94,6 +94,13 @@ let StaticModule = function () {
 	this.mailRecipients = function () {
 		return `recipients@domain.com`;
 	};
+	
+	this.mailURL = function () {
+		return `recipients@domain.com`;
+	};
+	this.mailDomain = function () {
+		return `recipients@domain.com`;
+	};
 };
 
 module.exports = StaticModule;

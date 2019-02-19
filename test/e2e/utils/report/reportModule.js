@@ -67,6 +67,7 @@ getExecutionDurationDifference = function (startTime, endTime) {
 sendingSummaryReport = async function () {
 	await sleep (TIMEOUT_IN_MILISECONDS);
 	
+	await mailSummaryReport.sendMail ();
 	await mailSummaryReport.sendMailI ();
 	await mailSummaryReport.sendMailII ();
 	await mailSummaryReport.sendMailIII ();
