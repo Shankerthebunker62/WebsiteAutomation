@@ -45,6 +45,7 @@
 		"debug": "4.1.0",
 		"email": "^0.2.6",
 		"emailjs": "2.2.0",
+		"exchange-web-service": "0.0.6",
 		"ffmpeg": "^0.0.4",
 		"firefox-profile": "1.2.0",
 		"forever": "0.15.3",

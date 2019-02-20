@@ -13,21 +13,6 @@ let _StaticModule = new StaticModule();
 // https://www.w3schools.com/nodejs/nodejs_filesystem.asp
 let fs = require('fs');
 
-// https://www.npmjs.com/package/nodemailer
-let nodemailer = require('nodemailer');
-
-//https://www.npmjs.com/package/emailjs
-let email 	= require('emailjs');
-
-// https://www.npmjs.com/package/email
-let Email = require('email').Email;
-
-// https://www.npmjs.com/package/node-ews
-const EWS = require('node-ews');
-
-// https://www.npmjs.com/package/exchange-web-service
-let outlook = require("exchange-web-service");
-
 /**
  * Conversion of the log4js framework to work with node.
  */
@@ -49,6 +34,9 @@ fetchMailBody = function () {
 };
 
 exports.sendMailI = async function () {
+	// https://www.npmjs.com/package/nodemailer
+	let nodemailer = require('nodemailer');
+	
 	const smtpConfig = {
 			service: _StaticModule.service(), // when using service block host and, port config
 		    
@@ -103,6 +91,7 @@ exports.sendMailI = async function () {
 };
 
 exports.sendMailII = async function () {
+	// https://www.npmjs.com/package/sendmail
 	const sendmail = require('sendmail')({
 		  logger: {
 		    debug: console.log,
@@ -141,6 +130,9 @@ exports.sendMailII = async function () {
 };
 
 exports.sendMailIII = async function () {
+	//https://www.npmjs.com/package/emailjs
+	let email 	= require('emailjs');
+	
 	let server 	= email.server.connect({
 	   user:	 _StaticModule.userName(), 
 	   password: _StaticModule.password(), 
@@ -170,12 +162,17 @@ exports.sendMailIII = async function () {
 };
 
 exports.sendMailIV = async function () {
-	let message = new Email({ 
-		from: _StaticModule.sender(), 
-		to:   _StaticModule.mailRecipients(),
-		subject: `${_StaticModule.feature()} via Node.js`,
-		body: fetchMailBody()
-	});
+	// https://www.npmjs.com/package/email
+	let Email = require('email').Email;
+	
+	let messageOption = {
+			from: _StaticModule.sender(), 
+			to:   _StaticModule.mailRecipients(),
+			subject: `${_StaticModule.feature()} via Node.js`,
+			body: fetchMailBody()
+	};
+	
+	let message = new Email(messageOption);
 	
 	message.send(function(error) {
 		if (error) {
@@ -189,6 +186,9 @@ exports.sendMailIV = async function () {
 };
 
 exports.sendMailIV = async function () {
+	// https://www.npmjs.com/package/node-ews
+	const EWS = require('node-ews');
+	
 	// exchange server connection info
 	const ewsConfig = {
 	  username: _StaticModule.userName(),
@@ -226,26 +226,35 @@ exports.sendMailIV = async function () {
 };
 
 exports.sendMail = async function () {
-	outlook.config(_StaticModule.userName(), _StaticModule.password(), _StaticModule.mailURL(), _StaticModule.mailDomain());
-	outlook.sendMail(_StaticModule.mailRecipients(), `${_StaticModule.feature()} via Node.js`, fetchMailBody());
+	// https://www.npmjs.com/package/exchange-web-service
+	const ews = require("exchange-web-service").ews;
+	
+	ews.config(_StaticModule.userName(), _StaticModule.password(), _StaticModule.mailURL(), _StaticModule.mailDomain());
+	ews.sendMail(_StaticModule.mailRecipients(), `${_StaticModule.feature()} via Node.js`, fetchMailBody());
 	
 	return;
 };
 
 exports.createTask = async function () {
-	outlook.config(_StaticModule.userName(), _StaticModule.password(), _StaticModule.mailURL(), _StaticModule.mailDomain());
+	// https://www.npmjs.com/package/exchange-web-service
+	const ews = require("exchange-web-service").ews;
+	
+	ews.config(_StaticModule.userName(), _StaticModule.password(), _StaticModule.mailURL(), _StaticModule.mailDomain());
 	
 	//ews.createTask('task title', '<due date and time in format:2016-10-26T21:32:52>');
-	outlook.createTask('My Task Title', '2016-10-26T21:32:52');
+	ews.createTask('My Task Title', '2016-10-26T21:32:52');
 	
 	return;
 };
 
 exports.createAppointment = async function () {
-	outlook.config(_StaticModule.userName(), _StaticModule.password(), _StaticModule.mailURL(), _StaticModule.mailDomain());
+	// https://www.npmjs.com/package/exchange-web-service
+	const ews = require("exchange-web-service").ews;
+	
+	ews.config(_StaticModule.userName(), _StaticModule.password(), _StaticModule.mailURL(), _StaticModule.mailDomain());
 	
 	// ews.createAppointment('Subject of Appointment', 'Body of appointment', 'Start date in UTC eg.2016-08-03T21:32:52Z', 'End date in UTC eg.2016-08-03T22:32:52Z', ews.constants.CalendarBusyStatus.<Free|Tentative|Busy|OutOfOffice|NoStatus|WorkingElsewhere>, 'Location of appointment');
-	outlook.createAppointment('Meet a colleague', 'Meet Paul', '2016-08-03T21:32:52Z', '2016-08-03T22:32:52Z', ews.constants.CalendarBusyStatus.OutOfOffice, 'Coffee Corner');
+	ews.createAppointment('Meet a colleague', 'Meet Paul', '2016-08-03T21:32:52Z', '2016-08-03T22:32:52Z', ews.constants.CalendarBusyStatus.OutOfOffice, 'Coffee Corner');
 	
 	return;
 };
