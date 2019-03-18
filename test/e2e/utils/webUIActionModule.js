@@ -314,6 +314,22 @@ exports.back = async function () {
 };
 
 /**
+ * Navigate forward a page on the browser
+ */
+exports.forward = async function () {
+	let _result = true;
+	
+	browser.navigate().forward().then(() => {
+		console.log(`Navigating forward ...`);
+	}).catch((error) => {
+		_result = false;
+		console.error(`Couldn't navigate forward !!, error: ${error.message}, stackTrace ${error.stack}`);
+	});
+	
+	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate forward in the browser` ,`Navigate forward in the browser` , _result);
+};
+
+/**
  * Refresh the browser page
  */
 exports.refresh = async function () {

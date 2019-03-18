@@ -96,10 +96,10 @@ let StaticModule = function () {
 	};
 	
 	this.mailURL = function () {
-		return `recipients@domain.com`;
+		return `https://main.url.com/`;
 	};
 	this.mailDomain = function () {
-		return `recipients@domain.com`;
+		return `mail.domain`;
 	};
 };
 

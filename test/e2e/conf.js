@@ -73,9 +73,15 @@ exports.config = {
      * `seleniumArgs`.
      */
     localSeleniumStandaloneOpts : {
-    	  jvmArgs : [`-Dwebdriver.ie.driver=${_StaticModule.ieBinary()}`, `-Dwebdriver.edge.driver=${_StaticModule.edgeBinary()}`, `-Dwebdriver.opera.driver=${_StaticModule.operaBinary()}`, `-Dwebdriver.chrome.driver=${_StaticModule.chromeBinary()}`, `-Dwebdriver.gecko.driver=${_StaticModule.firefoxBinary()}`, `-Dwebdriver.safari.noinstall=true`]
+    	  jvmArgs : [
+    		  `-Dwebdriver.ie.driver=${_StaticModule.ieBinary()}`, 
+    		  `-Dwebdriver.edge.driver=${_StaticModule.edgeBinary()}`, 
+    		  `-Dwebdriver.opera.driver=${_StaticModule.operaBinary()}`, 
+    		  `-Dwebdriver.chrome.driver=${_StaticModule.chromeBinary()}`, 
+    		  `-Dwebdriver.gecko.driver=${_StaticModule.firefoxBinary()}`, 
+    		  `-Dwebdriver.safari.noinstall=true`
+    	  ]
     },
-    
 
 	/**
 	 * How long to wait for a page to load.
@@ -116,7 +122,6 @@ exports.config = {
         passedSubTestCount: 0,
         failedSubTestCount: 0
     },
-    
 
     /**
      * Required. Spec patterns are relative to the location of this config.
