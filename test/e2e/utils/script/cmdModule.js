@@ -14,10 +14,12 @@ const uploadPath = browser.params.uploadPath;
 const downloadPath = browser.params.downloadPath;
 const execFilePath = browser.params.execFilePath;
 
-const TIMEOUT_IN_MILISECONDS = 2000; 
+const TIMEOUT_IN_MILISECONDS = 2000;
 
 //https://www.npmjs.com/package/child_process
-const {execFile} = require('child_process');
+const {
+    execFile
+} = require('child_process');
 
 // https://www.npmjs.com/package/winreg
 let registry = require('winreg');
@@ -28,11 +30,11 @@ let regedit = require('regedit');
 /**
  * Conversion of the log4js framework to work with node.
  */
-const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+const console = require(dirPath + '/utils/logger/logModule.js');
 
 /***********************************************************
-************************ CMD Script ************************
-***********************************************************/
+ ************************ CMD Script ************************
+ ***********************************************************/
 
 /**
  * Function to execute exe
@@ -43,12 +45,13 @@ const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
  */
 exports.executeFile = function(fileName, params, path) {
     let promise = new Promise((resolve, reject) => {
-    	execFile(fileName, params, { cwd: path }, (error, data) => {
+        execFile(fileName, params, {
+            cwd: path
+        }, (error, data) => {
             if (error) {
-            	console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-            	reject(error);
-            }
-            else resolve(data);
+                console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+                reject(error);
+            } else resolve(data);
         });
 
     });
@@ -62,12 +65,13 @@ exports.executeFile = function(fileName, params, path) {
  */
 exports.executeFile = function(fileName) {
     let promise = new Promise((resolve, reject) => {
-    	execFile(execFilePath+fileName, params, { cwd: path }, (error, data) => {
+        execFile(execFilePath + fileName, params, {
+            cwd: path
+        }, (error, data) => {
             if (error) {
-            	console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-            	reject(error);
-            }
-            else resolve(data);
+                console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+                reject(error);
+            } else resolve(data);
         });
 
     });
@@ -75,32 +79,32 @@ exports.executeFile = function(fileName) {
 };
 
 /***********************************************************
-********************** RegEdit Script **********************
-***********************************************************/
+ ********************** RegEdit Script **********************
+ ***********************************************************/
 
 exports.listAutoStartPrograms = function() {
-	let regKey = new Registry({                                       	// new operator is optional
-		hive: Registry.HKCU,                                        	// open registry hive HKEY_CURRENT_USER
-		key :  '\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' 	// key containing autostart programs
-	});
-	
-	regKey.values(function (error, items /* array of RegistryItem */) {
-		if (error)
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		else
-			for (var i=0; i<items.length; i++)
-				console.log('ITEM: '+items[i].name+'\t'+items[i].type+'\t'+items[i].value);
-	});
+    let regKey = new Registry({ // new operator is optional
+        hive: Registry.HKCU, // open registry hive HKEY_CURRENT_USER
+        key: '\\Software\\Microsoft\\Windows\\CurrentVersion\\Run' // key containing autostart programs
+    });
+
+    regKey.values(function(error, items /* array of RegistryItem */ ) {
+        if (error)
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        else
+            for (var i = 0; i < items.length; i++)
+                console.log('ITEM: ' + items[i].name + '\t' + items[i].type + '\t' + items[i].value);
+    });
 };
 
 /***********************************************************
-************************ Exe Script ************************
-***********************************************************/
+ ************************ Exe Script ************************
+ ***********************************************************/
 
 exports.executeExeFile = function(fileName) {
-	execFile(execFilePath+fileName, function(error, data) {  
-		if (error) 
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		console.log(data.toString());                       
-	});  
+    execFile(execFilePath + fileName, function(error, data) {
+        if (error)
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        console.log(data.toString());
+    });
 };

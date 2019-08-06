@@ -17,7 +17,7 @@ const TIMEOUT_IN_MILISECONDS = 30000;
 /**
  * Conversion of the log4js framework to work with node.
  */
-const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+const console = require(dirPath + '/utils/logger/logModule.js');
 
 /**
  * An expected condition that returns the negated value.
@@ -25,13 +25,13 @@ const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
  * @param: _condition to be negated
  * @returns: promise
  */
-exports.waitForNotCondition = function (_condition) {
-	  return browser.wait(EC.not(_condition), TIMEOUT_IN_MILISECONDS).then(() => {
-		  return true;
-	  }).catch((error) => {
-		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		  return false;
-	  });
+exports.waitForNotCondition = function(_condition) {
+    return browser.wait(EC.not(_condition), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -41,13 +41,13 @@ exports.waitForNotCondition = function (_condition) {
  * @param: _condition02 could be boolean or, another expectedCondition
  * @return: promise
  */
-exports.waitForAndCondition = function (_condition01, _condition02) {
-	  return browser.wait(EC.and(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
-		  return true;
-	  }).catch((error) => {
-		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		  return false;
-	  });
+exports.waitForAndCondition = function(_condition01, _condition02) {
+    return browser.wait(EC.and(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -57,13 +57,13 @@ exports.waitForAndCondition = function (_condition01, _condition02) {
  * @param: _condition02 could be boolean or, another expectedCondition
  * @return: promise
  */
-exports.waitForOrCondition = function (_condition01, _condition02) {
-	  return browser.wait(EC.or(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
-		  return true;
-	  }).catch((error) => {
-		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		  return false;
-	  });
+exports.waitForOrCondition = function(_condition01, _condition02) {
+    return browser.wait(EC.or(_condition01, _condition02), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -71,13 +71,13 @@ exports.waitForOrCondition = function (_condition01, _condition02) {
  * 
  * @return: promise
  */
-exports.alertIsPresent = function () {
-	return browser.wait(EC.alertIsPresent(), TIMEOUT_IN_MILISECONDS).then(() => {
-		return true;
-	}).catch((error) => {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	});
+exports.alertIsPresent = function() {
+    return browser.wait(EC.alertIsPresent(), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -86,13 +86,13 @@ exports.alertIsPresent = function () {
  * @param: _element to be checked if is click able or, not
  * @return: promise
  */
-exports.waitForElementToBeClickable = function (_element) {
-	  return browser.wait(EC.elementToBeClickable(_element), TIMEOUT_IN_MILISECONDS).then(() => {
-		  return true;
-	  }).catch((error) => {
-		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		  return false;
-	  });
+exports.waitForElementToBeClickable = function(_element) {
+    return browser.wait(EC.elementToBeClickable(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -102,13 +102,13 @@ exports.waitForElementToBeClickable = function (_element) {
  * @param: _text present in the _element
  * @return: promise
  */
-exports.waitForElementTextToBePresentIn = function (_element, _text) {
-	  return browser.wait(EC.textToBePresentIn(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
-		  return true;
-	  }).catch((error) => {
-		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		  return false;
-	  });
+exports.waitForElementTextToBePresentIn = function(_element, _text) {
+    return browser.wait(EC.textToBePresentIn(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -118,13 +118,13 @@ exports.waitForElementTextToBePresentIn = function (_element, _text) {
  * @param: _text value present in the _element
  * @return: promise
  */
-exports.waitForElementTextToBePresentInValue = function (_element, _text) {
-	  return browser.wait(EC.textToBePresentInElementValue(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
-		  return true;
-	  }).catch((error) => {
-		  console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		  return false;
-	  });
+exports.waitForElementTextToBePresentInValue = function(_element, _text) {
+    return browser.wait(EC.textToBePresentInElementValue(_element, _text), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -133,13 +133,13 @@ exports.waitForElementTextToBePresentInValue = function (_element, _text) {
  * @param: _titleContains to be checked if title contains same/similar text/value or not
  * @return: promise
  */
-exports.titleContains = function (_titleContains) {
-	return browser.wait(EC.titleContains(_titleContains), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.titleContains = function(_titleContains) {
+    return browser.wait(EC.titleContains(_titleContains), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -148,13 +148,13 @@ exports.titleContains = function (_titleContains) {
  * @param: _title to be checked if title is same or not
  * @return: promise
  */
-exports.titleIs = function (_title) {
-	return browser.wait(EC.titleIs(_title), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.titleIs = function(_title) {
+    return browser.wait(EC.titleIs(_title), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -163,13 +163,13 @@ exports.titleIs = function (_title) {
  * @param: _urlContains to be checked if url contains same/similar text/value or not
  * @return: promise
  */
-exports.urlContains = function (_urlContains) {
-	return browser.wait(EC.urlContains(_urlContains), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.urlContains = function(_urlContains) {
+    return browser.wait(EC.urlContains(_urlContains), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -178,13 +178,13 @@ exports.urlContains = function (_urlContains) {
  * @param: _url to be checked if url is same or not
  * @return: promise
  */
-exports.urlIs = function (_url) {
-	return browser.wait(EC.urlIs(_url), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.urlIs = function(_url) {
+    return browser.wait(EC.urlIs(_url), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -193,13 +193,13 @@ exports.urlIs = function (_url) {
  * @param: _element to be checked is present or not
  * @return: promise
  */
-exports.waitForElementPresenceOf = function (_element) {
-	return browser.wait(EC.presenceOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
-		return true;
-	}).catch((error) => {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	});
+exports.waitForElementPresenceOf = function(_element) {
+    return browser.wait(EC.presenceOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -208,13 +208,13 @@ exports.waitForElementPresenceOf = function (_element) {
  * @param: _element to be checked if became stale or not
  * @return: promise
  */
-exports.waitForElementStalenessOf = function (_element) {
-	return browser.wait(EC.stalenessOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.waitForElementStalenessOf = function(_element) {
+    return browser.wait(EC.stalenessOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -223,13 +223,13 @@ exports.waitForElementStalenessOf = function (_element) {
  * @param: _element to be checked if became visible or not
  * @return: promise
  */
-exports.waitForElementVisiblity = function (_element) {
-	return browser.wait(EC.visibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.waitForElementVisiblity = function(_element) {
+    return browser.wait(EC.visibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -238,13 +238,13 @@ exports.waitForElementVisiblity = function (_element) {
  * @param: _element to be checked if became invisible or not
  * @return: promise
  */
-exports.waitForElementInvisibilityOf = function (_element) {
-	return browser.wait(EC.invisibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.waitForElementInvisibilityOf = function(_element) {
+    return browser.wait(EC.invisibilityOf(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };
 
 /**
@@ -253,11 +253,11 @@ exports.waitForElementInvisibilityOf = function (_element) {
  * @param: _element to be checked if selected or not
  * @return: promise
  */
-exports.waitForElementToBeSelected = function (_element) {
-	return browser.wait(EC.elementToBeSelected(_element), TIMEOUT_IN_MILISECONDS).then(() => {
-		 return true;
-	}).catch((error) => {
-		 console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		 return false;
-	});
+exports.waitForElementToBeSelected = function(_element) {
+    return browser.wait(EC.elementToBeSelected(_element), TIMEOUT_IN_MILISECONDS).then(() => {
+        return true;
+    }).catch((error) => {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    });
 };

@@ -6,83 +6,98 @@
  *                                        						       *
  ***********************************************************************/
 
-// Fetches static variables
-const StaticModule = require(`/Users/shankerthebunker/git/WebsiteAutomation/test/e2e/staticModule.js`);
-let _StaticModule = new StaticModule();
+// TODO:: Configuration variable should be replaced with a config.json
+let configModule = {
+    fileName: "SummaryReport.html",
+    automationReport: "Protractor Gradle Automation Report",
+    reportHeader: "Protractor Gradle Automation Report",
+    feature: "Angular  Calculator Function",
+    environment: "QA",
+    testType: "Regression",
+    operatingSystem: "Mac OS X",
+    browserName: "Google Chrome",
+};
+
+// Project location path
+const dirPath = browser.params.dirPath;
+
+// Config file location
+let config = (dirPath + '/' + browser.params.config);
 
 // https://www.w3schools.com/nodejs/nodejs_filesystem.asp
-let fs = require('fs');
+const fs = require('fs');
 
 const TIMEOUT_IN_MILISECONDS = 500;
 
 /**
  * Conversion of the log4js framework to work with node.
  */
-const console = require(_StaticModule.projectPath() + '/test/e2e/utils/logger/logModule.js');
+let console = require(dirPath + '/utils/logger/logModule.js');
+
 /**
  * Mail HTML Execution Report
  */
-let mailSummaryReport = require(_StaticModule.projectPath() + '/test/e2e/utils/report/mailModule.js');
-	
+let mailSummaryReport = require(dirPath + '/utils/report/mailModule.js');
+
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
 
-sleep = function (_sleepTimeOutInMilliSeconds) {
-	return new Promise(resolve => setTimeout(resolve, _sleepTimeOutInMilliSeconds)).then(() => {
-		console.log(`Waiting ...`);
-	}).catch((error) => {
-		 console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
+sleep = function(_sleepTimeOutInMilliSeconds) {
+    return new Promise(resolve => setTimeout(resolve, _sleepTimeOutInMilliSeconds)).then(() => {
+        console.log(`Waiting ...`);
+    }).catch((error) => {
+        console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
 };
 
 getDate = function() {
-	let date = new Date(),
-		year = date.getFullYear(),
-	    month = (date.getMonth() + 1).toString(),
-	    formatedMonth = (month.length === 1) ? ("0" + month) : month,
-	    day = date.getDate().toString(),
-	    formatedDay = (day.length === 1) ? ("0" + day) : day,
-	    hour = date.getHours().toString(),
-	    formatedHour = (hour.length === 1) ? ("0" + hour) : hour,
-	    minute = date.getMinutes().toString(),
-	    formatedMinute = (minute.length === 1) ? ("0" + minute) : minute,
-	    second = date.getSeconds().toString(),
-	    formatedSecond = (second.length === 1) ? ("0" + second) : second;
-	    return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
+    let date = new Date(),
+        year = date.getFullYear(),
+        month = (date.getMonth() + 1).toString(),
+        formatedMonth = (month.length === 1) ? ("0" + month) : month,
+        day = date.getDate().toString(),
+        formatedDay = (day.length === 1) ? ("0" + day) : day,
+        hour = date.getHours().toString(),
+        formatedHour = (hour.length === 1) ? ("0" + hour) : hour,
+        minute = date.getMinutes().toString(),
+        formatedMinute = (minute.length === 1) ? ("0" + minute) : minute,
+        second = date.getSeconds().toString(),
+        formatedSecond = (second.length === 1) ? ("0" + second) : second;
+    return formatedDay + "-" + formatedMonth + "-" + year + " " + formatedHour + ':' + formatedMinute + ':' + formatedSecond;
 };
 
-getExecutionDurationDifference = function (startTime, endTime) {
-	let seconds = Math.floor((endTime - (startTime))/1000);
-	let minutes = Math.floor(seconds/60);
-	let hours = Math.floor(minutes/60);
-	let days = Math.floor(hours/24);
+getExecutionDurationDifference = function(startTime, endTime) {
+    let seconds = Math.floor((endTime - (startTime)) / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    let days = Math.floor(hours / 24);
 
-	hours = hours-(days*24);
-	minutes = minutes-(days*24*60)-(hours*60);
-	seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
-	
-	return `${days} days: ${hours} hrs : ${minutes} mins : ${seconds} secs`;
+    hours = hours - (days * 24);
+    minutes = minutes - (days * 24 * 60) - (hours * 60);
+    seconds = seconds - (days * 24 * 60 * 60) - (hours * 60 * 60) - (minutes * 60);
+
+    return `${days} days: ${hours} hrs : ${minutes} mins : ${seconds} secs`;
 };
 
-sendingSummaryReport = async function () {
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	await mailSummaryReport.sendMail ();
-	await mailSummaryReport.sendMailI ();
-	await mailSummaryReport.sendMailII ();
-	await mailSummaryReport.sendMailIII ();
-	await mailSummaryReport.sendMailIV ();
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
+sendingSummaryReport = async function() {
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    await mailSummaryReport.sendMail();
+    //await mailSummaryReport.sendMailI();
+    //await mailSummaryReport.sendMailII();
+    //await mailSummaryReport.sendMailIII();
+    //await mailSummaryReport.sendMailIV();
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
 };
 
-exports.createSummaryOutput = async function () {
-	let executionStartTime = getDate();
-	
-	let heading = (`<!DOCTYPE HTML>
+exports.createSummaryOutput = async function() {
+    let executionStartTime = getDate();
+
+    let heading = (`<!DOCTYPE HTML>
 			<html>
 			<head>
-			<title>${_StaticModule.automationReport()}</title>
+			<title>${configModule.automationReport}</title>
 			<style>
 
 			html {
@@ -779,26 +794,26 @@ exports.createSummaryOutput = async function () {
 
 			<body>
 				<br>
-				<h3 align='center' style='color: #0d10df'>${_StaticModule.reportHeader()}</h3>
+				<h3 align='center' style='color: #0d10df'>${configModule.reportHeader}</h3>
 				<table class='table table-striped'>
 					<tr></tr>
 					<tr>
-						<th colspan='2' style='text-align: center' bgcolor='#78BCFF' id="feature">${_StaticModule.feature()}</th>
+						<th colspan='2' style='text-align: center' bgcolor='#78BCFF' id="feature">${configModule.feature}</th>
 					</tr>
 					<tr>
 						<td>
 							<table class='table table-hover'>
 								<tr>
 									<th>Operating System</th>
-									<td id="os">${_StaticModule.operatingSystem()}</td>
+									<td id="os">${configModule.operatingSystem}</td>
 								</tr>
 								<tr>
 									<th>Environment</th>
-									<td>${_StaticModule.environment()}</td>
+									<td>${configModule.environment}</td>
 								</tr>
 								<tr>
 									<th>Browser</th>
-									<td id="browser">${_StaticModule.browserName()}</td>
+									<td id="browser">${configModule.browserName}</td>
 								</tr>
 								<tr>
 									<th>Execution Start Time</th>
@@ -818,7 +833,7 @@ exports.createSummaryOutput = async function () {
 							<table class='table table-hover'>
 								<tr>
 									<th>Test Type</th>
-									<td>${_StaticModule.testType()}</td>
+									<td>${configModule.testType}</td>
 								</tr>
 								<tr>
 									<th>Total Main Tests</th>
@@ -858,38 +873,38 @@ exports.createSummaryOutput = async function () {
 						<th>Sl.No.</th>
 						<th>Test Purpose</th>
 					</tr>`);
-	
-	fs.unlink(_StaticModule.fileName(), function (error) {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		}
-		console.log('File deleted!');
-	});
-	
-	fs.open(_StaticModule.fileName(), 'w', function (error, file) {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		}
-		console.log(`File: ${file}`);
-		console.log('File Created!');
-	});
-	
-	fs.appendFile(_StaticModule.fileName(), heading, function (error) {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		}
-		console.log('Heading Added!');
-	});
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	return;
+
+    fs.unlink(configModule.fileName, function(error) {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        }
+        console.log('File deleted!');
+    });
+
+    fs.open(configModule.fileName, 'w', function(error, file) {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        }
+        console.log(`File: ${file}`);
+        console.log('File Created!');
+    });
+
+    fs.appendFile(configModule.fileName, heading, function(error) {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        }
+        console.log('Heading Added!');
+    });
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    return;
 };
 
-exports.createSummaryOutputMainTestBody = async function (testPurpose) {
-	let mainTestIndex = (browser.params.mainTestIndex) + 1;
-	
-	let mainTestBody = (`<tr>
+exports.createSummaryOutputMainTestBody = async function(testPurpose) {
+    let mainTestIndex = (browser.params.mainTestIndex) + 1;
+
+    let mainTestBody = (`<tr>
 			<td align='center'>${mainTestIndex}</td>
 			<td>${testPurpose}<br> <br>
 				<table class='table table-striped' border='1'>
@@ -901,55 +916,55 @@ exports.createSummaryOutputMainTestBody = async function (testPurpose) {
 						<th>Actual Result</th>
 						<th>Screenshot Result</th>
 					</tr>`);
-	
-	fs.appendFile(_StaticModule.fileName(), mainTestBody, function (error) {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		}
-		console.log('Main Test Body Added!');
-	});
-	
-	browser.params.mainTestIndex = mainTestIndex;
-	browser.params.subTestCount = 0;
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	return;
+
+    fs.appendFile(configModule.fileName, mainTestBody, function(error) {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        }
+        console.log('Main Test Body Added!');
+    });
+
+    browser.params.mainTestIndex = mainTestIndex;
+    browser.params.subTestCount = 0;
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    return;
 };
 
-exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expectedResult, result) {
-	let fontColour = '';
-	let status = '';
-	let imageAppender = '';
-	let actualResult = '';
-	let imageFilePath = '';
-	
-	let subTestCount = (browser.params.subTestCount) + 1;
-	
-	if (!result) {
-		let screnshotFile = (new Date().getTime());
-		
-	    // take screenshots
-	    screenshots.takeScreenshot(screnshotFile);
-		imageFilePath = `${dirPath}/target/screenshots/chrome-${screnshotFile}.png`;
-		imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
-	}
-	
-	if (result) {
-	    status = 'PASS';
-		fontColour = 'green';
-		actualResult = expectedResult + ' :passed';
-		
-		browser.params.passedSubTestCount += 1;
-	} else {
-	    status = 'FAIL';
-		fontColour = 'red';
-		actualResult = expectedResult + ' :failed';
-		
-		browser.params.failedSubTestCount += 1;
-	}
-	
-	let subTestBody = (`<tr>
+exports.createSummaryOutputSubTestBody = async function(testStepPurpose, expectedResult, result) {
+    let fontColour = '';
+    let status = '';
+    let imageAppender = '';
+    let actualResult = '';
+    let imageFilePath = '';
+
+    let subTestCount = (browser.params.subTestCount) + 1;
+
+    if (!result) {
+        let screnshotFile = (new Date().getTime());
+
+        // take screenshots
+        screenshots.takeScreenshot(screnshotFile);
+        imageFilePath = `${dirPath}/target/screenshots/chrome-${screnshotFile}.png`;
+        imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
+    }
+
+    if (result) {
+        status = 'PASS';
+        fontColour = 'green';
+        actualResult = expectedResult + ' :passed';
+
+        browser.params.passedSubTestCount += 1;
+    } else {
+        status = 'FAIL';
+        fontColour = 'red';
+        actualResult = expectedResult + ' :failed';
+
+        browser.params.failedSubTestCount += 1;
+    }
+
+    let subTestBody = (`<tr>
 			<td align='center'>${subTestCount}</td>
 			<td align='center'><font color='${fontColour}'>${status}</font></td>
 			<td>${testStepPurpose}</td>
@@ -957,103 +972,103 @@ exports.createSummaryOutputSubTestBody = async function (testStepPurpose, expect
 			<td>${actualResult}</td>
 			<td>${imageAppender}</td>
 		</tr>`);
-	
-	fs.appendFile(_StaticModule.fileName(), subTestBody, function (error) {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		}
-		console.log('Main Test Body Added!');
-	});
-	
-	browser.params.subTestCount = subTestCount;
-	browser.params.totalSubTestCount += 1;
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	return;
+
+    fs.appendFile(configModule.fileName, subTestBody, function(error) {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        }
+        console.log('Main Test Body Added!');
+    });
+
+    browser.params.subTestCount = subTestCount;
+    browser.params.totalSubTestCount += 1;
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    return;
 };
 
-exports.createSummaryOutputMainTestBodyEnd = async function () {
-	let mainTestBodyEnd = (`</table>
+exports.createSummaryOutputMainTestBodyEnd = async function() {
+    let mainTestBodyEnd = (`</table>
 			</td>
 		</tr>`);
-	
-	fs.appendFile(_StaticModule.fileName(), mainTestBodyEnd, function (error) {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		}
-		console.log('Main Test BodyEnded!');
-	});
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	return;
+
+    fs.appendFile(configModule.fileName, mainTestBodyEnd, function(error) {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        }
+        console.log('Main Test BodyEnded!');
+    });
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    return;
 };
 
 exports.finalizeSummaryOutput = async function() {
-	let headingEnd = (`</table>
+    let headingEnd = (`</table>
 			</body>
 			</html>`);
-	
-	fs.appendFile(_StaticModule.fileName(), headingEnd, function (error) {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		}
-		console.log('Heading Ended!');
-	});
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	fs.readFile(_StaticModule.fileName(), 'utf8', (error, data) => {
-		if (error) {
-			console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		} else {
-			let executionStartTime = browser.params.executionStartTime;
-			let executionEndTime = new Date();
-			let executionDuration = getExecutionDurationDifference(executionStartTime, executionEndTime);
-			
-			console.log(`Execution Start Time: ${executionStartTime}`);
-			console.log(`Execution End Time: ${executionEndTime}`);
-			console.log(`Execution Duration : ${executionDuration}`);
-			
-			data = data.replace('$executionEndTime', getDate());
-			data = data.replace('$executionDuration', executionDuration);
-			
-			let mainTestCount = browser.params.mainTestIndex;
-			let totalSubTestCount = browser.params.totalSubTestCount;
-			let passedSubTestCount = browser.params.passedSubTestCount;
-			let failedSubTestCount = browser.params.failedSubTestCount;
-			
-			data = data.replace('$mainTestCount', mainTestCount);
-			data = data.replace('$totalSubTestCount', totalSubTestCount);
-			data = data.replace('$passedSubTestCount', passedSubTestCount);
-			data = data.replace('$failedSubTestCount', failedSubTestCount);
-			
-			console.log(`Total Main Tests: ${mainTestCount}`);
-			console.log(`Total Sub Tests: ${totalSubTestCount}`);
-			console.log(`Passed Sub Tests: ${passedSubTestCount}`);
-			console.log(`Failed Sub Tests: ${failedSubTestCount}`);
-			
-			let passPercentage = ((passedSubTestCount/totalSubTestCount) * 100);
-			
-			data = data.replace('$passPercentage', passPercentage + ' %');
-			
-			console.log(`Pass Percentage: ${passPercentage} %`);
-			
-			fs.writeFile(_StaticModule.fileName(), data, function (error) {
-				if (error) {
-					console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-				}
-				console.log('Finalized Automation Report!');
-			});
-		}
-	});
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	await sendingSummaryReport ();
-	
-	await sleep (TIMEOUT_IN_MILISECONDS);
-	
-	return;
+
+    fs.appendFile(configModule.fileName, headingEnd, function(error) {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        }
+        console.log('Heading Ended!');
+    });
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    fs.readFile(configModule.fileName, 'utf8', (error, data) => {
+        if (error) {
+            console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        } else {
+            let executionStartTime = browser.params.executionStartTime;
+            let executionEndTime = new Date();
+            let executionDuration = getExecutionDurationDifference(executionStartTime, executionEndTime);
+
+            console.log(`Execution Start Time: ${executionStartTime}`);
+            console.log(`Execution End Time: ${executionEndTime}`);
+            console.log(`Execution Duration : ${executionDuration}`);
+
+            data = data.replace('$executionEndTime', getDate());
+            data = data.replace('$executionDuration', executionDuration);
+
+            let mainTestCount = browser.params.mainTestIndex;
+            let totalSubTestCount = browser.params.totalSubTestCount;
+            let passedSubTestCount = browser.params.passedSubTestCount;
+            let failedSubTestCount = browser.params.failedSubTestCount;
+
+            data = data.replace('$mainTestCount', mainTestCount);
+            data = data.replace('$totalSubTestCount', totalSubTestCount);
+            data = data.replace('$passedSubTestCount', passedSubTestCount);
+            data = data.replace('$failedSubTestCount', failedSubTestCount);
+
+            console.log(`Total Main Tests: ${mainTestCount}`);
+            console.log(`Total Sub Tests: ${totalSubTestCount}`);
+            console.log(`Passed Sub Tests: ${passedSubTestCount}`);
+            console.log(`Failed Sub Tests: ${failedSubTestCount}`);
+
+            let passPercentage = ((passedSubTestCount / totalSubTestCount) * 100);
+
+            data = data.replace('$passPercentage', passPercentage + ' %');
+
+            console.log(`Pass Percentage: ${passPercentage} %`);
+
+            fs.writeFile(configModule.fileName, data, function(error) {
+                if (error) {
+                    console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+                }
+                console.log('Finalized Automation Report!');
+            });
+        }
+    });
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    await sendingSummaryReport();
+
+    await sleep(TIMEOUT_IN_MILISECONDS);
+
+    return;
 };

@@ -5,26 +5,28 @@ var taskListing = require('gulp-task-listing');
 var webdriver_update = require('gulp-protractor').webdriver_update_specific;
 
 gulp.task('webdriver_update', webdriver_update({
-    webdriverManagerArgs: ['--ignore_ssl']
+    webdriverManagerArgs: ['--ignore_ssl', 'update', '--ie64']
 }));
 
 gulp.task('protractor', function() {
-  var configFile = 'test/e2e/conf.js';
+    var configFile = 'test/e2e/conf.js';
 
-  return gulp
-  .src(['./test/e2e/specs/*.js'])
-  .pipe(protractor({
-    configFile: configFile
-  }))
-  .on('error', function(e) { throw e; });
+    return gulp
+        .src(['./test/e2e/specs/*.js'])
+        .pipe(protractor({
+            configFile: configFile
+        }))
+        .on('error', function(e) {
+            throw e;
+        });
 });
 
 gulp.task('test:e2e', function(callback) {
-  runSequence(
-    'webdriver_update',
-    'protractor',
-    callback
-  );
+    runSequence(
+        //'webdriver_update',
+        'protractor',
+        callback
+    );
 });
 
-gulp.task( 'default', taskListing);
+gulp.task('default', taskListing);

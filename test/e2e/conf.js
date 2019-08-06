@@ -21,17 +21,38 @@ let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
 
-// Fetches static variables
-const StaticModule = require('./staticModule.js');
-let _StaticModule = new StaticModule();
-
 // Profile settings
-let profiles = require(_StaticModule.projectPath() + '/test/e2e/utils/profile/profiles.js');
-
-// HTML Execution Report
-let report = require(_StaticModule.projectPath() + '/test/e2e/utils/report/reportModule.js');
+//let profiles = require(__dirname + '/utils/profile/profiles.js');
 
 exports.config = {
+
+    /**
+     * The params object will be passed directly to the Protractor instance,
+     * and can be accessed from your test as browser.params. It is an arbitrary
+     * object and can contain anything you may need in your test.
+     */
+    params: {
+        // Project location path
+        dirPath: __dirname,
+        config: 'config.json',
+
+        // Resource location path
+        uploadPath: __dirname + '/resources/uploads',
+        downloadPath: __dirname + '/resources/downloads',
+        execFilePath: __dirname + '/resources/execFile',
+
+        // Application under test should be same as 
+        // the folder under which script, testData and, uiMap is kept
+        appName: 'SuperCalculator',
+        executionStartTime: new Date(),
+
+        mainTestIndex: 0,
+        subTestCount: 0,
+
+        totalSubTestCount: 0,
+        passedSubTestCount: 0,
+        failedSubTestCount: 0
+    },
 
     /**
      * If true, Protractor will connect directly to the browser Drivers
@@ -41,29 +62,29 @@ exports.config = {
      * default: false
      */
     directConnect: true,
-    
+
     /**
      * The location of the standalone Selenium Server jar file, relative
      * to the location of webdriver-manager. If no other method of starting
      * Selenium Server is found, this will default to
      * node_modules/protractor/node_modules/webdriver-manager/selenium/<jar file>
      */
-     // seleniumServerJar: string;
+    // seleniumServerJar: string;
 
     /**
      * The timeout milliseconds waiting for a local standalone Selenium Server to start.
      *
      * default: 30000ms
      */
-     // seleniumServerStartTimeout: number;
-    
+    // seleniumServerStartTimeout: number;
+
     /**
      * The address of a running Selenium Server. If specified, Protractor will
      * connect to an already running instance of Selenium. This usually looks like
      * seleniumAddress: 'http://localhost:4444/wd/hub'
      */
-     // seleniumAddress: 'http://localhost:4444/wd/hub',
-    
+    // seleniumAddress: 'http://localhost:4444/wd/hub',
+
     /**
      * Can be an object which will be passed to the SeleniumServer class as args.
      * See a full list of options at
@@ -72,20 +93,20 @@ exports.config = {
      * values set via the deprecated config values `seleniumPort` and
      * `seleniumArgs`.
      */
-    localSeleniumStandaloneOpts : {
-    	  jvmArgs : [
-    		  `-Dwebdriver.ie.driver=${_StaticModule.ieBinary()}`, 
-    		  `-Dwebdriver.edge.driver=${_StaticModule.edgeBinary()}`, 
-    		  `-Dwebdriver.opera.driver=${_StaticModule.operaBinary()}`, 
-    		  `-Dwebdriver.chrome.driver=${_StaticModule.chromeBinary()}`, 
-    		  `-Dwebdriver.gecko.driver=${_StaticModule.firefoxBinary()}`, 
-    		  `-Dwebdriver.safari.noinstall=true`
-    	  ]
+    localSeleniumStandaloneOpts: {
+        jvmArgs: [
+            `-Dwebdriver.ie.driver=${__dirname + '/resources/binary/IEDriverServer.exe'}`,
+            `-Dwebdriver.edge.driver=${__dirname + '/resources/binary/MicrosoftWebDriver.exe'}`,
+            `-Dwebdriver.opera.driver=${__dirname + '/resources/binary/operadriver'}`,
+            `-Dwebdriver.chrome.driver=${__dirname + '/resources/binary/chromedriver'}`,
+            `-Dwebdriver.gecko.driver=${__dirname + '/resources/binary/geckodriver'}`,
+            `-Dwebdriver.safari.noinstall=true`
+        ]
     },
 
-	/**
-	 * How long to wait for a page to load.
-	 */
+    /**
+     * How long to wait for a page to load.
+     */
     getPageTimeout: 30,
 
     /**
@@ -94,34 +115,6 @@ exports.config = {
      * stabilize between tasks.
      */
     allScriptsTimeout: 60000,
-
-    /**
-     * The params object will be passed directly to the Protractor instance,
-     * and can be accessed from your test as browser.params. It is an arbitrary
-     * object and can contain anything you may need in your test.
-     */
-    params: {
-        // Project location path
-        dirPath: _StaticModule.projectPath(),
-        
-        // Resource location path
-        uploadPath: _StaticModule.uploadPath(),
-        downloadPath: _StaticModule.downloadPath(),
-        execFilePath: _StaticModule.execFilePath(),
-        
-        // Application under test should be same as 
-        // the folder under which script, testData and, uiMap is kept
-        appName: 'SuperCalculator',
-        
-        executionStartTime: new Date(),
-        
-        mainTestIndex: 0,
-        subTestCount: 0,
-        
-        totalSubTestCount: 0,
-        passedSubTestCount: 0,
-        failedSubTestCount: 0
-    },
 
     /**
      * Required. Spec patterns are relative to the location of this config.
@@ -171,7 +164,7 @@ exports.config = {
      * default: INFO
      */
     logLevel: 'ERROR' | 'WARN' | 'INFO' | 'DEBUG',
-    
+
     /**
      * If set, will create a log file in the given directory with a readable log of
      * the webdriver commands it executes.
@@ -179,7 +172,7 @@ exports.config = {
      * This is an experimental feature. Enabling this will also turn on Blocking Proxy
      * synchronization, which is also experimental.
      */
-     // webDriverLogDir: 'browser.log',
+    // webDriverLogDir: 'browser.log',
 
     /**
      * If set, protractor will save the test output in json format at this path.
@@ -195,7 +188,7 @@ exports.config = {
      * This is an experimental feature. Enabling this will also turn on Blocking Proxy
      * synchronization, which is also experimental.
      */
-     // highlightDelay: 1000,
+    // highlightDelay: 1000,
 
     /**
      * Test framework to use. This may be one of: jasmine, mocha or custom.
@@ -259,12 +252,12 @@ exports.config = {
                 'download': {
                     'prompt_for_download': false,
                     'directory_upgrade': true,
-                    'default_directory': _StaticModule.downloadPath()
+                    'default_directory': __dirname + '/test/e2e/resources/downloads'
                 }
             }
         }
-     },
-    
+    },
+
     /**
      * A callback function called once configs are read but before any
      * environment setup. This will only run once, and before onPrepare.
@@ -277,7 +270,7 @@ exports.config = {
      * purpose of this function should be to bring up test dependencies.
      */
     beforeLaunch: function() {
-    	report.createSummaryOutput ();
+
     },
 
     /**
@@ -295,7 +288,11 @@ exports.config = {
      * At this point, global variable 'protractor' object will be set up, and
      * globals from the test framework will be available.
      */
-     onPrepare: function() {
+    onPrepare: function() {
+        browser.driver.getCapabilities().then((caps) => {
+            browser.browserName = caps.get('browserName');
+        });
+
         VideoReporter.prototype.jasmineStarted = function() {
             var self = this;
             if (self.options.singleVideo) {
@@ -308,7 +305,7 @@ exports.config = {
                     self._jasmineStartTime = new Date();
                 }
             }
-         };
+        };
 
         jasmine.getEnv().addReporter(new VideoReporter({
             baseDirectory: Path.normalize('./reports/video'),
@@ -326,10 +323,10 @@ exports.config = {
                 '-i', '1',
                 '-g', '300',
                 '-vcodec', 'mpeg4'
-             ]
-         }));
+            ]
+        }));
 
-         jasmine.getEnv().addReporter(new HtmlReporter({
+        jasmine.getEnv().addReporter(new HtmlReporter({
             baseDirectory: './reports/HtmlReport/' + (new Date().getTime()),
 
             docTitle: 'Protractor Automation Report',
@@ -337,9 +334,9 @@ exports.config = {
 
             gatherBrowserLogs: true,
             preserveDirectory: false
-         }).getJasmine2Reporter());
+        }).getJasmine2Reporter());
 
-         jasmine.getEnv().addReporter(new SpecReporter({
+        jasmine.getEnv().addReporter(new SpecReporter({
             displayStacktrace: 'all', // display stack-trace for each failed assertion, values: (all|specs|summary|none)
             displaySuccessesSummary: true,
             displayFailuresSummary: true,
@@ -363,16 +360,19 @@ exports.config = {
             },
 
             customProcessors: []
-         }));
-        
-         // joiner between browser name and file name
-         screenshots.browserNameJoiner = '-'; //this is the default
-         // folder of screenshots
-         screenshots.screenShotDirectory = 'target/screenshots';
-         // creates folder of screenshots
-         screenshots.createDirectory();
-     },
-    
+        }));
+
+        // joiner between browser name and file name
+        screenshots.browserNameJoiner = '-'; //this is the default
+        // folder of screenshots
+        screenshots.screenShotDirectory = 'target/screenshots';
+        // creates folder of screenshots
+        screenshots.createDirectory();
+
+        // HTML Start Execution Report
+        require(__dirname + '/utils/report/reportModule.js').createSummaryOutput();
+    },
+
     /**
      * A callback function called once tests are finished. onComplete can
      * optionally return a promise, which Protractor will wait for before
@@ -382,6 +382,7 @@ exports.config = {
      * available.
      */
     onComplete: function() {
-    	report.finalizeSummaryOutput ();
+        // HTML End Execution Report
+        require(__dirname + '/utils/report/reportModule.js').finalizeSummaryOutput();
     }
 };

@@ -21,38 +21,38 @@ const setTimeoutPromise = util.promisify(setTimeout);
 /**
  * Conversion of the log4js framework to work with node.
  */
-const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+const console = require(dirPath + '/utils/logger/logModule.js');
 
 /**
  * Web page test data fetch method to be used
  */
-const testDataModule = require(dirPath + '/test/e2e/utils/testDataModule.js');
+const testDataModule = require(dirPath + '/utils/testDataModule.js');
 
 /**
  * Web page UI webElement creator method to be used
  */
-const uiMapModule = require(dirPath + '/test/e2e/utils/uiMapModule.js');
+const uiMapModule = require(dirPath + '/utils/uiMapModule.js');
 
 /**
  * UI webElement expected conditions creator method to be used
  */
-const conditionsModule = require(dirPath + '/test/e2e/utils/additional/conditionsModule.js');
+const conditionsModule = require(dirPath + '/utils/additional/conditionsModule.js');
 
 /**
  * autoIt/Shell/CMD/Bat/OAScript method to be used
  */
-const cmdModule = require(dirPath + '/test/e2e/utils/script/cmdModule.js');
-const shellModule = require(dirPath + '/test/e2e/utils/script/shellModule.js');
+const cmdModule = require(dirPath + '/utils/script/cmdModule.js');
+const shellModule = require(dirPath + '/utils/script/shellModule.js');
 
 /**
  * DB Validation method to be used
  */
-const dbModule = require(dirPath + '/test/e2e/utils/db/dbModule.js');
+const dbModule = require(dirPath + '/utils/db/dbModule.js');
 
 /**
  * Reporting each step of execution method to be used
  */
-const reportModule = require(dirPath + '/test/e2e/utils/report/reportModule.js');
+const reportModule = require(dirPath + '/utils/report/reportModule.js');
 
 // http://www.collectionsjs.com/ --> for collections alternative in .js
 
@@ -75,13 +75,13 @@ let uuid = require('uuid');
  * @returns string: alpha-numberic text
  */
 generateString = function() {
-	let text = "";
-	let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-	for (let i = 0; i < 5; i++)
-		text += possible.charAt(Math.floor(Math.random() * possible.length));
+    for (let i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-	return text;
+    return text;
 };
 
 /**
@@ -91,9 +91,9 @@ generateString = function() {
  * @returns string: alpha-numberic text
  */
 generateCryptoHexString = function(length) {
-	if (typeof length !== 'number')
-		throw 'length should be a number';
-	return crypto.randomBytes(Math.floor(length/2)).toString('hex');
+    if (typeof length !== 'number')
+        throw 'length should be a number';
+    return crypto.randomBytes(Math.floor(length / 2)).toString('hex');
 };
 
 /**
@@ -101,7 +101,7 @@ generateCryptoHexString = function(length) {
  * @returns string: alpha-numberic uuid text
  */
 generateUUIDString = function() {
-	return uuid.v4();
+    return uuid.v4();
 };
 
 /**
@@ -109,8 +109,8 @@ generateUUIDString = function() {
  * 
  * @returns string: date-time stamp
  */
-getTimeStamp = function () {
-	return new Date().getTime();
+getTimeStamp = function() {
+    return new Date().getTime();
 };
 
 /************************************************************
@@ -123,14 +123,14 @@ getTimeStamp = function () {
  * @param elementName: element locator
  * @return element: web element fetched 
  */
-exports.getWebElement = function (elementName) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		return _element;
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return null;
-	}
+exports.getWebElement = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return _element;
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return null;
+    }
 };
 
 /**
@@ -139,14 +139,14 @@ exports.getWebElement = function (elementName) {
  * @param elementName: elements' locator
  * @return elements: web element list fetched 
  */
-exports.getWebElements = function (elementName) {
-	try {
-		let _elements = uiMapModule.getExcelUIMapList(elementName);
-		return _elements;
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return null;
-	}
+exports.getWebElements = function(elementName) {
+    try {
+        let _elements = uiMapModule.getExcelUIMapList(elementName);
+        return _elements;
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return null;
+    }
 };
 
 /************************************************************
@@ -160,14 +160,14 @@ exports.getWebElements = function (elementName) {
  * @param dataColumn: column under which test data is to found
  * @return _testData: data under test
  */
-exports.getTestData = function (pageData, dataColumn) {
-	try {
-		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-		return _testData;
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return null;
-	}
+exports.getTestData = function(pageData, dataColumn) {
+    try {
+        let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+        return _testData;
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return null;
+    }
 };
 
 /************************************************************
@@ -183,29 +183,29 @@ exports.getTestData = function (pageData, dataColumn) {
  * @param url: url of the said application
  */
 exports.launchApplication = async function(pageData, dataColumn) {
-	// true for angular applications, false otherwise.
-	browser.waitForAngularEnabled(true);
-	
-	let _url = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	let _result = true;
-	
-	browser.get(_url).then(() => {
-		console.log(`Opening URL ${_url} ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-		
-	browser.driver.getSession().then((session) => {
-		console.log(session);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
-		
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url` ,`Launching application url ${_url}` , _result);
+    // true for angular applications, false otherwise.
+    browser.waitForAngularEnabled(true);
+
+    let _url = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    let _result = true;
+
+    browser.get(_url).then(() => {
+        console.log(`Opening URL ${_url} ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    browser.driver.getSession().then((session) => {
+        console.log(session);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
+
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url`, `Launching application url ${_url}`, _result);
 };
 
 /**
@@ -213,136 +213,136 @@ exports.launchApplication = async function(pageData, dataColumn) {
  * 
  * @return return type of action boolean (true/false)
  */
-exports.close = async function () {
-	let _result = true;
-	
-	browser.close().then(() => {
-		console.log(`Closing browser ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't close browser !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to close the current open browser` ,`Closing the current browser` , _result);
+exports.close = async function() {
+    let _result = true;
+
+    browser.close().then(() => {
+        console.log(`Closing browser ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't close browser !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to close the current open browser`, `Closing the current browser`, _result);
 };
 
 /**
  * Maximize current window on focus
  */
-exports.maximize = async function () {
-	let _result = true;
-	
-	browser.driver.manage().window().maximize().then(() => {
-		console.log(`Maximizing browser window ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't maximize browser window !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to maximize the current browser` ,`Maximizing the current browser` , _result);
+exports.maximize = async function() {
+    let _result = true;
+
+    browser.driver.manage().window().maximize().then(() => {
+        console.log(`Maximizing browser window ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't maximize browser window !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to maximize the current browser`, `Maximizing the current browser`, _result);
 };
 
 /**
  * Clears all cookies on the browser
  */
-exports.clearCokkies = async function () {
-	let _result = true;
-	
-	browser.manage().deleteAllCookies().then(() => {
-		console.log(`Deleting cookies ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't delete cookies !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current session cokkies` ,`Clearing the current session cokkies` , _result);
+exports.clearCokkies = async function() {
+    let _result = true;
+
+    browser.manage().deleteAllCookies().then(() => {
+        console.log(`Deleting cookies ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't delete cookies !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current session cokkies`, `Clearing the current session cokkies`, _result);
 };
 
 /**
  * Clears any user/non-user session currently active on the browser
  */
-exports.clearSession = async function () {
-	let _result = true;
-	
-	browser.executeScript('window.sessionStorage.clear();').then(() => {
-		console.log(`Executing window.sessionStorage.clear() ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't execute window.sessionStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-		
-	browser.executeScript('window.localStorage.clear();').then(() => {
-		console.log(`Executing window.localStorage.clear() ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't execute window.localStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current browser session` ,`Clearing the current browser session` , _result);
+exports.clearSession = async function() {
+    let _result = true;
+
+    browser.executeScript('window.sessionStorage.clear();').then(() => {
+        console.log(`Executing window.sessionStorage.clear() ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't execute window.sessionStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    browser.executeScript('window.localStorage.clear();').then(() => {
+        console.log(`Executing window.localStorage.clear() ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't execute window.localStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current browser session`, `Clearing the current browser session`, _result);
 };
 
 /**
  * Restarts the browser instance
  */
-exports.restart = async function () {
-	let _result = true;
-	
-	browser.restart().then(() => {
-		console.log(`Closing and Restarting browser ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't restart !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to restart the browser` ,`Restarting the browser` , _result);
+exports.restart = async function() {
+    let _result = true;
+
+    browser.restart().then(() => {
+        console.log(`Closing and Restarting browser ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't restart !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to restart the browser`, `Restarting the browser`, _result);
 };
 
 /**
  * Navigate back a page on the browser
  */
-exports.back = async function () {
-	let _result = true;
-	
-	browser.navigate().back().then(() => {
-		console.log(`Navigating back ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't navigate back !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate back in the browser` ,`Navigate back in the browser` , _result);
+exports.back = async function() {
+    let _result = true;
+
+    browser.navigate().back().then(() => {
+        console.log(`Navigating back ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't navigate back !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate back in the browser`, `Navigate back in the browser`, _result);
 };
 
 /**
  * Navigate forward a page on the browser
  */
-exports.forward = async function () {
-	let _result = true;
-	
-	browser.navigate().forward().then(() => {
-		console.log(`Navigating forward ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't navigate forward !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate forward in the browser` ,`Navigate forward in the browser` , _result);
+exports.forward = async function() {
+    let _result = true;
+
+    browser.navigate().forward().then(() => {
+        console.log(`Navigating forward ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't navigate forward !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate forward in the browser`, `Navigate forward in the browser`, _result);
 };
 
 /**
  * Refresh the browser page
  */
-exports.refresh = async function () {
-	let _result = true;
-	
-	browser.navigate().refresh().then(() => {
-		console.log(`Refreshing ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't refresh !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to refresh the current browser` ,`Refreshing the current browser` , _result);
+exports.refresh = async function() {
+    let _result = true;
+
+    browser.navigate().refresh().then(() => {
+        console.log(`Refreshing ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't refresh !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to refresh the current browser`, `Refreshing the current browser`, _result);
 };
 
 /**
@@ -350,17 +350,17 @@ exports.refresh = async function () {
  * 
  * @param _sleepTimeOutInMilliSeconds: sleep Time Out In MilliSeconds
  */
-exports.sleep = async function (_sleepTimeOutInMilliSeconds) {
-	let _result = true;
-	
-	browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
-		console.log(`Waiting ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout` ,`Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds` , _result);
+exports.sleep = async function(_sleepTimeOutInMilliSeconds) {
+    let _result = true;
+
+    browser.sleep(_sleepTimeOutInMilliSeconds).then(() => {
+        console.log(`Waiting ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout`, `Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds`, _result);
 };
 
 /**
@@ -368,63 +368,63 @@ exports.sleep = async function (_sleepTimeOutInMilliSeconds) {
  * 
  * @param _sleepTimeOutInMilliSeconds: sleep Time Out In MilliSeconds
  */
-exports.driverSleep = async function (_sleepTimeOutInMilliSeconds) {
-	let _result = true;
-	
-	browser.driver.sleep(_sleepTimeOutInMilliSeconds).then(() => {
-		console.log(`Waiting ...`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout` ,`Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds` , _result);
+exports.driverSleep = async function(_sleepTimeOutInMilliSeconds) {
+    let _result = true;
+
+    browser.driver.sleep(_sleepTimeOutInMilliSeconds).then(() => {
+        console.log(`Waiting ...`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout`, `Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds`, _result);
 };
 
 /**
  * Checks for an alert on the page and, dismisses it
  */
-exports.dismissAlert  = async function () {
-	let _result = true;
-	
-	conditionsModule.alertIsPresent().then(() => {
-		console.log(`Alert is found`);
-		
-		browser.switchTo().alert().dismiss().then(() => {
-			console.log(`Alert is found and, dismissed`);
-		}).catch((error) => {
-			_result = false;
-		    console.error(`Alert dismiss failed, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-      }).catch((error) => {
-    	  _result = false;
-    	  console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
-      });
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to dismiss the alert if present` ,`Dismissing the alert when found` , _result);
+exports.dismissAlert = async function() {
+    let _result = true;
+
+    conditionsModule.alertIsPresent().then(() => {
+        console.log(`Alert is found`);
+
+        browser.switchTo().alert().dismiss().then(() => {
+            console.log(`Alert is found and, dismissed`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Alert dismiss failed, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    }).catch((error) => {
+        _result = false;
+        console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to dismiss the alert if present`, `Dismissing the alert when found`, _result);
 };
 
 /**
  * Checks for an alert on the page and, accepts it
  */
-exports.acceptAlert  = async function () {
-	let _result = true;
-	
-	conditionsModule.alertIsPresent().then(() => {
-		console.log(`Alert is found`);
-		
-		browser.switchTo().alert().accept().then(() => {
-			console.log(`Alert is found and, accepted`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Alert accept failed, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to accept the alert if present` ,`Accepting the alert when found` , _result);
+exports.acceptAlert = async function() {
+    let _result = true;
+
+    conditionsModule.alertIsPresent().then(() => {
+        console.log(`Alert is found`);
+
+        browser.switchTo().alert().accept().then(() => {
+            console.log(`Alert is found and, accepted`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Alert accept failed, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    }).catch((error) => {
+        _result = false;
+        console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to accept the alert if present`, `Accepting the alert when found`, _result);
 };
 
 /**
@@ -433,36 +433,36 @@ exports.acceptAlert  = async function () {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.switchToWindowHandle = async function (pageData, dataColumn) {
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	let _result = false;
-	
-	try {
-		browser.getAllWindowHandles().then(function(handles){
-			 for (let windowHandle of handles) {
-				 browser.switchTo().window(windowHandle);
-				 
-				 browser.getTitle().then(function(title){
-					if(title === _testData && _result === false){
-						console.log(`Successfully switched to window handle with title ${_testData}`);
-						_result = true;
-					}
-				});
-				 
-				if (_result)
-					break;
-			 };
-		});
-		
-		if (!_result)
-			console.log(`Failed to switch to window handle with title ${_testData}`);
-		
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to window with title ${_testData}` ,`Switching to window with title ${_testData}` , _result);
+exports.switchToWindowHandle = async function(pageData, dataColumn) {
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+    let _result = false;
+
+    try {
+        browser.getAllWindowHandles().then(function(handles) {
+            for (let windowHandle of handles) {
+                browser.switchTo().window(windowHandle);
+
+                browser.getTitle().then(function(title) {
+                    if (title === _testData && _result === false) {
+                        console.log(`Successfully switched to window handle with title ${_testData}`);
+                        _result = true;
+                    }
+                });
+
+                if (_result)
+                    break;
+            };
+        });
+
+        if (!_result)
+            console.log(`Failed to switch to window handle with title ${_testData}`);
+
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to window with title ${_testData}`, `Switching to window with title ${_testData}`, _result);
 };
 
 /**
@@ -471,44 +471,44 @@ exports.switchToWindowHandle = async function (pageData, dataColumn) {
  * @param elementName: element of frame
  */
 exports.switchToFrame = async function(elementName) {
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	try {
-		browser.switchTo().frame(_element).then(() => {
-			console.log(`Switched to frame ${elementName}`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Failed to switch to frame ${elementName}, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to frame ${elementName}` ,`Switching to frame ${elementName}` , _result);
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    try {
+        browser.switchTo().frame(_element).then(() => {
+            console.log(`Switched to frame ${elementName}`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Failed to switch to frame ${elementName}, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to frame ${elementName}`, `Switching to frame ${elementName}`, _result);
 };
 
 /**
  * switchToDefaultContent: switching out of any/all frames
  */
 exports.switchToDefaultContent = async function() {
-	let _result = true;
-	
-	try {
-		browser.switchTo().defaultContent().then(() => {
-			console.log(`Switching back from frame`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Switching back from frame failed, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to default content` ,`Switching to default content` , _result);
+    let _result = true;
+
+    try {
+        browser.switchTo().defaultContent().then(() => {
+            console.log(`Switching back from frame`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Switching back from frame failed, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to default content`, `Switching to default content`, _result);
 };
 
 /************************************************************
@@ -522,20 +522,20 @@ exports.switchToDefaultContent = async function() {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.fileUpload = async function (elementName, pageData, dataColumn) {
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = uploadPath + testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	_element.sendKeys(_testData).then(() => {
-		console.log(`Element ${elementName} setValue ${_testData} is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload the file ${_testData}` ,`Uploading the file ${_testData} on element ${elementName}` , _result);
+exports.fileUpload = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = uploadPath + testDataModule.getExcelTestData(pageData, dataColumn);
+
+    _element.sendKeys(_testData).then(() => {
+        console.log(`Element ${elementName} setValue ${_testData} is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload the file ${_testData}`, `Uploading the file ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -545,27 +545,27 @@ exports.fileUpload = async function (elementName, pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.setValue = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	_element.clear().then(() => {
-		console.log(`Element ${elementName} clear is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-		
-	_element.sendKeys(_testData).then(() => {
-		console.log(`Element ${elementName} setValue ${_testData} is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}` ,`Setting value ${_testData} on element ${elementName}` , _result);
+exports.setValue = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    _element.clear().then(() => {
+        console.log(`Element ${elementName} clear is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    _element.sendKeys(_testData).then(() => {
+        console.log(`Element ${elementName} setValue ${_testData} is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -575,32 +575,32 @@ exports.setValue = async function (elementName, pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.setValueRandom = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	if (_testData !== null || _testData !== '')
-		_testData += generateString();
-	else
-		_testData = generateString();
-		
-	_element.clear().then(() => {
-		console.log(`Element ${elementName} clear is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-		
-	_element.sendKeys(_testData).then(() => {
-		console.log(`Element ${elementName} setValue ${_testData} is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}` ,`Setting value ${_testData} on element ${elementName}` , _result);
+exports.setValueRandom = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    if (_testData !== null || _testData !== '')
+        _testData += generateString();
+    else
+        _testData = generateString();
+
+    _element.clear().then(() => {
+        console.log(`Element ${elementName} clear is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    _element.sendKeys(_testData).then(() => {
+        console.log(`Element ${elementName} setValue ${_testData} is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -610,32 +610,32 @@ exports.setValueRandom = async function (elementName, pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.setValueTimeStamp = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	if (_testData !== null || _testData !== '')
-		_testData += getTimeStamp();
-	else
-		_testData = getTimeStamp();
-		
-	_element.clear().then(() => {
-		console.log(`Element ${elementName} clear is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-		
-	_element.sendKeys(_testData).then(() => {
-		console.log(`Element ${elementName} setValue ${_testData} is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}` ,`Setting value ${_testData} on element ${elementName}` , _result);
+exports.setValueTimeStamp = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    if (_testData !== null || _testData !== '')
+        _testData += getTimeStamp();
+    else
+        _testData = getTimeStamp();
+
+    _element.clear().then(() => {
+        console.log(`Element ${elementName} clear is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    _element.sendKeys(_testData).then(() => {
+        console.log(`Element ${elementName} setValue ${_testData} is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -645,27 +645,27 @@ exports.setValueTimeStamp = async function (elementName, pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.setValueEnter = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	_element.clear().then(() => {
-		console.log(`Element ${elementName} clear is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-		
-	_element.sendKeys(_testData + protractor.Key.ENTER).then(() => {
-		console.log(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is passed`);
-	}).catch((error) => {
-		_result = false;
-		console.error(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} and, press enter` ,`Setting value ${_testData} on element ${elementName} and, press enter` , _result);
+exports.setValueEnter = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    _element.clear().then(() => {
+        console.log(`Element ${elementName} clear is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    _element.sendKeys(_testData + protractor.Key.ENTER).then(() => {
+        console.log(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} and, press enter`, `Setting value ${_testData} on element ${elementName} and, press enter`, _result);
 };
 
 /**
@@ -675,45 +675,45 @@ exports.setValueEnter = async function (elementName, pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.setValueCharByChar = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	_element.clear().then(() => {
-		console.log(`Element ${elementName} clear is passed`);
-      }).catch((error) => {
-    	  _result = false;
-    	  console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
-      });
-	
-	let chars = _testData.split('');
-	
-	for (let i=0; i<chars.length; i++) {
-		_element.sendKeys(chars[i]).then(() => {
-			console.log(`Element ${elementName} setValue ${chars[i]} is passed`);
-	      }).catch((error) => {
-	    	  _result = false;
-	    	  console.error(`Element ${elementName} setValue ${chars[i]} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	      });
-		
-		browser.sleep(250).then(() => {
-			console.log(`Waiting ...`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	}
-	
-	_element.sendKeys(protractor.Key.ENTER).then(() => {
-		console.log(`Element ${elementName} send keys enter is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} character by character` ,`Setting value ${_testData} on element ${elementName} character by character` , _result);
+exports.setValueCharByChar = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    _element.clear().then(() => {
+        console.log(`Element ${elementName} clear is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    let chars = _testData.split('');
+
+    for (let i = 0; i < chars.length; i++) {
+        _element.sendKeys(chars[i]).then(() => {
+            console.log(`Element ${elementName} setValue ${chars[i]} is passed`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Element ${elementName} setValue ${chars[i]} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+
+        browser.sleep(250).then(() => {
+            console.log(`Waiting ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    }
+
+    _element.sendKeys(protractor.Key.ENTER).then(() => {
+        console.log(`Element ${elementName} send keys enter is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} character by character`, `Setting value ${_testData} on element ${elementName} character by character`, _result);
 };
 
 /**
@@ -723,20 +723,20 @@ exports.setValueCharByChar = async function (elementName, pageData, dataColumn) 
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.select = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	_element.sendKeys(_testData).then(() => {
-		console.log(`Element ${elementName} select data ${_testData} is passed`);
-	 }).catch((error) => {
-		 _result = false;
-	    console.error(`Element ${elementName} select data ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	 });
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to select option ${_testData} from dropdown on element ${elementName}` ,`Select option ${_testData} from dropdown on element ${elementName}` , _result);
+exports.select = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    _element.sendKeys(_testData).then(() => {
+        console.log(`Element ${elementName} select data ${_testData} is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} select data ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to select option ${_testData} from dropdown on element ${elementName}`, `Select option ${_testData} from dropdown on element ${elementName}`, _result);
 };
 
 /**
@@ -744,19 +744,19 @@ exports.select = async function (elementName, pageData, dataColumn) {
  * 
  * @param elementName: element created to web page interaction
  */
-exports.sendKeysEnter = async function (elementName) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	_element.sendKeys(protractor.Key.ENTER).then(() => {
-		console.log(`Element ${elementName} send keys enter is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to press enter key on element ${elementName}` ,`Press enter on element ${elementName}` , _result);
+exports.sendKeysEnter = async function(elementName) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    _element.sendKeys(protractor.Key.ENTER).then(() => {
+        console.log(`Element ${elementName} send keys enter is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to press enter key on element ${elementName}`, `Press enter on element ${elementName}`, _result);
 };
 
 /**
@@ -764,19 +764,19 @@ exports.sendKeysEnter = async function (elementName) {
  * 
  * @param elementName: element created to web page interaction
  */
-exports.clear = async function (elementName) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	_element.clear().then((isTrue) => {
-		console.log(`Element ${elementName} clear is passed`);
-	 }).catch((error) => {
-		 _result = false;
-		 console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	 });
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear data on element ${elementName}` ,`Clearing data on element ${elementName}` , _result);
+exports.clear = async function(elementName) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    _element.clear().then((isTrue) => {
+        console.log(`Element ${elementName} clear is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear data on element ${elementName}`, `Clearing data on element ${elementName}`, _result);
 };
 
 /************************************************************
@@ -790,30 +790,30 @@ exports.clear = async function (elementName) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.verifySelectOption = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		element(_element.locator()).$('option:checked').getText().then(function (text) {
-	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
-	        	console.log(`Element ${elementName} selected option ${_testData} to ${text} is passed`);
-	        } else {
-	        	_result = false;
-	        	console.log(`Element ${elementName} selected option ${_testData} to ${text} is failed`);
-	        }
-		});
-		
-		let _data = element(_element.locator()).$('option:checked').getText();
-		expect(_data).toContain(_testData);
-	} catch (error) {
-		_result = false;
-		console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validated the dropdown option ${_testData} on element ${elementName}` ,`Validating dropdown option ${_testData} on element ${elementName}` , _result);
+exports.verifySelectOption = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    try {
+        element(_element.locator()).$('option:checked').getText().then(function(text) {
+            if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+                console.log(`Element ${elementName} selected option ${_testData} to ${text} is passed`);
+            } else {
+                _result = false;
+                console.log(`Element ${elementName} selected option ${_testData} to ${text} is failed`);
+            }
+        });
+
+        let _data = element(_element.locator()).$('option:checked').getText();
+        expect(_data).toContain(_testData);
+    } catch (error) {
+        _result = false;
+        console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validated the dropdown option ${_testData} on element ${elementName}`, `Validating dropdown option ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -823,30 +823,30 @@ exports.verifySelectOption = async function (elementName, pageData, dataColumn) 
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.verifyValue = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		_element.getAttribute('value').then(function (text) {
-	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
-	        	console.log(`Element ${elementName} get value ${_testData} to ${text} is passed`);
-	        } else {
-	        	_result = false;
-	        	console.log(`Element ${elementName} get value ${_testData} to ${text} is failed`);
-	        }
-		});
-		
-		let _data = _element.getAttribute('value');
-		expect(_data).toContain(_testData);
-	} catch (error) {
-		_result = false;
-		console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate value ${_testData} on element ${elementName}` ,`Validating value ${_testData} on element ${elementName}` , _result);
+exports.verifyValue = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    try {
+        _element.getAttribute('value').then(function(text) {
+            if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+                console.log(`Element ${elementName} get value ${_testData} to ${text} is passed`);
+            } else {
+                _result = false;
+                console.log(`Element ${elementName} get value ${_testData} to ${text} is failed`);
+            }
+        });
+
+        let _data = _element.getAttribute('value');
+        expect(_data).toContain(_testData);
+    } catch (error) {
+        _result = false;
+        console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate value ${_testData} on element ${elementName}`, `Validating value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -856,30 +856,30 @@ exports.verifyValue = async function (elementName, pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.verifyText = async function (elementName, pageData, dataColumn) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		_element.getText().then(function (text) {
-	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
-	        	console.log(`Element ${elementName} get text ${_testData} to ${text} is passed`);
-	        } else {
-	        	_result = false;
-	        	console.error(`Element ${elementName} get text ${_testData} to ${text} is failed`);
-	        }
-		});
-			
-		let _data = _element.getText();
-		expect(_data).toContain(_testData);
-	} catch (error) {
-		_result = false;
-		console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate text ${_testData} on element ${elementName}` ,`Validating text ${_testData} on element ${elementName}` , _result);
+exports.verifyText = async function(elementName, pageData, dataColumn) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    try {
+        _element.getText().then(function(text) {
+            if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+                console.log(`Element ${elementName} get text ${_testData} to ${text} is passed`);
+            } else {
+                _result = false;
+                console.error(`Element ${elementName} get text ${_testData} to ${text} is failed`);
+            }
+        });
+
+        let _data = _element.getText();
+        expect(_data).toContain(_testData);
+    } catch (error) {
+        _result = false;
+        console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate text ${_testData} on element ${elementName}`, `Validating text ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -888,29 +888,29 @@ exports.verifyText = async function (elementName, pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.verifyPageTitle = async function(pageData, dataColumn) {	
-	let _result = true;
-	
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		browser.getTitle().then(function (text) {
-	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
-	        	console.log(`Verify title ${_testData} to ${_data} is passed`);
-	        } else {
-	        	_result = false;
-	        	console.log(`Verify title ${_testData} to ${_data} is failed`);
-	        }
-		});
-		
-		let _data = browser.getTitle();
-		expect(_data).toContain(_testData);
-	} catch (error) {
-		_result = false;
-		console.error(`Verify title ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate page title as ${_testData}` ,`Validating page title as ${_testData}` , _result);
+exports.verifyPageTitle = async function(pageData, dataColumn) {
+    let _result = true;
+
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    try {
+        browser.getTitle().then(function(text) {
+            if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+                console.log(`Verify title ${_testData} to ${_data} is passed`);
+            } else {
+                _result = false;
+                console.log(`Verify title ${_testData} to ${_data} is failed`);
+            }
+        });
+
+        let _data = browser.getTitle();
+        expect(_data).toContain(_testData);
+    } catch (error) {
+        _result = false;
+        console.error(`Verify title ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate page title as ${_testData}`, `Validating page title as ${_testData}`, _result);
 };
 
 /**
@@ -919,31 +919,31 @@ exports.verifyPageTitle = async function(pageData, dataColumn) {
  * @param pageData: sheetName and, _rowId from where to pick data
  * @param dataColumn: column under which test data is to found
  */
-exports.verifyAlertText = async function (pageData, dataColumn) {	
-	let _result = true;
-	
-	let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-	
-	try {
-		conditionsModule.alertIsPresent();
-		
-		browser.switchTo().alert().getText().then(function (text) {
-	        if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
-	        	console.log(`Alert get text ${_testData} to ${text} is passed`);
-	        } else {
-	        	_result = false;
-	        	console.error(`Alert get text ${_testData} to ${text} is failed`);
-	        }
-		});
-		
-		let _data = browser.switchTo().alert().getText();
-		expect(_data).toContain(_testData);
-	} catch (error) {
-		_result = false;
-		console.error(`Verify alet text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate alert text as ${_testData}` ,`Validating alert text as ${_testData}` , _result);
+exports.verifyAlertText = async function(pageData, dataColumn) {
+    let _result = true;
+
+    let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+
+    try {
+        conditionsModule.alertIsPresent();
+
+        browser.switchTo().alert().getText().then(function(text) {
+            if (text === _testData || text.includes(_testData) || _testData.includes(text)) {
+                console.log(`Alert get text ${_testData} to ${text} is passed`);
+            } else {
+                _result = false;
+                console.error(`Alert get text ${_testData} to ${text} is failed`);
+            }
+        });
+
+        let _data = browser.switchTo().alert().getText();
+        expect(_data).toContain(_testData);
+    } catch (error) {
+        _result = false;
+        console.error(`Verify alet text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate alert text as ${_testData}`, `Validating alert text as ${_testData}`, _result);
 };
 
 /**
@@ -951,27 +951,27 @@ exports.verifyAlertText = async function (pageData, dataColumn) {
  * 
  * @param elementName: element created to web page interaction
  */
-exports.verifyElementIsDisplayed = async function(elementName) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	try {
-		let isDisplayed = _element.isDisplayed();
-		expect(isDisplayed).toBeTruthy();
-        
+exports.verifyElementIsDisplayed = async function(elementName) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    try {
+        let isDisplayed = _element.isDisplayed();
+        expect(isDisplayed).toBeTruthy();
+
         if (isDisplayed) {
-	        console.log(`Element ${elementName} is displayed passed`);
+            console.log(`Element ${elementName} is displayed passed`);
         } else {
-        	_result = false;
-        	console.log(`Element ${elementName} is displayed failed`);
+            _result = false;
+            console.log(`Element ${elementName} is displayed failed`);
         }
-	} catch (error) {
-		_result = false;
-		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is displayed` ,`Validating element ${elementName} is displayed` , _result);
+    } catch (error) {
+        _result = false;
+        console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is displayed`, `Validating element ${elementName} is displayed`, _result);
 };
 
 /**
@@ -979,27 +979,27 @@ exports.verifyElementIsDisplayed = async function(elementName) {
  * 
  * @param elementName: element created to web page interaction
  */
-exports.verifyElementIsNotPresent = async function(elementName) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	try {
-		let isPresent = _element.isPresent();
-		expect(isPresent).to.become(false).and.notify(next);
-        
+exports.verifyElementIsNotPresent = async function(elementName) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    try {
+        let isPresent = _element.isPresent();
+        expect(isPresent).to.become(false).and.notify(next);
+
         if (!isPresent) {
-	        console.log(`Element ${elementName} is not displayed passed`);
+            console.log(`Element ${elementName} is not displayed passed`);
         } else {
-        	_result = false;
-        	console.log(`Element ${elementName} is displayed failed`);
+            _result = false;
+            console.log(`Element ${elementName} is displayed failed`);
         }
-	} catch (error) {
-		_result = false;
-		console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is not displayed` ,`Validating element ${elementName} is not displayed` , _result);
+    } catch (error) {
+        _result = false;
+        console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is not displayed`, `Validating element ${elementName} is not displayed`, _result);
 };
 
 /************************************************************
@@ -1011,19 +1011,19 @@ exports.verifyElementIsNotPresent = async function(elementName) {
  * 
  * @param elementName: element created to web page interaction
  */
-exports.click = async function (elementName) {	
-	let _result = true;
-	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	_element.click().then(() => {
-		console.log(`Element ${elementName} click is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} click is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to click on element ${elementName}` ,`Clicking on element ${elementName}` , _result);
+exports.click = async function(elementName) {
+    let _result = true;
+
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    _element.click().then(() => {
+        console.log(`Element ${elementName} click is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} click is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to click on element ${elementName}`, `Clicking on element ${elementName}`, _result);
 };
 
 /**
@@ -1032,19 +1032,19 @@ exports.click = async function (elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.doubleClick = async function(elementName) {
-	let _result = true;
-	
-	let _action = browser.actions();
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	_action.doubleClick(_element).perform().then(() => {
-		console.log(`Element ${elementName} mouse double click is passed`);
-	}).catch((error) => {
-		_result = false;
-	    console.error(`Element ${elementName} mouse double click is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	});
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to double click on element ${elementName}` ,`Double click on element ${elementName}` , _result);
+    let _result = true;
+
+    let _action = browser.actions();
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    _action.doubleClick(_element).perform().then(() => {
+        console.log(`Element ${elementName} mouse double click is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} mouse double click is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to double click on element ${elementName}`, `Double click on element ${elementName}`, _result);
 };
 
 /**
@@ -1053,26 +1053,26 @@ exports.doubleClick = async function(elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.rightClick = async function(elementName) {
-	let _result = true;
-	
-	let _action = browser.actions();
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	_action.mouseMove(_element.getLocation()).perform().then(() => {
-		console.log(`Element ${elementName} mouse move is passed`);
-	 }).catch((error) => {
-		 _result = false;
-	    console.error(`Element ${elementName} mouse move is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	 });
-		
-	_action.click(protractor.Button.RIGHT).perform().then(() => {
-		console.log(`Element ${elementName} mouse click right is passed`);
-	 }).catch((error) => {
-		 _result = false;
-	    console.error(`Element ${elementName} mouse click right is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	 });
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to right click on element ${elementName}` ,`Right click on element ${elementName}` , _result);
+    let _result = true;
+
+    let _action = browser.actions();
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    _action.mouseMove(_element.getLocation()).perform().then(() => {
+        console.log(`Element ${elementName} mouse move is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} mouse move is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    _action.click(protractor.Button.RIGHT).perform().then(() => {
+        console.log(`Element ${elementName} mouse click right is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} mouse click right is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to right click on element ${elementName}`, `Right click on element ${elementName}`, _result);
 };
 
 /**
@@ -1081,19 +1081,19 @@ exports.rightClick = async function(elementName) {
  * @param elementName: element created to web page interaction
  */
 exports.mouseHoverAction = async function(elementName) {
-	let _result = true;
-	
-	let _action = browser.actions();	
-	let _element = uiMapModule.getExcelUIMap(elementName);
-	
-	_action.mouseMove(_element).perform().then(() => {
-		console.log(`Element ${elementName} mouse over is passed`);
-	 }).catch((error) => {
-		 _result = false;
-	    console.error(`Element ${elementName} mouse over is failed, error: ${error.message}, stackTrace ${error.stack}`);
-	 });
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to hover mouse over the element ${elementName}` ,`Mouse hover on element ${elementName}` , _result);
+    let _result = true;
+
+    let _action = browser.actions();
+    let _element = uiMapModule.getExcelUIMap(elementName);
+
+    _action.mouseMove(_element).perform().then(() => {
+        console.log(`Element ${elementName} mouse over is passed`);
+    }).catch((error) => {
+        _result = false;
+        console.error(`Element ${elementName} mouse over is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    });
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to hover mouse over the element ${elementName}`, `Mouse hover on element ${elementName}`, _result);
 };
 
 /**
@@ -1102,21 +1102,21 @@ exports.mouseHoverAction = async function(elementName) {
  * @param elementFrom: element created to be dragged from
  * @param elementTo: element created to be dragged fromto
  */
-exports.dragAndDrop = async function (elementFrom, elementTo) {
-	let _result = true;
-	
-	let _action = browser.actions();	
-	let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
-	let _toElement = uiMapModule.getExcelUIMap(elementTo);
-	
-	_action.dragAndDrop(_fromElement, _toElement).perform().then(() => {
-		console.log(`Element ${elementFrom} drag to Element ${elementTo} is passed`);
+exports.dragAndDrop = async function(elementFrom, elementTo) {
+    let _result = true;
+
+    let _action = browser.actions();
+    let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
+    let _toElement = uiMapModule.getExcelUIMap(elementTo);
+
+    _action.dragAndDrop(_fromElement, _toElement).perform().then(() => {
+        console.log(`Element ${elementFrom} drag to Element ${elementTo} is passed`);
     }).catch((error) => {
-    	_result = false;
-    	console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+        _result = false;
+        console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     });
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} to ${elementTo}` ,`Drag and drop ${elementFrom} to ${elementTo}` , _result);
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} to ${elementTo}`, `Drag and drop ${elementFrom} to ${elementTo}`, _result);
 };
 
 /************************************************************
@@ -1130,13 +1130,13 @@ exports.dragAndDrop = async function (elementFrom, elementTo) {
  * 
  * @return: true/false
  */
-exports.checkIfAlertPresent = function () {
-	try {
-		return conditionsModule.alertIsPresent();
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfAlertPresent = function() {
+    try {
+        return conditionsModule.alertIsPresent();
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1146,14 +1146,14 @@ exports.checkIfAlertPresent = function () {
  * 
  * @return: true/false
  */
-exports.checkIfElementClickable = function (elementName) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		return conditionsModule.waitForElementToBeClickable(_element);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementClickable = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return conditionsModule.waitForElementToBeClickable(_element);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1166,15 +1166,15 @@ exports.checkIfElementClickable = function (elementName) {
  * 
  * @return: true/false
  */
-exports.checkIfElementTextPresent = function (elementName, pageData, dataColumn) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-		return conditionsModule.waitForElementTextToBePresentIn(_element, _testData);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementTextPresent = function(elementName, pageData, dataColumn) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+        return conditionsModule.waitForElementTextToBePresentIn(_element, _testData);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1187,15 +1187,15 @@ exports.checkIfElementTextPresent = function (elementName, pageData, dataColumn)
  * 
  * @return: true/false
  */
-exports.checkIfElementValuePresent = function (elementName, pageData, dataColumn) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-		return conditionsModule.waitForElementTextToBePresentInValue(_element, _testData);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementValuePresent = function(elementName, pageData, dataColumn) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+        return conditionsModule.waitForElementTextToBePresentInValue(_element, _testData);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1206,14 +1206,14 @@ exports.checkIfElementValuePresent = function (elementName, pageData, dataColumn
  * 
  * @return: true/false
  */
-exports.checkIfTitleContains = function (pageData, dataColumn) {
-	try {
-		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);	
-		return conditionsModule.titleContains(_testData);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfTitleContains = function(pageData, dataColumn) {
+    try {
+        let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+        return conditionsModule.titleContains(_testData);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1225,14 +1225,14 @@ exports.checkIfTitleContains = function (pageData, dataColumn) {
  * 
  * @return: true/false
  */
-exports.checkIfTitleIs = function (pageData, dataColumn) {
-	try {
-		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-		return conditionsModule.titleIs(_testData);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfTitleIs = function(pageData, dataColumn) {
+    try {
+        let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+        return conditionsModule.titleIs(_testData);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1243,14 +1243,14 @@ exports.checkIfTitleIs = function (pageData, dataColumn) {
  * 
  * @return: true/false
  */
-exports.checkIfUrlContains = function (pageData, dataColumn) {	
-	try {
-		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
-		return conditionsModule.urlContains(_testData);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfUrlContains = function(pageData, dataColumn) {
+    try {
+        let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+        return conditionsModule.urlContains(_testData);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1262,14 +1262,14 @@ exports.checkIfUrlContains = function (pageData, dataColumn) {
  * 
  * @return: true/false
  */
-exports.checkIfUrlIs = function (pageData, dataColumn) {	
-	try {
-		let _testData = testDataModule.getExcelTestData(pageData, dataColumn);		
-		return conditionsModule.urlIs(_testData);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfUrlIs = function(pageData, dataColumn) {
+    try {
+        let _testData = testDataModule.getExcelTestData(pageData, dataColumn);
+        return conditionsModule.urlIs(_testData);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1279,14 +1279,14 @@ exports.checkIfUrlIs = function (pageData, dataColumn) {
  * 
  * @return: true/false
  */
-exports.checkIfElementPresent = function (elementName) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);	
-		return conditionsModule.waitForElementPresenceOf(_element);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementPresent = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return conditionsModule.waitForElementPresenceOf(_element);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1296,14 +1296,14 @@ exports.checkIfElementPresent = function (elementName) {
  * 
  * @return: true/false
  */
-exports.checkIfElementStale = function (elementName) {	
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);		
-		return conditionsModule.waitForElementStalenessOf(_element);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementStale = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return conditionsModule.waitForElementStalenessOf(_element);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1313,14 +1313,14 @@ exports.checkIfElementStale = function (elementName) {
  * 
  * @return: true/false
  */
-exports.checkIfElementVisible = function (elementName) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		return conditionsModule.waitForElementVisiblity(_element);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementVisible = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return conditionsModule.waitForElementVisiblity(_element);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1331,14 +1331,14 @@ exports.checkIfElementVisible = function (elementName) {
  * 
  * @return: true/false
  */
-exports.checkIfElementInvisible = function (elementName) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		return conditionsModule.waitForElementInvisibilityOf(_element);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementInvisible = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return conditionsModule.waitForElementInvisibilityOf(_element);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1348,14 +1348,14 @@ exports.checkIfElementInvisible = function (elementName) {
  * 
  * @return: true/false
  */
-exports.checkIfElementSelected = function (elementName) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		return conditionsModule.waitForElementToBeSelected(_element);
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementSelected = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return conditionsModule.waitForElementToBeSelected(_element);
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /**
@@ -1365,14 +1365,14 @@ exports.checkIfElementSelected = function (elementName) {
  * 
  * @returns: true/false
  */
-exports.checkIfElementIsDisplayed = function (elementName) {
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		return _element.isDisplayed();
-	} catch (error) {
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-		return false;
-	}
+exports.checkIfElementIsDisplayed = function(elementName) {
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+        return _element.isDisplayed();
+    } catch (error) {
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+        return false;
+    }
 };
 
 /************************************************************
@@ -1384,38 +1384,38 @@ exports.checkIfElementIsDisplayed = function (elementName) {
  * 
  * @param elementName: element to be highlighted
  */
-exports.highlightElement = async function (elementName) {
-	let _result = true;
-	
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		
-		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _element.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
-			console.log(`Giving highlight style to element ${elementName} ...`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Couldn't give highlight style to element ${elementName} !!, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-		
-		browser.sleep(1000).then(() => {
-			console.log(`Waiting ...`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-		
-		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _element.getWebElement(), '').then(() => {
-			console.log(`Removing highlight style to element ${elementName} ...`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Couldn't remove highlight style to element ${elementName} !!, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight ${elementName}` ,`Highlight ${elementName}` , _result);
+exports.highlightElement = async function(elementName) {
+    let _result = true;
+
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+
+        browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _element.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
+            console.log(`Giving highlight style to element ${elementName} ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't give highlight style to element ${elementName} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+
+        browser.sleep(1000).then(() => {
+            console.log(`Waiting ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+
+        browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _element.getWebElement(), '').then(() => {
+            console.log(`Removing highlight style to element ${elementName} ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't remove highlight style to element ${elementName} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight ${elementName}`, `Highlight ${elementName}`, _result);
 };
 
 /**
@@ -1423,36 +1423,36 @@ exports.highlightElement = async function (elementName) {
  * 
  * @param _elementName: web element to be highlighted
  */
-exports.highlightWebElement = async function (_elementName) {
-	let _result = true;
-	
-	try {
-		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _elementName.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
-			console.log(`Giving highlight style to element ${_elementName.locator()} ...`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Couldn't give highlight style to element ${_elementName.locator()} !!, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-		
-		browser.sleep(2000).then(() => {
-			console.log(`Waiting ...`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-		
-		browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _elementName.getWebElement(), '').then(() => {
-			console.log(`Removing highlight style to element ${_elementName.locator()} ...`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Couldn't remove highlight style to element ${_elementName.locator()} !!, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight webElement ${_elementName.locator()}` ,`Highlight webElement ${_elementName.locator()}` , _result);
+exports.highlightWebElement = async function(_elementName) {
+    let _result = true;
+
+    try {
+        browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _elementName.getWebElement(), 'color: green; background-color: #FFFF00;').then(() => {
+            console.log(`Giving highlight style to element ${_elementName.locator()} ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't give highlight style to element ${_elementName.locator()} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+
+        browser.sleep(2000).then(() => {
+            console.log(`Waiting ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+
+        browser.executeScript('arguments[0].setAttribute(\'style\', arguments[1]);', _elementName.getWebElement(), '').then(() => {
+            console.log(`Removing highlight style to element ${_elementName.locator()} ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't remove highlight style to element ${_elementName.locator()} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight webElement ${_elementName.locator()}`, `Highlight webElement ${_elementName.locator()}`, _result);
 };
 
 /**
@@ -1460,27 +1460,27 @@ exports.highlightWebElement = async function (_elementName) {
  * 
  * @param elementName: element to unhide/made visible 
  */
-exports.unhideElement = async function (elementName) {
-	let _result = true;
-	
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		
-		browser.executeScript(function (arguments) {
-		    arguments[0].style.visibility = 'visible'; 
-		    arguments[0].style.display = 'block';
-		}, _element.getWebElement()).then(() => {
-			console.log(`Making element ${elementName} visible`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Failed to make element ${elementName} visible, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to unhide ${elementName}` ,`Unhiding ${elementName}` , _result);
+exports.unhideElement = async function(elementName) {
+    let _result = true;
+
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+
+        browser.executeScript(function(arguments) {
+            arguments[0].style.visibility = 'visible';
+            arguments[0].style.display = 'block';
+        }, _element.getWebElement()).then(() => {
+            console.log(`Making element ${elementName} visible`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Failed to make element ${elementName} visible, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to unhide ${elementName}`, `Unhiding ${elementName}`, _result);
 };
 
 /**
@@ -1488,69 +1488,69 @@ exports.unhideElement = async function (elementName) {
  * 
  * @param elementName: element on which java script click is to be performed
  */
-exports.javaScriptClick = async function (elementName) {
-	let _result = true;
-	
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		
-		browser.executeScript('arguments[0].click();', _element.getWebElement()).then(() => {
-			console.log(`Java Script click on element ${elementName}`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Java Script click on element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform javaScript click on ${elementName}` ,`JavaScript clicking on ${elementName}` , _result);
+exports.javaScriptClick = async function(elementName) {
+    let _result = true;
+
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+
+        browser.executeScript('arguments[0].click();', _element.getWebElement()).then(() => {
+            console.log(`Java Script click on element ${elementName}`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Java Script click on element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform javaScript click on ${elementName}`, `JavaScript clicking on ${elementName}`, _result);
 };
-	
+
 /**
  * Mouse hover action on a webelement using java script
  * 
  * @param elementName: element for mouse hover action
  */
-exports.mouseHoverJavaScript = async function (elementName) {
-	let _result = true;
-	
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		
-		browser.executeScript('if(document.createEvent){var evObj = document.createEvent(\'MouseEvents\');evObj.initEvent(\'mouseover\', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent(\'onmouseover\');}', _element.getWebElement());
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform mouse hover action using javaScript on ${elementName}` ,`Perform javaScript mouse hover action on ${elementName}` , _result);
-};	
-	
+exports.mouseHoverJavaScript = async function(elementName) {
+    let _result = true;
+
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+
+        browser.executeScript('if(document.createEvent){var evObj = document.createEvent(\'MouseEvents\');evObj.initEvent(\'mouseover\', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent(\'onmouseover\');}', _element.getWebElement());
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform mouse hover action using javaScript on ${elementName}`, `Perform javaScript mouse hover action on ${elementName}`, _result);
+};
+
 /**
  * Scroll element in view of web page in browser
  * 
  * @param elementName: element to be scrolled to
  */
-exports.scrollingToElement = async function (elementName) {
-	let _result = true;
-	
-	try {
-		let _element = uiMapModule.getExcelUIMap(elementName);
-		
-		browser.executeScript('arguments[0].scrollIntoView(true);', _element.getWebElement()).then(() => {
-			console.log(`Scrolling onto element ${elementName}`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`Scrolling onto element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to scroll ${elementName} into view` ,`Scroll ${elementName} into view` , _result);
+exports.scrollingToElement = async function(elementName) {
+    let _result = true;
+
+    try {
+        let _element = uiMapModule.getExcelUIMap(elementName);
+
+        browser.executeScript('arguments[0].scrollIntoView(true);', _element.getWebElement()).then(() => {
+            console.log(`Scrolling onto element ${elementName}`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Scrolling onto element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to scroll ${elementName} into view`, `Scroll ${elementName} into view`, _result);
 };
 
 /**
@@ -1560,26 +1560,26 @@ exports.scrollingToElement = async function (elementName) {
  * @param elementFrom: element created to be dragged from
  * @param elementTo: element created to be dragged fromto
  */
-exports.dragAndDropHtmlDnD = async function (elementFrom, elementTo) {
-	let _result = true;
-	
-	try {
-		let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
-		let _toElement = uiMapModule.getExcelUIMap(elementTo);
-		
-		browser.executeScript(dragAndDrop, _fromElement, _toElement).then(() => {
-			console.log(`drag element ${elementFrom} to element ${elementTo}`);
-		}).catch((error) => {
-			_result = false;
-			console.error(`drag element ${elementFrom} to element ${elementTo} failed, error: ${error.message}, stackTrace ${error.stack}`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} and, drop to ${elementTo} using HtmlDnD module` ,`Drag ${elementFrom} and, drop to ${elementTo}` , _result);
-};	
+exports.dragAndDropHtmlDnD = async function(elementFrom, elementTo) {
+    let _result = true;
+
+    try {
+        let _fromElement = uiMapModule.getExcelUIMap(elementFrom);
+        let _toElement = uiMapModule.getExcelUIMap(elementTo);
+
+        browser.executeScript(dragAndDrop, _fromElement, _toElement).then(() => {
+            console.log(`drag element ${elementFrom} to element ${elementTo}`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`drag element ${elementFrom} to element ${elementTo} failed, error: ${error.message}, stackTrace ${error.stack}`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} and, drop to ${elementTo} using HtmlDnD module`, `Drag ${elementFrom} and, drop to ${elementTo}`, _result);
+};
 
 /***********************************************************
  ********************* OAScript Methods ********************
@@ -1591,19 +1591,19 @@ exports.dragAndDropHtmlDnD = async function (elementFrom, elementTo) {
  * @param name of the .scpt placed in 'execFile' folder
  * @returns: true/false
  */
-exports.executeOSAScript = async function (pageData, dataColumnOAScript) {
-	let _result = true;
-	
-	let _osaScript = testDataModule.getExcelTestData(pageData, dataColumnOAScript);
-	try {
-		shellModule.executeOSAScript(_osaScript);
-		console.log(`Executing ${_osaScript}`);
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute apple script ${_osaScript}` ,`Executing apple script ${_osaScript}` , _result);
+exports.executeOSAScript = async function(pageData, dataColumnOAScript) {
+    let _result = true;
+
+    let _osaScript = testDataModule.getExcelTestData(pageData, dataColumnOAScript);
+    try {
+        shellModule.executeOSAScript(_osaScript);
+        console.log(`Executing ${_osaScript}`);
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute apple script ${_osaScript}`, `Executing apple script ${_osaScript}`, _result);
 };
 
 /**
@@ -1614,25 +1614,25 @@ exports.executeOSAScript = async function (pageData, dataColumnOAScript) {
  * @param BrowserName: name of the browser under focus
  * @returns: true/false
  */
-exports.executeFileUploadOSAScript = async function (pageData, dataColumnFileToUpload, dataColumnBrowserName) {
-	let _result = true;
-	
-	let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
-	let _browserName = testDataModule.getExcelTestData(pageData, dataColumnBrowserName);
-	try {
-		shellModule.executeFileUploadOSAScript(_fileToUpload, _browserName);
-		console.log(`Executing apple script to upload file ${_fileToUpload} on browser ${_browserName}`);
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload file ${_fileToUpload} in browser ${_browserName} using apple script` ,`Uploading file ${_fileToUpload} in browser ${_browserName} using apple script` , _result);
+exports.executeFileUploadOSAScript = async function(pageData, dataColumnFileToUpload, dataColumnBrowserName) {
+    let _result = true;
+
+    let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
+    let _browserName = testDataModule.getExcelTestData(pageData, dataColumnBrowserName);
+    try {
+        shellModule.executeFileUploadOSAScript(_fileToUpload, _browserName);
+        console.log(`Executing apple script to upload file ${_fileToUpload} on browser ${_browserName}`);
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload file ${_fileToUpload} in browser ${_browserName} using apple script`, `Uploading file ${_fileToUpload} in browser ${_browserName} using apple script`, _result);
 };
 
 /***********************************************************
-******************** Shell Script Methods ******************
-***********************************************************/
+ ******************** Shell Script Methods ******************
+ ***********************************************************/
 
 /**
  * Executing shell '.sh' file name provided in data sheet
@@ -1641,23 +1641,23 @@ exports.executeFileUploadOSAScript = async function (pageData, dataColumnFileToU
  * @returns: true/false
  */
 exports.executeShellFile = async function(pageData, dataColumnFileName) {
-	let _result = true;
-	
-	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
-	try {
-		shellModule.executeShellFile(_fileName);
-		console.log(`Executing ${_fileName}`);
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute shell-script ${_fileName}` ,`Executing shell-script ${_fileName}` , _result);
+    let _result = true;
+
+    let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+    try {
+        shellModule.executeShellFile(_fileName);
+        console.log(`Executing ${_fileName}`);
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute shell-script ${_fileName}`, `Executing shell-script ${_fileName}`, _result);
 };
 
 /***********************************************************
-************************ CMD Script ************************
-***********************************************************/
+ ************************ CMD Script ************************
+ ***********************************************************/
 
 /**
  * Executing .bat/.exe file with provided arguments and, file path
@@ -1668,20 +1668,20 @@ exports.executeShellFile = async function(pageData, dataColumnFileName) {
  * @returns: true/false
  */
 exports.executeFile = async function(pageData, dataColumnFileName, dataColumnParams, dataColumnPath) {
-	let _result = true;
-	
-	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
-	let _params = testDataModule.getExcelTestData(pageData, dataColumnParams);
-	let _path = testDataModule.getExcelTestData(pageData, dataColumnPath);
-	try {
-		cmdModule.executeFile(_fileName,_params,_path);
-		console.log(`Executing ${_fileName} using param ${_params} on path ${_path}`);
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute CMD: ${_fileName} ${_params} ${_path}` ,`Executing CMD: ${_fileName} ${_params} ${_path}` , _result);
+    let _result = true;
+
+    let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+    let _params = testDataModule.getExcelTestData(pageData, dataColumnParams);
+    let _path = testDataModule.getExcelTestData(pageData, dataColumnPath);
+    try {
+        cmdModule.executeFile(_fileName, _params, _path);
+        console.log(`Executing ${_fileName} using param ${_params} on path ${_path}`);
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute CMD: ${_fileName} ${_params} ${_path}`, `Executing CMD: ${_fileName} ${_params} ${_path}`, _result);
 };
 
 /**
@@ -1691,39 +1691,39 @@ exports.executeFile = async function(pageData, dataColumnFileName, dataColumnPar
  * @returns: true/false
  */
 exports.executeFile = async function(pageData, dataColumnFileName) {
-	let _result = true;
-	
-	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
-	try {
-		cmdModule.executeFile(_fileName);
-		console.log(`Executing ${_fileName}`);
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute CMD: ${_fileName}` ,`Executing CMD: ${_fileName}` , _result);
+    let _result = true;
+
+    let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+    try {
+        cmdModule.executeFile(_fileName);
+        console.log(`Executing ${_fileName}`);
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute CMD: ${_fileName}`, `Executing CMD: ${_fileName}`, _result);
 };
 
 /***********************************************************
-********************** RegEdit Script **********************
-***********************************************************/
+ ********************** RegEdit Script **********************
+ ***********************************************************/
 
 /**
  * Fetch regEdit settings of current user
  */
 exports.listAutoStartPrograms = async function() {
-	let _result = true;
-	
-	try {
-		cmdModule.listAutoStartPrograms();
-		console.log(`Fetching list Auto Start Programs`);
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to run regEdit to list all auto start programs` ,`Running regEdit to list all auto start programs` , _result);
+    let _result = true;
+
+    try {
+        cmdModule.listAutoStartPrograms();
+        console.log(`Fetching list Auto Start Programs`);
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to run regEdit to list all auto start programs`, `Running regEdit to list all auto start programs`, _result);
 };
 
 /***********************************************************
@@ -1738,23 +1738,23 @@ exports.listAutoStartPrograms = async function() {
  * @returns: true/false
  */
 exports.executeExeFile = async function(pageData, dataColumnFileName, dataColumnTimeOut) {
-	let _result = true;
-	
-	let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
-	let _timeOutInMiliSeconds = testDataModule.getExcelTestData(pageData, dataColumnFileName);
-	try {
-		setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
-			// boolean === true (passing values is optional)
-			// This is executed after about ${_timeOutInMiliSeconds} milliseconds.
-			cmdModule.executeExeFile(_fileName);
-			console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` ,`Executing EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` , _result);
+    let _result = true;
+
+    let _fileName = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+    let _timeOutInMiliSeconds = testDataModule.getExcelTestData(pageData, dataColumnFileName);
+    try {
+        setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
+            // boolean === true (passing values is optional)
+            // This is executed after about ${_timeOutInMiliSeconds} milliseconds.
+            cmdModule.executeExeFile(_fileName);
+            console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds`, `Executing EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds`, _result);
 };
 
 /**
@@ -1765,19 +1765,19 @@ exports.executeExeFile = async function(pageData, dataColumnFileName, dataColumn
  * @returns: true/false
  */
 exports.executeExeFile = async function(_fileName, _timeOutInMiliSeconds) {
-	let _result = true;
-	
-	try {
-		setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
-			// boolean === true (passing values is optional)
-			// This is executed after about ${_timeOutInMiliSeconds} milliseconds.
-			cmdModule.executeExeFile(_fileName);
-			console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
-		});
-	} catch (error) {
-		_result = false;
-		console.error(`error: ${error.message}, stackTrace ${error.stack}`);
-	}
-	
-	await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` ,`Executing EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds` , _result);
+    let _result = true;
+
+    try {
+        setTimeoutPromise(_timeOutInMiliSeconds, true).then((value) => {
+            // boolean === true (passing values is optional)
+            // This is executed after about ${_timeOutInMiliSeconds} milliseconds.
+            cmdModule.executeExeFile(_fileName);
+            console.log(`Executing ${_fileName} after about ${_timeOutInMiliSeconds} milliseconds`);
+        });
+    } catch (error) {
+        _result = false;
+        console.error(`error: ${error.message}, stackTrace ${error.stack}`);
+    }
+
+    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds`, `Executing EXE: ${_fileName} after ${_timeOutInMiliSeconds} milli-seconds`, _result);
 };

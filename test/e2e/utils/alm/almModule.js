@@ -15,6 +15,6 @@ let Octane = require('octane')
 /**
  * Conversion of the log4js framework to work with node.
  */
-const console = require(dirPath + '/test/e2e/utils/logger/logModule.js');
+const console = require(dirPath + '/utils/logger/logModule.js');
 
 // https://gist.github.com/jungleeforce/af83f36fec0aa9a102c6 --> sample
