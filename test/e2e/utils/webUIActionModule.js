@@ -202,7 +202,7 @@ exports.launchApplication = async function(pageData, dataColumn) {
             _result = false;
             console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
         }).then(() => {
-            sleep(TIME_OUT * 2);
+            sleep(TIME_OUT * 1);
             reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url`, `Launching application url ${_url}`, _result);
         });
     }).then(() => {
