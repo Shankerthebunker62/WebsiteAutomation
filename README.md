@@ -95,3 +95,5 @@ http://localhost:4545/grid/console
 * https://stackoverflow.com/questions/48910876/error-eacces-permission-denied-access-usr-local-lib-node-modules-react
 * https://github.com/aerokube/windows-images/tree/master/image
 * https://github.com/angular/protractor/blob/master/lib/config.ts
+* https://github.com/aerokube/selenoid
+* https://github.com/GoogleChrome/puppeteer

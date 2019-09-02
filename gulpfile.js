@@ -8,7 +8,7 @@ var webdriver_update = require('gulp-protractor').webdriver_update_specific;
 const APP_NAME = 'SuperCalculator';
 
 gulp.task('webdriver_update', webdriver_update({
-    webdriverManagerArgs: ['--ignore_ssl', 'update', '--ie64']
+    webdriverManagerArgs: ['update', '--Microsoft Edge', '--chrome', '--safari', '--Opera', '--Internet Explorer', '--firefox', '--ignore_ssl', '--ie64']
 }));
 
 gulp.task('protractor', function() {

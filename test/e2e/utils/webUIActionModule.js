@@ -65,6 +65,9 @@ let crypto = require('crypto');
 // UUID Generator method to be used
 let uuid = require('uuid');
 
+// browser implicte wait
+const TIME_OUT = 10000;
+
 /************************************************************
  ********************* Utility Methods **********************
  ***********************************************************/
@@ -187,23 +190,28 @@ exports.launchApplication = async function(pageData, dataColumn) {
     browser.waitForAngularEnabled(true);
 
     let _url = testDataModule.getExcelTestData(pageData, dataColumn);
-
     let _result = true;
 
-    browser.get(_url).then(() => {
-        console.log(`Opening URL ${_url} ...`);
-    }).catch((error) => {
+    browser.manage().timeouts().implicitlyWait(TIME_OUT * 6).catch((error) => {
         _result = false;
-        console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        console.error(`Couldn't wait on URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
     }).then(() => {
-        reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url`, `Launching application url ${_url}`, _result);
-    });
-
-    browser.driver.getSession().then((session) => {
-        console.log(session);
-    }).catch((error) => {
-        _result = false;
-        console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
+        browser.get(_url).then(() => {
+            console.log(`Opening URL ${_url} ...`);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            sleep(TIME_OUT * 2);
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url`, `Launching application url ${_url}`, _result);
+        });
+    }).then(() => {
+        browser.driver.getSession().then((session) => {
+            console.log(session);
+        }).catch((error) => {
+            _result = false;
+            console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
+        });
     });
 };
 

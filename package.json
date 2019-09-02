@@ -7,7 +7,7 @@
     "lockfileVersion": 1,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "update": "node node_modules/protractor/bin/webdriver-manager update"
+        "update": "node node_modules/protractor/bin/webdriver-manager update '--Microsoft Edge' --chrome --safari --Opera '--Internet Explorer' --firefox --ignore_ssl --ie64"
     },
     "devDependencies": {
         "grunt-concurrent": "^2.3.1",

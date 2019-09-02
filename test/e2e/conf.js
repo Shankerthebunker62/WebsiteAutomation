@@ -86,7 +86,7 @@ exports.config = {
      * connect to an already running instance of Selenium. This usually looks like
      * seleniumAddress: 'http://localhost:4444/wd/hub'
      */
-    seleniumAddress: 'http://localhost:4545/wd/hub',
+    //seleniumAddress: 'http://localhost:4545/wd/hub',
 
     /**
      * Can be an object which will be passed to the SeleniumServer class as args.
@@ -238,6 +238,11 @@ exports.config = {
     },
 
     /**
+     * Split protractor spec tests between browsers
+     */
+    splitTestsBetweenCapabilities: true,
+
+    /**
      * Protractor can launch your tests on one or more browsers. If you are
      * testing on a single browser, use the capabilities option. If you are
      * testing on multiple browsers, use the multiCapabilities array.
@@ -247,57 +252,58 @@ exports.config = {
      * In addition, you may specify count, shardTestFiles, and maxInstances.
      */
     multiCapabilities: [{
-            'shardTestFiles': true,
-            'maxInstances': 2,
+        'browserName': 'chrome',
+        //'seleniumAddress': 'http://localhost:4545/wd/hub',
 
-            'browserName': 'chrome',
-            'seleniumAddress': 'http://localhost:4545/wd/hub',
-
-            'logName': 'Chrome - English',
-            'chromeOptions': {
-                'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'], // '--headless'
-                'prefs': {
-                    'download': {
-                        'prompt_for_download': false,
-                        'directory_upgrade': true,
-                        'default_directory': __dirname + '/test/e2e/resources/downloads'
-                    }
+        'logName': 'Chrome - English',
+        'chromeOptions': {
+            'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'], // '--headless'
+            'prefs': {
+                'download': {
+                    'prompt_for_download': false,
+                    'directory_upgrade': true,
+                    'default_directory': __dirname + '/test/e2e/resources/downloads'
                 }
             }
         },
-        {
-            'shardTestFiles': true,
-            'maxInstances': 2,
 
-            'browserName': 'firefox',
-            'seleniumAddress': 'http://localhost:4545/wd/hub',
+        'shardTestFiles': true,
+        'maxInstances': 2,
+    }, {
+        'browserName': 'firefox',
+        //'seleniumAddress': 'http://localhost:4545/wd/hub',
 
-            'logName': 'Firefox - English',
-            'moz:firefoxOptions': {
-                'args': ['--verbose', '--safe-mode'] // '--headless'
-            }
-        }, {
-            'shardTestFiles': true,
-            'maxInstances': 2,
-
-            'browserName': 'safari',
-            'seleniumAddress': 'http://localhost:4545/wd/hub',
-
-            'safari.options': {
-                technologyPreview: true
-            }
+        'logName': 'Firefox - English',
+        'moz:firefoxOptions': {
+            'args': ['--verbose', '--safe-mode'] // '--headless'
         },
-        {
-            'shardTestFiles': true,
-            'maxInstances': 2,
+        'shardTestFiles': true,
+        'maxInstances': 2,
+    }, {
+        'browserName': 'MicrosoftEdge',
+        //'seleniumAddress': 'http://localhost:4545/wd/hub',
 
-            'browserName': 'internet explorer',
-            'seleniumAddress': 'http://localhost:4545/wd/hub',
+        'shardTestFiles': true,
+        'maxInstances': 2,
+    }, {
+        'browserName': 'Opera',
+        //'seleniumAddress': 'http://localhost:4545/wd/hub',
 
-            'platform': 'ANY',
-            'version': '11'
-        }
-    ],
+        'shardTestFiles': true,
+        'maxInstances': 2,
+    }, {
+        'browserName': 'safari',
+        //'seleniumAddress': 'http://localhost:4545/wd/hub',
+
+        'shardTestFiles': true,
+        'maxInstances': 1,
+    }, {
+        'browserName': 'internet explorer',
+        //'seleniumAddress': 'http://localhost:4545/wd/hub',
+
+        'shardTestFiles': true,
+        'maxInstances': 2,
+    }],
 
     /**
      * A callback function called once configs are read but before any
