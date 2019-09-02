@@ -91,6 +91,16 @@ http://localhost:4545/grid/console
 # To see the VNC port run
 * $ docker-compose ps
 
+### One-command Installation
+Start browser automation in minutes by copy-pasting just **one command**:
+```
+$ curl -s https://aerokube.com/cm/bash | bash \
+    && ./cm selenoid start --vnc --tmpfs 128
+```
+**That's it!** You can now use Selenoid instead of Selenium server. Specify the following Selenium URL in tests:
+```
+http://localhost:4444/wd/hub
+```
 # Useful links:
 * https://stackoverflow.com/questions/48910876/error-eacces-permission-denied-access-usr-local-lib-node-modules-react
 * https://github.com/aerokube/windows-images/tree/master/image

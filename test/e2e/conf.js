@@ -253,7 +253,7 @@ exports.config = {
      */
     multiCapabilities: [{
         'browserName': 'chrome',
-        //'seleniumAddress': 'http://localhost:4545/wd/hub',
+        'seleniumAddress': 'http://localhost:4545/wd/hub',
 
         'logName': 'Chrome - English',
         'chromeOptions': {
@@ -271,7 +271,7 @@ exports.config = {
         'maxInstances': 2,
     }, {
         'browserName': 'firefox',
-        //'seleniumAddress': 'http://localhost:4545/wd/hub',
+        'seleniumAddress': 'http://localhost:4545/wd/hub',
 
         'logName': 'Firefox - English',
         'moz:firefoxOptions': {
@@ -287,7 +287,7 @@ exports.config = {
         'maxInstances': 2,
     }, {
         'browserName': 'Opera',
-        //'seleniumAddress': 'http://localhost:4545/wd/hub',
+        //'seleniumAddress': 'http://localhost:4444/wd/hub',
 
         'shardTestFiles': true,
         'maxInstances': 2,
