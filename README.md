@@ -10,6 +10,7 @@
 * Java (1.8 or, higher)
 * Node Js
 * Gradle
+* DockerToolBox
 
 # Setup
 
