@@ -55,6 +55,25 @@ npm install --unsafe-perm=true</br>
 }
 </pre>
 
+# Internet Explore
+
+<pre>
+'browserName': 'internet explorer',
+
+'platform': 'ANY',
+'version': '11'
+</pre>
+
+# Safari
+
+<pre>
+'browserName': 'safari',
+
+'safari.options': {
+    technologyPreview: true
+}
+</pre>
+
 # Run Selenium hub with VNC supported 
 	Firefox and Chrome with scale feature with the simple compose commands.
 
@@ -71,3 +90,8 @@ http://localhost:4545/grid/console
 
 # To see the VNC port run
 * $ docker-compose ps
+
+# Useful links:
+* https://stackoverflow.com/questions/48910876/error-eacces-permission-denied-access-usr-local-lib-node-modules-react
+* https://github.com/aerokube/windows-images/tree/master/image
+* https://github.com/angular/protractor/blob/master/lib/config.ts

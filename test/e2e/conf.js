@@ -122,8 +122,8 @@ exports.config = {
     /**
      * Required. Spec patterns are relative to the location of this config.
      */
-    specs: [`test/${APP_NAME}/testCases/Addition and Substraction Super Calculator.js`,
-        `test/${APP_NAME}/testCases/Multiplication and Division Super Calculator.js`,
+    specs: [`test/${APP_NAME}/testCases/Addition and Substraction.js`,
+        `test/${APP_NAME}/testCases/Multiplication and Division.js`,
         `test/${APP_NAME}/testCases/Modulus Super Calculator.js`
     ],
 
@@ -294,8 +294,8 @@ exports.config = {
             'browserName': 'internet explorer',
             'seleniumAddress': 'http://localhost:4545/wd/hub',
 
-            platform: 'ANY',
-            version: '11'
+            'platform': 'ANY',
+            'version': '11'
         }
     ],
 

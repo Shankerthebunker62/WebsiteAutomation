@@ -1,7 +1,7 @@
 /***********************************************************************
  *                                        						       *
  * Author: Siddharth Shanker               						       *
- * Date: September, 2019.                           			   	   *
+ * Date: September, 2019.                            			   	   *
  * GitHub: https://github.com/Shankerthebunker62/WebsiteAutomation.git *
  *                                        						       *
  ***********************************************************************/
@@ -17,7 +17,7 @@ let report = require(dirPath + '/utils/report/reportModule.js');
 const SuperCalculator = require(dirPath.replace('e2e', 'apps') + '/' + appName + '/scriptModule.js');
 let _SuperCalculator = new SuperCalculator();
 
-const testCasePurpose = 'Addition and Substraction Super Calculator';
+const testCasePurpose = 'Multiplication and Division Calculator';
 
 describe(testCasePurpose, function() {
 
@@ -33,12 +33,12 @@ describe(testCasePurpose, function() {
         _SuperCalculator.launchUrl('_DefaultCompRow');
     });
 
-    it('Add Two Numbers', function() {
-        _SuperCalculator.Add('_DefaultCompRowTwo');
+    it('Multiply Two Numbers', function() {
+        _SuperCalculator.Multiply('_DefaultCompRowTwo');
     });
 
-    it('Substract Two Numbers', function() {
-        _SuperCalculator.Substract('_DefaultCompRowTwo');
+    it('Divide Two Numbers', function() {
+        _SuperCalculator.Divide('_DefaultCompRowOne');
     });
 
     it('Closing Browser', function() {

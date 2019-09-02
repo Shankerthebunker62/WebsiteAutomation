@@ -17,7 +17,7 @@ let report = require(dirPath + '/utils/report/reportModule.js');
 const SuperCalculator = require(dirPath.replace('e2e', 'apps') + '/' + appName + '/scriptModule.js');
 let _SuperCalculator = new SuperCalculator();
 
-const testCasePurpose = 'Modulus Super Calculator';
+const testCasePurpose = 'Modulus Calculator';
 
 describe(testCasePurpose, function() {
 

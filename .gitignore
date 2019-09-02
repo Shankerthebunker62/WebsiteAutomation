@@ -1,0 +1,12 @@
+node_modules
+console.json
+console.log
+package-lock.json
+SummaryReport.html
+target
+reports
+protractorFailuresReport
+.gradle
+.DS_Store
+.angulardoc.json
+.settings/
