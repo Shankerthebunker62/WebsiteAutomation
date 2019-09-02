@@ -54,3 +54,20 @@ npm install --unsafe-perm=true</br>
 	}
 }
 </pre>
+
+# Run Selenium hub with VNC supported 
+	Firefox and Chrome with scale feature with the simple compose commands.
+
+# GRID running at
+http://localhost:4545/grid/console	
+
+# Docker selenium-hub Compose
+$ docker-compose up -d
+$ docker-compose start
+$ docker-compose scale nodechrome=3 nodefirefox=3
+
+$ docker-compose stop
+$ docker-compose down
+
+# To see the VNC port run
+$ docker-compose ps
