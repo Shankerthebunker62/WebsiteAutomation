@@ -62,12 +62,12 @@ npm install --unsafe-perm=true</br>
 http://localhost:4545/grid/console	
 
 # Docker selenium-hub Compose
-$ docker-compose up -d
-$ docker-compose start
-$ docker-compose scale nodechrome=3 nodefirefox=3
+* $ docker-compose up -d
+* $ docker-compose start
+* $ docker-compose scale nodechrome=3 nodefirefox=3
 
-$ docker-compose stop
-$ docker-compose down
+* $ docker-compose stop
+* $ docker-compose down
 
 # To see the VNC port run
-$ docker-compose ps
+* $ docker-compose ps
