@@ -195,6 +195,8 @@ exports.launchApplication = async function(pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't opening URL ${_url} !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url`, `Launching application url ${_url}`, _result);
     });
 
     browser.driver.getSession().then((session) => {
@@ -202,10 +204,7 @@ exports.launchApplication = async function(pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't get browser session !!, error: ${error.message}, stackTrace ${error.stack}`);
-
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to launch the application url`, `Launching application url ${_url}`, _result);
 };
 
 /**
@@ -221,9 +220,9 @@ exports.close = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't close browser !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to close the current open browser`, `Closing the current browser`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to close the current open browser`, `Closing the current browser`, _result);
 };
 
 /**
@@ -237,9 +236,9 @@ exports.maximize = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't maximize browser window !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to maximize the current browser`, `Maximizing the current browser`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to maximize the current browser`, `Maximizing the current browser`, _result);
 };
 
 /**
@@ -253,9 +252,9 @@ exports.clearCokkies = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't delete cookies !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current session cokkies`, `Clearing the current session cokkies`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current session cokkies`, `Clearing the current session cokkies`, _result);
 };
 
 /**
@@ -269,6 +268,8 @@ exports.clearSession = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't execute window.sessionStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current browser session storage`, `Clearing the current browser session storage`, _result);
     });
 
     browser.executeScript('window.localStorage.clear();').then(() => {
@@ -276,9 +277,9 @@ exports.clearSession = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't execute window.localStorage.clear() !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current browser local storage`, `Clearing the current browser local storage`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear the current browser session`, `Clearing the current browser session`, _result);
 };
 
 /**
@@ -292,9 +293,9 @@ exports.restart = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't restart !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to restart the browser`, `Restarting the browser`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to restart the browser`, `Restarting the browser`, _result);
 };
 
 /**
@@ -308,9 +309,9 @@ exports.back = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't navigate back !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate back in the browser`, `Navigate back in the browser`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate back in the browser`, `Navigate back in the browser`, _result);
 };
 
 /**
@@ -324,9 +325,9 @@ exports.forward = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't navigate forward !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate forward in the browser`, `Navigate forward in the browser`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to navigate forward in the browser`, `Navigate forward in the browser`, _result);
 };
 
 /**
@@ -340,9 +341,9 @@ exports.refresh = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't refresh !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to refresh the current browser`, `Refreshing the current browser`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to refresh the current browser`, `Refreshing the current browser`, _result);
 };
 
 /**
@@ -358,9 +359,9 @@ exports.sleep = async function(_sleepTimeOutInMilliSeconds) {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout`, `Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout`, `Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds`, _result);
 };
 
 /**
@@ -376,9 +377,9 @@ exports.driverSleep = async function(_sleepTimeOutInMilliSeconds) {
     }).catch((error) => {
         _result = false;
         console.error(`Couldn't wait !!, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout`, `Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to pause\sleep for certain timeout`, `Sleeping\Pausing for ${_sleepTimeOutInMilliSeconds} milli-seconds`, _result);
 };
 
 /**
@@ -399,9 +400,9 @@ exports.dismissAlert = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to dismiss the alert if present`, `Dismissing the alert when found`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to dismiss the alert if present`, `Dismissing the alert when found`, _result);
 };
 
 /**
@@ -422,9 +423,9 @@ exports.acceptAlert = async function() {
     }).catch((error) => {
         _result = false;
         console.error(`Alert is not found, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to accept the alert if present`, `Accepting the alert when found`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to accept the alert if present`, `Accepting the alert when found`, _result);
 };
 
 /**
@@ -452,6 +453,8 @@ exports.switchToWindowHandle = async function(pageData, dataColumn) {
                 if (_result)
                     break;
             };
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to window with title ${_testData}`, `Switching to window with title ${_testData}`, _result);
         });
 
         if (!_result)
@@ -461,8 +464,6 @@ exports.switchToWindowHandle = async function(pageData, dataColumn) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to window with title ${_testData}`, `Switching to window with title ${_testData}`, _result);
 };
 
 /**
@@ -481,13 +482,13 @@ exports.switchToFrame = async function(elementName) {
         }).catch((error) => {
             _result = false;
             console.error(`Failed to switch to frame ${elementName}, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to frame ${elementName}`, `Switching to frame ${elementName}`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to frame ${elementName}`, `Switching to frame ${elementName}`, _result);
 };
 
 /**
@@ -502,13 +503,13 @@ exports.switchToDefaultContent = async function() {
         }).catch((error) => {
             _result = false;
             console.error(`Switching back from frame failed, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to default content`, `Switching to default content`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to switch to default content`, `Switching to default content`, _result);
 };
 
 /************************************************************
@@ -533,9 +534,9 @@ exports.fileUpload = async function(elementName, pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload the file ${_testData}`, `Uploading the file ${_testData} on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload the file ${_testData}`, `Uploading the file ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -563,9 +564,9 @@ exports.setValue = async function(elementName, pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -598,9 +599,9 @@ exports.setValueRandom = async function(elementName, pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -633,9 +634,9 @@ exports.setValueTimeStamp = async function(elementName, pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} setValue ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName}`, `Setting value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -663,9 +664,9 @@ exports.setValueEnter = async function(elementName, pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} setValue ${_testData + protractor.Key.ENTER} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} and, press enter`, `Setting value ${_testData} on element ${elementName} and, press enter`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} and, press enter`, `Setting value ${_testData} on element ${elementName} and, press enter`, _result);
 };
 
 /**
@@ -711,9 +712,9 @@ exports.setValueCharByChar = async function(elementName, pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} character by character`, `Setting value ${_testData} on element ${elementName} character by character`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to setValue ${_testData} on element ${elementName} character by character`, `Setting value ${_testData} on element ${elementName} character by character`, _result);
 };
 
 /**
@@ -734,9 +735,9 @@ exports.select = async function(elementName, pageData, dataColumn) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} select data ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to select option ${_testData} from dropdown on element ${elementName}`, `Select option ${_testData} from dropdown on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to select option ${_testData} from dropdown on element ${elementName}`, `Select option ${_testData} from dropdown on element ${elementName}`, _result);
 };
 
 /**
@@ -754,9 +755,9 @@ exports.sendKeysEnter = async function(elementName) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} send keys enter is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to press enter key on element ${elementName}`, `Press enter on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to press enter key on element ${elementName}`, `Press enter on element ${elementName}`, _result);
 };
 
 /**
@@ -774,9 +775,9 @@ exports.clear = async function(elementName) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} clear is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear data on element ${elementName}`, `Clearing data on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to clear data on element ${elementName}`, `Clearing data on element ${elementName}`, _result);
 };
 
 /************************************************************
@@ -804,16 +805,16 @@ exports.verifySelectOption = async function(elementName, pageData, dataColumn) {
                 _result = false;
                 console.log(`Element ${elementName} selected option ${_testData} to ${text} is failed`);
             }
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to validated the dropdown option ${_testData} on element ${elementName}`, `Validating dropdown option ${_testData} on element ${elementName}`, _result);
         });
 
         let _data = element(_element.locator()).$('option:checked').getText();
-        expect(_data).toContain(_testData);
+        expect(_testData).toContain(_data);
     } catch (error) {
         _result = false;
         console.error(`Element ${elementName} selected option ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validated the dropdown option ${_testData} on element ${elementName}`, `Validating dropdown option ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -837,16 +838,16 @@ exports.verifyValue = async function(elementName, pageData, dataColumn) {
                 _result = false;
                 console.log(`Element ${elementName} get value ${_testData} to ${text} is failed`);
             }
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate value ${_testData} on element ${elementName}`, `Validating value ${_testData} on element ${elementName}`, _result);
         });
 
         let _data = _element.getAttribute('value');
-        expect(_data).toContain(_testData);
+        expect(_testData).toContain(_data);
     } catch (error) {
         _result = false;
         console.error(`Element ${elementName} get value ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate value ${_testData} on element ${elementName}`, `Validating value ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -870,16 +871,16 @@ exports.verifyText = async function(elementName, pageData, dataColumn) {
                 _result = false;
                 console.error(`Element ${elementName} get text ${_testData} to ${text} is failed`);
             }
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate text ${_testData} on element ${elementName}`, `Validating text ${_testData} on element ${elementName}`, _result);
         });
 
         let _data = _element.getText();
-        expect(_data).toContain(_testData);
+        expect(_testData).toContain(_data);
     } catch (error) {
         _result = false;
         console.log(`Element ${elementName} get text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate text ${_testData} on element ${elementName}`, `Validating text ${_testData} on element ${elementName}`, _result);
 };
 
 /**
@@ -901,16 +902,16 @@ exports.verifyPageTitle = async function(pageData, dataColumn) {
                 _result = false;
                 console.log(`Verify title ${_testData} to ${_data} is failed`);
             }
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate page title as ${_testData}`, `Validating page title as ${_testData}`, _result);
         });
 
         let _data = browser.getTitle();
-        expect(_data).toContain(_testData);
+        expect(_testData).toContain(_data);
     } catch (error) {
         _result = false;
         console.error(`Verify title ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate page title as ${_testData}`, `Validating page title as ${_testData}`, _result);
 };
 
 /**
@@ -934,16 +935,16 @@ exports.verifyAlertText = async function(pageData, dataColumn) {
                 _result = false;
                 console.error(`Alert get text ${_testData} to ${text} is failed`);
             }
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate alert text as ${_testData}`, `Validating alert text as ${_testData}`, _result);
         });
 
         let _data = browser.switchTo().alert().getText();
-        expect(_data).toContain(_testData);
+        expect(_testData).toContain(_data);
     } catch (error) {
         _result = false;
         console.error(`Verify alet text ${_testData} is failed, error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to validate alert text as ${_testData}`, `Validating alert text as ${_testData}`, _result);
 };
 
 /**
@@ -957,7 +958,9 @@ exports.verifyElementIsDisplayed = async function(elementName) {
     let _element = uiMapModule.getExcelUIMap(elementName);
 
     try {
-        let isDisplayed = _element.isDisplayed();
+        let isDisplayed = _element.isDisplayed().then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is displayed`, `Validating element ${elementName} is displayed`, _result);
+        });
         expect(isDisplayed).toBeTruthy();
 
         if (isDisplayed) {
@@ -970,8 +973,6 @@ exports.verifyElementIsDisplayed = async function(elementName) {
         _result = false;
         console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is displayed`, `Validating element ${elementName} is displayed`, _result);
 };
 
 /**
@@ -985,7 +986,9 @@ exports.verifyElementIsNotPresent = async function(elementName) {
     let _element = uiMapModule.getExcelUIMap(elementName);
 
     try {
-        let isPresent = _element.isPresent();
+        let isPresent = _element.isPresent().then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is not displayed`, `Validating element ${elementName} is not displayed`, _result);
+        });
         expect(isPresent).to.become(false).and.notify(next);
 
         if (!isPresent) {
@@ -998,8 +1001,6 @@ exports.verifyElementIsNotPresent = async function(elementName) {
         _result = false;
         console.error(`Element ${elementName} is displayed failed, error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to check element ${elementName} is not displayed`, `Validating element ${elementName} is not displayed`, _result);
 };
 
 /************************************************************
@@ -1021,9 +1022,9 @@ exports.click = async function(elementName) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} click is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to click on element ${elementName}`, `Clicking on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to click on element ${elementName}`, `Clicking on element ${elementName}`, _result);
 };
 
 /**
@@ -1042,9 +1043,9 @@ exports.doubleClick = async function(elementName) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} mouse double click is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to double click on element ${elementName}`, `Double click on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to double click on element ${elementName}`, `Double click on element ${elementName}`, _result);
 };
 
 /**
@@ -1070,9 +1071,9 @@ exports.rightClick = async function(elementName) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} mouse click right is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to right click on element ${elementName}`, `Right click on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to right click on element ${elementName}`, `Right click on element ${elementName}`, _result);
 };
 
 /**
@@ -1091,9 +1092,9 @@ exports.mouseHoverAction = async function(elementName) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementName} mouse over is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to hover mouse over the element ${elementName}`, `Mouse hover on element ${elementName}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to hover mouse over the element ${elementName}`, `Mouse hover on element ${elementName}`, _result);
 };
 
 /**
@@ -1114,9 +1115,9 @@ exports.dragAndDrop = async function(elementFrom, elementTo) {
     }).catch((error) => {
         _result = false;
         console.error(`Element ${elementFrom} drag to Element ${elementTo} is failed, error: ${error.message}, stackTrace ${error.stack}`);
+    }).then(() => {
+        reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} to ${elementTo}`, `Drag and drop ${elementFrom} to ${elementTo}`, _result);
     });
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} to ${elementTo}`, `Drag and drop ${elementFrom} to ${elementTo}`, _result);
 };
 
 /************************************************************
@@ -1409,13 +1410,13 @@ exports.highlightElement = async function(elementName) {
         }).catch((error) => {
             _result = false;
             console.error(`Couldn't remove highlight style to element ${elementName} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight ${elementName}`, `Highlight ${elementName}`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight ${elementName}`, `Highlight ${elementName}`, _result);
 };
 
 /**
@@ -1446,13 +1447,13 @@ exports.highlightWebElement = async function(_elementName) {
         }).catch((error) => {
             _result = false;
             console.error(`Couldn't remove highlight style to element ${_elementName.locator()} !!, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight webElement ${_elementName.locator()}`, `Highlight webElement ${_elementName.locator()}`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to highlight webElement ${_elementName.locator()}`, `Highlight webElement ${_elementName.locator()}`, _result);
 };
 
 /**
@@ -1474,13 +1475,13 @@ exports.unhideElement = async function(elementName) {
         }).catch((error) => {
             _result = false;
             console.error(`Failed to make element ${elementName} visible, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to unhide ${elementName}`, `Unhiding ${elementName}`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to unhide ${elementName}`, `Unhiding ${elementName}`, _result);
 };
 
 /**
@@ -1499,13 +1500,13 @@ exports.javaScriptClick = async function(elementName) {
         }).catch((error) => {
             _result = false;
             console.error(`Java Script click on element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform javaScript click on ${elementName}`, `JavaScript clicking on ${elementName}`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform javaScript click on ${elementName}`, `JavaScript clicking on ${elementName}`, _result);
 };
 
 /**
@@ -1519,13 +1520,16 @@ exports.mouseHoverJavaScript = async function(elementName) {
     try {
         let _element = uiMapModule.getExcelUIMap(elementName);
 
-        browser.executeScript('if(document.createEvent){var evObj = document.createEvent(\'MouseEvents\');evObj.initEvent(\'mouseover\', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent(\'onmouseover\');}', _element.getWebElement());
+        browser.executeScript('if(document.createEvent){var evObj = document.createEvent(\'MouseEvents\');evObj.initEvent(\'mouseover\', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent(\'onmouseover\');}', _element.getWebElement()).catch((error) => {
+            _result = false;
+            console.error(`Java Script mouse hover on element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform mouse hover action using javaScript on ${elementName}`, `Perform javaScript mouse hover action on ${elementName}`, _result);
+        });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to perform mouse hover action using javaScript on ${elementName}`, `Perform javaScript mouse hover action on ${elementName}`, _result);
 };
 
 /**
@@ -1544,13 +1548,13 @@ exports.scrollingToElement = async function(elementName) {
         }).catch((error) => {
             _result = false;
             console.error(`Scrolling onto element ${elementName} failed, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to scroll ${elementName} into view`, `Scroll ${elementName} into view`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to scroll ${elementName} into view`, `Scroll ${elementName} into view`, _result);
 };
 
 /**
@@ -1572,13 +1576,13 @@ exports.dragAndDropHtmlDnD = async function(elementFrom, elementTo) {
         }).catch((error) => {
             _result = false;
             console.error(`drag element ${elementFrom} to element ${elementTo} failed, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} and, drop to ${elementTo} using HtmlDnD module`, `Drag ${elementFrom} and, drop to ${elementTo}`, _result);
         });
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to drag ${elementFrom} and, drop to ${elementTo} using HtmlDnD module`, `Drag ${elementFrom} and, drop to ${elementTo}`, _result);
 };
 
 /***********************************************************
@@ -1596,14 +1600,17 @@ exports.executeOSAScript = async function(pageData, dataColumnOAScript) {
 
     let _osaScript = testDataModule.getExcelTestData(pageData, dataColumnOAScript);
     try {
-        shellModule.executeOSAScript(_osaScript);
+        shellModule.executeOSAScript(_osaScript).catch((error) => {
+            _result = false;
+            console.error(`Execute OSAScript failed, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute apple script ${_osaScript}`, `Executing apple script ${_osaScript}`, _result);
+        });
         console.log(`Executing ${_osaScript}`);
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to execute apple script ${_osaScript}`, `Executing apple script ${_osaScript}`, _result);
 };
 
 /**
@@ -1620,14 +1627,17 @@ exports.executeFileUploadOSAScript = async function(pageData, dataColumnFileToUp
     let _fileToUpload = testDataModule.getExcelTestData(pageData, dataColumnFileToUpload);
     let _browserName = testDataModule.getExcelTestData(pageData, dataColumnBrowserName);
     try {
-        shellModule.executeFileUploadOSAScript(_fileToUpload, _browserName);
+        shellModule.executeFileUploadOSAScript(_fileToUpload, _browserName).catch((error) => {
+            _result = false;
+            console.error(`Execute apple-script to upload file on the browser failed, error: ${error.message}, stackTrace ${error.stack}`);
+        }).then(() => {
+            reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload file ${_fileToUpload} in browser ${_browserName} using apple script`, `Uploading file ${_fileToUpload} in browser ${_browserName} using apple script`, _result);
+        });
         console.log(`Executing apple script to upload file ${_fileToUpload} on browser ${_browserName}`);
     } catch (error) {
         _result = false;
         console.error(`error: ${error.message}, stackTrace ${error.stack}`);
     }
-
-    await reportModule.createSummaryOutputSubTestBody(`Verify user is able to upload file ${_fileToUpload} in browser ${_browserName} using apple script`, `Uploading file ${_fileToUpload} in browser ${_browserName} using apple script`, _result);
 };
 
 /***********************************************************

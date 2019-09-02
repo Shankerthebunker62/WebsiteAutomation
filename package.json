@@ -1,7 +1,7 @@
 {
-    "name": "protractor-gradle",
-    "version": "0.0.0",
-    "description": "Sample project for gulp, gradle and protractor",
+    "name": "WebsiteAutomation",
+    "version": "1.0.0",
+    "description": "Sample project for gulp, gradle and protractor:jasmine",
     "main": "index.js",
     "requires": true,
     "lockfileVersion": 1,
@@ -87,6 +87,7 @@
         "protractor": "5.4.2",
         "protractor-beautiful-reporter": "^1.2.7",
         "protractor-jasmine2-html-reporter": "^0.0.7",
+        "protractor-retry": "1.2.9",
         "protractor-take-screenshots-on-demand": "^1.2.0",
         "protractor-video-reporter": "^0.3.0",
         "react": "16.8.6",

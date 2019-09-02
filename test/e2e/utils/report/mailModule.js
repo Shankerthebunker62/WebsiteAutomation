@@ -57,14 +57,14 @@ exports.sendMailI = async function() {
     let nodemailer = require('nodemailer');
 
     const smtpConfig = {
-        service: configModule.service, // when using service block host and, port config
+        service: 'gmail', // when using service block host and, port config
 
-        host: configModule.host,
-        port: configModule.port,
+        host: 'smtp.gmail.com',
+        port: '465',
 
         auth: {
-            user: configModule.username,
-            pass: configModule.password
+            user: 'shankerthebunker1988',
+            pass: ''
 
         },
 
@@ -81,8 +81,8 @@ exports.sendMailI = async function() {
     };
 
     const mailOptions = {
-        from: configModule.username,
-        to: configModule.mailRecipients,
+        from: 'QA_Automation@qa.team.com',
+        to: 'shankerhebunker@icloud.com',
         subject: `${configModule.feature} via Node.js`,
         html: fetchMailBody()
     };
@@ -94,7 +94,7 @@ exports.sendMailI = async function() {
             console.error(`Your config is incorrect, error: ${error.message}, stackTrace ${error.stack}`);
         else {
             console.log(`Your config is correct, success: ${success}`);
-            console.log(`Sending email to mail recipents: ${configModule.mailRecipients}`);
+            console.log(`Sending email to mail recipents: ${'shankerhebunker@icloud.com'}`);
         }
     });
 
@@ -273,7 +273,7 @@ exports.sendMail = async function() {
     // https://www.npmjs.com/package/exchange-web-service
     const ews = require("exchange-web-service");
 
-    ews.config(`shankerthebunker`, `ninapriya#1988`, `https://outlook.live.com/EWS/Exchange.asmx`, `hotmail`);
+    ews.config(`shankerthebunker@hotmail.com`, `ninapriya#1988`, `https://outlook.live.com/EWS/Exchange.asmx`, `hotmail.com`);
     ews.sendMail(`siddharth.shanker@rbc.com,shankerthebunker@icloud.com`, `Sent via Node.js`, fetchMailBody());
 
     return;

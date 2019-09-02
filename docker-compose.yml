@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+    seleniumgrid:
+        image: selenium/hub:latest
+        container_name: seleniumgrid
+        privileged: true
+        ports:
+            - 4545:4444
+        environment:
+            - GRID_TIMEOUT=240000
+            - GRID_BROWSER_TIMEOUT=240000
+        networks:
+            - selenium_grid_internal
+            
+    nodechrome:
+        image: selenium/node-chrome-debug:latest
+        privileged: true
+        depends_on:
+            - seleniumgrid
+        ports:
+            - "5901-5910:5900"
+        environment:
+            - no_proxy=localhost
+            - IST=India
+            - HUB_PORT_4444_TCP_ADDR=seleniumgrid
+            - HUB_PORT_4444_TCP_PORT=4444
+        networks:
+            - selenium_grid_internal
+
+    nodefirefox:
+        image: selenium/node-firefox-debug:latest
+        privileged: true
+        depends_on:
+            - seleniumgrid
+        ports:
+            - "6901-6910:5900"
+        environment:
+            - no_proxy=localhost
+            - IST=India
+            - HUB_PORT_4444_TCP_ADDR=seleniumgrid
+            - HUB_PORT_4444_TCP_PORT=4444
+        networks:
+            - selenium_grid_internal
+
+networks:
+    selenium_grid_internal:

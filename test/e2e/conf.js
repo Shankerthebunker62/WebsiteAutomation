@@ -21,8 +21,20 @@ let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
 // https://www.npmjs.com/package/protractor-take-screenshots-on-demand
 let screenshots = require('protractor-take-screenshots-on-demand');
 
+// https://www.npmjs.com/package/protractor-retry
+let retry = require('protractor-retry').retry;
+
+// number of retries ( default is 2 )
+const NUMBER_OF_RETRIES = 2;
+
+// Application under Test
+const APP_NAME = 'SuperCalculator';
+
 // Profile settings
 //let profiles = require(__dirname + '/utils/profile/profiles.js');
+
+// https://github.com/aerokube/windows-images
+// windows docker boot setup
 
 exports.config = {
 
@@ -43,7 +55,7 @@ exports.config = {
 
         // Application under test should be same as 
         // the folder under which script, testData and, uiMap is kept
-        appName: 'SuperCalculator',
+        appName: APP_NAME,
         executionStartTime: new Date(),
 
         mainTestIndex: 0,
@@ -53,15 +65,6 @@ exports.config = {
         passedSubTestCount: 0,
         failedSubTestCount: 0
     },
-
-    /**
-     * If true, Protractor will connect directly to the browser Drivers
-     * at the locations specified by chromeDriver and firefoxPath. Only Chrome
-     * and Firefox are supported for direct connect.
-     *
-     * default: false
-     */
-    directConnect: true,
 
     /**
      * The location of the standalone Selenium Server jar file, relative
@@ -83,7 +86,7 @@ exports.config = {
      * connect to an already running instance of Selenium. This usually looks like
      * seleniumAddress: 'http://localhost:4444/wd/hub'
      */
-    // seleniumAddress: 'http://localhost:4444/wd/hub',
+    seleniumAddress: 'http://localhost:4545/wd/hub',
 
     /**
      * Can be an object which will be passed to the SeleniumServer class as args.
@@ -119,7 +122,10 @@ exports.config = {
     /**
      * Required. Spec patterns are relative to the location of this config.
      */
-    specs: ['test\e2e\specs\*.js'],
+    specs: [`test/${APP_NAME}/testCases/Addition and Substraction Super Calculator.js`,
+        `test/${APP_NAME}/testCases/Multiplication and Division Super Calculator.js`,
+        `test/${APP_NAME}/testCases/Modulus Super Calculator.js`
+    ],
 
     /**
      * If true, protractor will restart the browser between each test. Default
@@ -240,23 +246,58 @@ exports.config = {
      * https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
      * In addition, you may specify count, shardTestFiles, and maxInstances.
      */
-    capabilities: {
-        'shardTestFiles': true,
-        'maxInstances': 1,
+    multiCapabilities: [{
+            'shardTestFiles': true,
+            'maxInstances': 2,
 
-        'browserName': 'chrome',
-        'logName': 'Chrome - English',
-        'chromeOptions': {
-            'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars', '--headless'], // '--headless'
-            'prefs': {
-                'download': {
-                    'prompt_for_download': false,
-                    'directory_upgrade': true,
-                    'default_directory': __dirname + '/test/e2e/resources/downloads'
+            'browserName': 'chrome',
+            'seleniumAddress': 'http://localhost:4545/wd/hub',
+
+            'logName': 'Chrome - English',
+            'chromeOptions': {
+                'args': ['--disable-gpu', 'test-type', 'disable-popup-blocking', 'start-maximized', 'disable-infobars'], // '--headless'
+                'prefs': {
+                    'download': {
+                        'prompt_for_download': false,
+                        'directory_upgrade': true,
+                        'default_directory': __dirname + '/test/e2e/resources/downloads'
+                    }
                 }
             }
+        },
+        {
+            'shardTestFiles': true,
+            'maxInstances': 2,
+
+            'browserName': 'firefox',
+            'seleniumAddress': 'http://localhost:4545/wd/hub',
+
+            'logName': 'Firefox - English',
+            'moz:firefoxOptions': {
+                'args': ['--verbose', '--safe-mode'] // '--headless'
+            }
+        }, {
+            'shardTestFiles': true,
+            'maxInstances': 2,
+
+            'browserName': 'safari',
+            'seleniumAddress': 'http://localhost:4545/wd/hub',
+
+            'safari.options': {
+                technologyPreview: true
+            }
+        },
+        {
+            'shardTestFiles': true,
+            'maxInstances': 2,
+
+            'browserName': 'internet explorer',
+            'seleniumAddress': 'http://localhost:4545/wd/hub',
+
+            platform: 'ANY',
+            version: '11'
         }
-    },
+    ],
 
     /**
      * A callback function called once configs are read but before any
@@ -289,6 +330,8 @@ exports.config = {
      * globals from the test framework will be available.
      */
     onPrepare: function() {
+        retry.onPrepare();
+
         browser.driver.getCapabilities().then((caps) => {
             browser.browserName = caps.get('browserName');
         });
@@ -371,6 +414,26 @@ exports.config = {
 
         // HTML Start Execution Report
         require(__dirname + '/utils/report/reportModule.js').createSummaryOutput();
+    },
+
+    /**
+     * A callback function called once the tests have finished running and
+     * the WebDriver instance has been shut down. It is passed the exit code
+     * (0 if the tests passed). This is called once per capability.
+     */
+    onCleanUp: function(results) {
+        retry.onCleanUp(results);
+    },
+
+    /**
+     * A callback function called once all tests have finished running and
+     * the WebDriver instance has been shut down. It is passed the exit code
+     * (0 if the tests passed). afterLaunch must return a promise if you want
+     * asynchronous code to be executed before the program exits.
+     * This is called only once before the program exits (after onCleanUp).
+     */
+    afterLaunch: function() {
+        return retry.afterLaunch(NUMBER_OF_RETRIES);
     },
 
     /**

@@ -83,7 +83,7 @@ sendingSummaryReport = async function() {
     await sleep(TIMEOUT_IN_MILISECONDS);
 
     await mailSummaryReport.sendMail();
-    //await mailSummaryReport.sendMailI();
+    await mailSummaryReport.sendMailI();
     //await mailSummaryReport.sendMailII();
     //await mailSummaryReport.sendMailIII();
     //await mailSummaryReport.sendMailIV();
@@ -946,7 +946,7 @@ exports.createSummaryOutputSubTestBody = async function(testStepPurpose, expecte
 
         // take screenshots
         screenshots.takeScreenshot(screnshotFile);
-        imageFilePath = `${dirPath}/target/screenshots/chrome-${screnshotFile}.png`;
+        imageFilePath = `${dirPath.replace('/test/e2e','')}/target/screenshots/chrome-${screnshotFile}.png`;
         imageAppender = `<br><img src='${imageFilePath}' style='width:70%;'/>`;
     }
 

@@ -4,6 +4,9 @@ var protractor = require('gulp-protractor').protractor;
 var taskListing = require('gulp-task-listing');
 var webdriver_update = require('gulp-protractor').webdriver_update_specific;
 
+// Application under Test
+const APP_NAME = 'SuperCalculator';
+
 gulp.task('webdriver_update', webdriver_update({
     webdriverManagerArgs: ['--ignore_ssl', 'update', '--ie64']
 }));
@@ -12,7 +15,7 @@ gulp.task('protractor', function() {
     var configFile = 'test/e2e/conf.js';
 
     return gulp
-        .src(['./test/e2e/specs/*.js'])
+        .src([`./test/apps/${APP_NAME}/testCases/*.js`])
         .pipe(protractor({
             configFile: configFile
         }))
@@ -21,7 +24,7 @@ gulp.task('protractor', function() {
         });
 });
 
-gulp.task('test:e2e', function(callback) {
+gulp.task('test:apps', function(callback) {
     runSequence(
         //'webdriver_update',
         'protractor',

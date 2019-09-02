@@ -2,7 +2,7 @@
     "fileName": "SummaryReport.html",
     "automationReport": "Protractor Gradle Automation Report",
     "reportHeader": "Protractor Gradle Automation Report",
-    "feature": "Angular  Calculator Function",
+    "feature": "Angular Calculator Function",
     "environment": "QA",
     "testType": "Regression",
     "operatingSystem": "Mac OS X",
@@ -16,5 +16,5 @@
     "mailRecopients": "recipients@domain.com",
     "mailURL": "https://mail.url.com/owa/",
     "mailDomain": "mail.domain",
-    "mutable": true
+    "mutable": false
 }

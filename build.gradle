@@ -33,5 +33,5 @@ configurations.all {
 }
 
 task e2e(type: GulpTask, dependsOn: npmInstall) { 
-    args = ["test:e2e"]
+    args = ["test:apps"]
 }
